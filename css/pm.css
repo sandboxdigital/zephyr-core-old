@@ -1,0 +1,139 @@
+
+	
+#PmPagesPageList {
+	float:left;
+	width:500px;
+}
+
+#PmPagesPageDetails {
+	float:right;
+	width:390px;
+}
+
+ul#jTreeHelper, ul#jTreeHelper ul {
+	list-style: none;
+	margin:0px 0px 0px 16px;
+	padding:0px 0px 0px 0px;
+}
+
+ul.PmPageList {
+	list-style: none;
+	margin:0px 12px 0px 0px;
+	padding:0px 0px 0px 0px;
+}
+
+ul.PmPageList ul {
+	list-style: none;
+	margin:0px 0px 0px 16px;
+	padding:0px 0px 0px 0px;
+}
+
+li.PmPageListPage {
+	margin:0px;
+	padding:2px 0px 2px 2px;
+}
+li.PmPageListPage div {
+	width:100%;
+	height: 21px;
+}
+li.PmPageListPage ul {
+	min-height:5px;
+	}
+
+.Hover {
+	background-color: #efefef;
+}
+
+div.PmPageListPage {
+	line-height:18px;
+	display:block;
+	margin:0px;
+	padding:2px 0px 2px 2px;
+	height:20px;
+}
+
+div.PmPageListPage {
+	width:370px;
+}
+
+.PmPageListPage .name  {
+	float:left;
+}
+
+ul.PmTemplateList {
+	list-style: none;
+	width:100%;
+	margin:0px 12px 0px 0px;
+	padding:0px 0px 0px 0px;
+}
+
+ul.PmTemplateList li {
+	line-height:18px;
+	display:block;
+	margin:0px;
+	padding:2px 0px 2px 0px;
+	height:20px;
+	background:url(/core/images/icons/icon_file.gif) 0px 4px no-repeat;
+}
+
+ul.PmTemplateList li .name {
+	float:left;
+	
+}
+
+img.control {
+	float:right;
+	width:16px;
+	height:20px;
+	display:block;
+	overflow:hidden;
+	text-indent: -100px;
+	padding-right:2px;
+}
+
+a.control {
+	float:right;
+	background:url(/core/images/icons/icon_file.gif) 0px 3px no-repeat;
+	width:20px;
+	height:20px;
+	display:block;
+	overflow:hidden;
+	text-indent: -100px;
+	padding-right:2px;
+}
+a.controlLeft {
+	float:left;
+	background: white url("/core/images/icons/icon_file.gif") 0px 3px no-repeat;
+	width:16px;
+	height:20px;
+	display:block;
+	overflow:hidden;
+	text-indent: -100px;
+	padding-right:2px;
+}
+img.controlLeft {
+	float:left;
+	padding-top:2px;
+	display:block;
+	overflow:hidden;
+	text-indent: -100px;
+	padding-right:2px;
+}
+a.menu {
+	background: white url("/core/images/backend/menu.png") 0px 3px no-repeat;
+}
+a.delete {
+	background: white url("/core/images/icons/icon_delete.gif") 0px 3px no-repeat;
+}
+a.edit {
+	background: white url("/core/images/icons/pencil.png") 0px 3px no-repeat;
+}
+a.roles {
+	background: white url("/core/images/icons/group.png") 0px 3px no-repeat;
+}
+a.roles_faded {
+	background: white url("/core/images/icons/group_faded.png") 0px 3px no-repeat;
+}
+a.add {
+	background: white url("/core/images/icons/icon_add.gif") 0px 3px no-repeat;
+}

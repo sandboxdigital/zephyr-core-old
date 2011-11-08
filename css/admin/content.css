@@ -1,0 +1,91 @@
+.x-tree-root-ct
+{
+	padding-left:0px;
+}
+
+.pageList
+{
+	float:left;
+	width:300px;
+	border:1px solid #cccccc;
+	min-height:700px;
+}
+
+ul.pageTree,
+ul.pageTree ul
+{
+	list-style:none;
+	padding:0;
+	margin:0;
+}
+ul.pageTree li
+{
+	list-style:none;
+	padding:0;
+	margin:0;
+}
+ul.pageTree li ul li
+{
+	list-style:none;
+	padding:0;
+	margin:0;
+	padding-left:18px;
+}
+
+.pageTreeNode div
+{
+	height:18px;
+	padding:2px 0 2px 5px;
+	position:relative;
+}
+
+.pageTreeNode div a
+{
+	position:absolute;
+	top:4px;
+	left:25px;
+}
+
+.pageTreeNode div.highlight
+{
+	background-color: #efefef;
+}
+
+.pageContent
+{
+	float:left;
+	width:600px;
+	border:1px solid #cccccc;
+}
+
+.pageContent .x-panel-body
+{
+	border:none;
+}
+
+
+#contentPanelBody
+{
+	padding:5px;
+}
+	
+.pageContent dl.cmsForm dt 
+{
+	width:150px;
+}
+
+.x-tree-node-collapsed .x-tree-node-icon,
+.x-tree-node-expanded .x-tree-node-icon,
+.x-tree-node-leaf .x-tree-node-icon 
+ {
+	background-image:url("/core/images/icons/icon_file.gif");
+}
+
+
+
+.formPanelWindow form
+{
+	border:none;
+	padding:10px 0 10px 0;	
+}
+

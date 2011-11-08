@@ -1,0 +1,21 @@
+EM
+{
+	font-style: italic;
+}
+INPUT[type="checkbox"]
+{
+	margin: 3px;
+}
+STRONG
+{
+	font-weight: bold;
+}
+H1
+{
+	font-size: 2em;
+}
+
+UL
+{
+	list-style-type: disc;
+}

@@ -1,0 +1,10 @@
+.png { behavior: url("/core/css/iepngfix.htc") }
+
+#nav {
+ 	display: inline;
+        zoom: 1;
+ }
+ 
+ .centeringContainer {
+ 	text-align: center;
+ } 

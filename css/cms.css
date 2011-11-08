@@ -1,0 +1,557 @@
+
+/**************************************************************************
+* CMS styles
+*/
+
+#ui-datepicker-div
+{
+	z-index:1500;
+}
+
+#CMSToggleVisible {
+	display:block;
+	height:12px;
+	width:12px;
+	overflow:hidden;
+	text-indent:999px;
+	background:url(../images/cms_panel_toggle.png) top left no-repeat;
+}
+
+#CMSToggleVisible.hidden {
+	display:block;
+	height:12px;
+	width:12px;
+	overflow:hidden;
+	text-indent:999px;
+	background:url(../images/cms_panel_toggle.png) 0px -12px no-repeat;
+}
+
+.CMSEditButton {
+	height:25px;
+	margin:0 auto;
+	width:918px;
+	background: #FFFFFF;
+	padding-top:5px;
+}
+
+.CMSEditButton a.edit {
+	display:block;
+	width:117px;
+	height:22px;
+	background:url(../images/btn_edit.gif) top left no-repeat;
+	overflow:hidden;
+	text-indent:-117px;
+	text-align:left;
+}
+
+.CMSEditButton a.edit:hover {
+	background:url(../images/btn_edit.gif) 0px -22px no-repeat;
+}
+
+.CMSEditButton a.save {
+	display:block;
+	width:117px;
+	height:22px;
+	background:url(../images/btn_save.gif) top left no-repeat;
+	overflow:hidden;
+	text-indent:-117px;
+	text-align:left;
+}
+
+.CMSEditButton a.save:hover {
+	background:url(../images/btn_save.gif) 0px -22px no-repeat;
+}
+
+.CMSGroup {
+	position:relative;
+	clear:both;
+	float: none;
+	margin-bottom:2px;
+	border:1px solid #CCCCCC;
+}
+.CMSGroupTitle {
+	background-color:#F0F0F0;
+	padding:3px 3px 3px 5px;
+	height:16px;
+	font-size:11px;
+	font-weight:bold;
+	line-height:19px;
+}
+.CMSGroupBody {
+	padding:2px;
+}
+.CMSGroupoption {
+	border:1px solid #dddddd;
+	position:relative;
+	margin-bottom:2px;
+}
+
+.CMSGroupoptionTitle {
+	height:17px;
+	padding:7px 0 0 4px;	
+	background-color: #F0F0F0;
+	background-image:url("/core/extjs/images/gray/toolbar/bg.gif");
+}
+
+.CMSGroupoptionBody
+{
+	padding:5px 3px 3px 3px;
+}
+
+.CMSGroupFooter, .CMSGroupTemp {	
+	background-color: #000000;
+}
+
+.CMSElement {
+	min-height:24px;
+	position:relative;
+}
+
+.CMSElementPlaceholder {
+	border:1px solid red;
+}
+
+.CMSOverlay {
+	position:absolute;
+	top:0px;
+	left:0px;
+	width:100px;
+	height:100px;
+	background-color: #000000;
+	z-index:900;
+	-moz-opacity:.25; 
+	filter:alpha(opacity=25); 
+	opacity:.25;
+}
+
+.CMSElementDetails {
+	position:absolute;
+	padding:0;
+	margin:0;
+	top:0px;
+	right:0px;
+	xbackground-color: #cccccc;
+	z-index:901;
+	width:62px;
+	height:24px;
+}
+
+.CMSElementDetails div {
+	padding:2px;
+}
+
+.ui-dialog {
+	font-family: Verdana;
+	font-size:10px;	
+}
+
+#CMSPagePanel {
+	position:fixed;
+	top:0px;
+	left:0px;
+	z-index:902;
+	height:45px;
+	font-family: Verdana;
+	font-size:9px;		
+}
+
+#CMSPagePanel .tleft {
+	background:url(../images/cms_panel_left.png) 8px 0  no-repeat;
+	width:15px;
+}
+
+#CMSPagePanel .tcontent {
+	background:url(../images/cms_panel_bg.png) repeat-x;
+	line-height:0;
+	vertical-align: top;
+}
+
+#CMSPagePanel .tright {
+	background:url(../images/cms_panel_right.png) 0px 0  no-repeat;
+	width:15px;
+}
+
+.editMode {
+	background:url(../images/cms_panel_editmode.png) 0 0  no-repeat;
+	width:124px;
+	height:25px;
+	display:block;
+	overflow: hidden;
+	text-indent: -200px;
+	float:left;
+	margin:8px 0px 0 10px;
+}
+
+.viewMode {
+	background:url(../images/cms_panel_viewmode.png) 0 0  no-repeat;
+	width:124px;
+	height:25px;
+	display:block;
+	overflow: hidden;
+	text-indent: -200px;
+	float:left;
+	margin:8px 0px 0 10px;
+}
+
+.admin {
+	xbackground:url(../images/btn_admin.png) 0 0  no-repeat;
+	width:63px;
+	height:25px;
+	display:block;
+	overflow: hidden;
+	text-indent: -200px;
+	float:right;
+	margin:8px 15px 0 10px;
+}
+
+#CMSPanelEditProp {
+	background:url(../images/cms_panel_edit_props.png) 0 0  no-repeat;
+	width:116px;
+	height:25px;
+	display:block;
+	overflow: hidden;
+	text-indent: -200px;
+	float:left;
+	margin:8px 0px 0 10px;
+}
+
+#CMSPanelEditContent {
+	background:url(../images/cms_panel_edit_content.png) 0 0  no-repeat;
+	width:102px;
+	height:25px;
+	display:block;
+	overflow: hidden;
+	text-indent: -200px;
+	float:left;
+	margin:8px 0px 0 10px;
+}
+
+
+.CMSIconCopy,.CMSIconPaste,.CMSIconAdd, .CMSIconHide, .CMSIconShow, .CMSIconDelete, .CMSIconEdit, .CMSIconMoveUp, .CMSIconMoveDown, .CMSIconMove  {
+	display:block;
+	text-indent:200px;
+	overflow:hidden;
+	height:18px;
+	width:18px;
+	float:left;
+}
+
+.CMSIconCopy,.CMSIconPaste,.CMSIconAdd {
+	float:right;
+}
+
+
+.CMSIconCopy {
+	background:url(../images/icons/page_white_copy.png) 0 0 no-repeat;
+}
+
+.CMSIconPaste {
+	background:url(../images/icons/paste_plain.png) 0 0 no-repeat;
+}
+.CMSIconAdd {
+	background:url(../images/icons/add.png) 0 0 no-repeat;
+}
+.CMSIconEdit {
+	background:url(../images/icons/pencil.png) 2px 2px no-repeat;	
+}
+.CMSIconDelete {
+	background:url(../images/icons/cross.png) 2px 2px no-repeat;
+}
+.CMSIconMoveUp {
+	background:url(../images/icons/icon_up.gif) 2px 2px no-repeat;
+}
+.CMSIconMoveDown {
+	background:url(../images/icons/icon_down.gif) 2px 2px no-repeat;
+}
+.CMSIconMove {
+	background:url(../images/icons/icon_up.gif) 2px 2px no-repeat;
+}
+.CMSIconHide {
+	background:url(../images/icons/minus.png) 2px 2px no-repeat;
+}
+.CMSIconShow {
+	background:url(../images/icons/plus.png) 2px 2px no-repeat;
+}
+
+.cmsElementTools {
+	background:url(../images/hr_2.gif) bottom left repeat-x;
+	margin-bottom:15px;
+}
+.cmsElementTools p {
+	padding-bottom:5px;
+}
+
+ul.cmsPageList {
+	list-style: none;
+	margin:0px 12px 0px 0px;
+	padding:0px 0px 0px 0px;
+}
+
+ul.cmsPageList ul {
+	list-style: none;
+	margin:0px 0px 0px 16px;
+	padding:0px 0px 0px 0px;
+}
+
+.cmsPageListPage {
+	line-height:18px;
+	display:block;
+	margin:0px;
+	padding:2px 0px 2px 0px;
+	height:20px;
+	background:  url("../images/icons/icon_file.gif") 0px 4px no-repeat;
+}
+
+.cmsPageListPage .name  {
+	float:left;
+}
+
+ul.cmsTemplateList, ul.list {
+	list-style: none;
+	width:100%;
+	margin:0px 12px 0px 0px;
+	padding:0px 0px 0px 0px;
+}
+
+ul.list li {
+	line-height:18px;
+	display:block;
+	margin:0px;
+	padding:2px 0px 2px 0px;
+	height:20px;
+}
+
+ul.cmsTemplateList li {
+	line-height:18px;
+	display:block;
+	margin:0px;
+	padding:2px 0px 2px 0px;
+	height:20px;
+	background: white url("../images/icon_file.gif") 0px 4px no-repeat;
+}
+
+ul.cmsTemplateList li .name, ul.list li .name {
+	float:left;	
+}
+
+a.control {
+	float:right;
+	background: white url("../images/icon_file.gif") 0px 3px no-repeat;
+	width:16px;
+	height:20px;
+	display:block;
+	overflow:hidden;
+	text-indent: -100px;
+	padding-right:2px;
+}
+a.controlLeft {
+	float:left;
+	background: white url("../images/icon_file.gif") 0px 3px no-repeat;
+	width:16px;
+	height:20px;
+	display:block;
+	overflow:hidden;
+	text-indent: -100px;
+	padding-right:2px;
+}
+
+a.icon {
+	background: white url("../images/icons/icon_file.gif") 0px 3px no-repeat;
+	width:16px;
+	height:20px;
+	display:block;
+	overflow:hidden;
+	text-indent: -100px;
+	padding-right:2px;
+	float:left;
+}
+a.delete {
+	background: white url("../images/icons/cross.png") 0px 3px no-repeat;
+}
+a.edit {
+	background: white url("../images/icons/edit.png") 0px 3px no-repeat;
+}
+a.add {
+	background: url("../images/icons/add.png") 0px 3px no-repeat;
+}
+
+.left {
+	float:left;
+}
+/*
+.clear{display:inline-block;}
+.clear:after{display:block;visibility:hidden;clear:both;height:0;content:".";}
+*/
+div.cmsForm {
+	padding:0;
+	margin:0;
+}
+
+div.cmsForm div.row 
+{
+	clear:both;
+}
+	
+div.cmsForm div.label {
+	float: left;
+	width:120px;
+	padding:0;
+	margin:0;
+	padding-bottom: 0px;
+	margin-bottom:2px;
+	padding-top:5px;
+}
+
+div.cmsForm div.label label {
+	font-family: Verdana;
+	font-weight:bold;
+	text-transform: capitalize;
+}
+div.cmsForm div.field 
+{
+	padding:0;
+	padding-right:3px;
+	margin:0;
+	margin-bottom:5px;
+    margin-left:130px;
+}
+div.cmsForm div.field div.FormFile
+{
+	min-height:24px;
+}
+
+div.cmsForm button {
+	height:25px;
+	width:63px;
+	text-indent:-100px;
+	border:0px;
+	padding:0px;
+}
+div.cmsForm .text{
+	padding:4px;
+	font-size:11px;
+	width:96%;
+	border:1px solid #A2A2A2;
+	}
+	
+div.cmsForm .textsmall{
+	padding:4px;
+	font-size:12px;
+	width:100px;
+	border:1px solid #A2A2A2;
+	}
+	
+div.cmsForm .textarea{
+	width:450px;
+	height:70px;
+	padding:4px;
+	border:1px solid #A2A2A2;
+	}
+	
+div.cmsForm textarea
+{
+    padding:0px;
+    margin:0px;
+	width:100%;
+}
+	
+div.cmsForm .submit{font-size:14px;padding:4px;}
+div.cmsForm .small{font-size:10px;color:#7c7c7c;}
+
+div.cmsForm .btnUpload {
+	background:url(../images/btn_upload.png) 0px 0px no-repeat;
+	height:24px;
+	width:116px;
+	text-indent:-200px;
+	border:0px;
+	padding:0px;
+}
+
+div.cmsForm.btnUpload:hover {
+	background:url(../images/btn_upload.png) -24px 0px no-repeat;
+}
+
+div.cmsForm .save {
+	background:url(../images/btn_save.gif);
+}
+
+div.cmsForm .cancel {
+	background:url(../images/btn_cancel.gif);
+}
+
+#inpageDialog .zend_form dd, #inpageDialog .zend_form dt {
+	width:100%;
+}
+
+#inpageDialog .zend_form dd textarea {
+	height:70px;
+	padding:4px;
+	width:300px;
+}
+
+#inpageDialog .zend_form dt label {
+	color:#333333;
+	font-size:10px;
+	font-weight:bold;
+}
+
+#inpageDialog .zend_form dt #submit {
+	-moz-border-radius-bottomleft:2px;
+	-moz-border-radius-bottomright:2px;
+	-moz-border-radius-topleft:2px;
+	-moz-border-radius-topright:2px;
+	-webkit-border-top-left-radius:2px;
+	-webkit-border-top-right-radius:2px;
+	-webkit-border-bottom-right-radius:2px;
+	-webkit-border-bottom-left-radius:2px;
+	border:1px solid #CCCCCC;
+	color:#333333;
+	font-family:Arial;
+	font-size:14.5px;
+	font-variant:normal;
+	font-weight:normal;
+	line-height:normal;
+	padding:10px 16px;
+	width:60px;
+	text-decoration: none;
+	background-color: #F0F0F0;
+	text-align:center;
+	display:block;
+	background-image: none;
+}
+
+.x-btn button 
+{
+    font-family:Verdana;
+    font-size:10px;
+}   
+
+/* Place above TinyMCE windows 
+#FileBrowserWindow
+{
+	z-index:300013 !important;
+}
+#FileUploadWindow
+{
+	z-index:300013 !important;
+}
+
+#WindowFormWindow
+{
+	z-index:300014 !important;
+}
+*/
+
+
+.fileRowSelected
+{
+	background-color: #F0F0F0;
+}
+
+
+input.x-tbar-page-number
+{
+	width:100px;
+}
+	
+	
