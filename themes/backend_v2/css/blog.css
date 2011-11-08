@@ -1,0 +1,57 @@
+/*+clearfix {*/
+FIELDSET#fieldset-buttons:after
+{
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+	font-size: 0;
+}
+FIELDSET#fieldset-buttons
+{
+	display: inline-block;
+}
+FIELDSET#fieldset-buttons
+{
+/*\*/
+	display: block;
+/**/
+	-height: 1px;
+}
+/*+}*/
+FIELDSET#fieldset-right
+{
+	/*+placement:float-right 0px 0px;*/
+	float: right;
+	position: relative;
+	left: 0px;
+	top: 0px;
+	border-left: 1px solid #DDDDDD;
+	width: 202px;
+	padding-left: 16px;
+}
+/*[clearfix]*/FIELDSET#fieldset-buttons
+{
+	clear: both;
+}
+DT#save-label
+{
+	display: none;
+}
+FIELDSET#fieldset-right INPUT
+{
+}
+#fieldset-right INPUT.textsmall, #fieldset-right SELECT
+{
+	width: 84px;
+}
+FIELDSET#fieldset-left
+{
+	/*+placement:float-left 0px 0px;*/
+	float: left;
+	position: relative;
+	left: 0px;
+	top: 0px;
+	width: 549px;
+}

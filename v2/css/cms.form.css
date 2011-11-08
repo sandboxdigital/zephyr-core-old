@@ -1,0 +1,131 @@
+h1
+{
+	font:13px "Lucida Grande", arial, verdana, sans-serif
+}
+
+/*+clearfix {*/
+.cmsForm:after
+{
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+	font-size: 0;
+}
+.cmsForm
+{
+	display: inline-block;
+}
+.cmsForm
+{
+/*\*/
+	display: block;
+/**/
+	-height: 1px;
+}
+/*+}*/
+DIV
+{
+	padding-bottom: 0px;
+}
+/*[clearfix]*/.cmsForm
+{
+	background-color: #EEEEEE;
+	clear: both;
+	padding: 6px !important;
+	/*+border-radius:10px;*/
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	-khtml-border-radius: 10px;
+	border-radius: 10px 10px 10px 10px;
+	border: 1px solid #DFDFDF;
+	margin-bottom: 5px !important;
+}
+.CMSGroup
+{
+	/*+border-radius:10px;*/
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	-khtml-border-radius: 10px;
+	border-radius: 10px 10px 10px 10px;
+	background-color: #E0E0E0;
+	padding: 5px;
+	border: 1px solid #DDDCDC;
+}
+.CMSGroupBody
+{
+	padding: 0px;
+}
+.CMSGroupTitle
+{
+	background-color: transparent;
+	font-size: 8.8pt !important;
+	padding: 0px 0px 3px 3px !important;
+	color: #FA3A3A !important;
+}
+.CMSGroupTitle .CMSIconAdd
+{
+	margin-top: 1px;
+}
+.CMSGroupoption
+{
+	background-color: #D0D0D0;
+	background-color: #EEEEEE;
+	/*+border-radius:10px;*/
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	-khtml-border-radius: 10px;
+	border-radius: 10px 10px 10px 10px;
+	border: 1px solid #D7D7D7;
+	padding: 9px;
+	margin: 2px 0px 0px;
+}
+A.formFileUploadDelete
+{
+	background: url(../../images/icons/cross.png) no-repeat 2px 2px;
+	display: block;
+	text-indent: -200px;
+	overflow: hidden;
+	height: 18px;
+	width: 18px;
+	float: left;
+}
+.CMSGroupoptionTitle
+{
+	background: transparent;
+	font-weight: bold;
+	font-size: 8pt;
+	padding: 0px;
+}
+.cmsForm INPUT[type=submit], .cmsForm INPUT[type=button]
+{
+	padding: 10px 15px;
+	-webkit-border-radius: 5px !important;
+	-moz-border-radius: 5px;
+	border: 1px solid #000000;
+	border-top-color: #CCC;
+	border-left-color: #CCC;
+	border-right-color: #888;
+	border-bottom-color: #888;
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgb(255, 255, 255)), to(rgb(221, 221, 221)));
+	background: -moz-linear-gradient(top, rgb(255, 255, 255), rgb(241, 241, 241));
+	color: #333 !important;
+	text-decoration: none;
+	cursor: pointer;
+	display: inline-block;
+	text-align: center;
+	text-shadow: 0px 1px 1px rgba(255, 255, 255, 1);
+	line-height: 1;
+	font-family: Verdana;
+	font-weight: bold;
+	font-size: 10px;
+}
+.CMSGroupTitle DIV
+{
+	font-size: 9pt;
+}
+.cmsFormFieldHtml
+{
+	min-height: 178px;
+}
