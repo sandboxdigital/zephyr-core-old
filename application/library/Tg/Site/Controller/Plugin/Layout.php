@@ -24,14 +24,16 @@ class Tg_Site_Controller_Plugin_Layout extends Zend_Controller_Plugin_Abstract
         // set the layout based on the current page(template)
         
 		$layout = Zend_Layout::getMvcInstance();
-		
+
     	$page = Tg_Site::getInstance()->getCurrentPage();
-    	
-    	if ($page) {
-			$layout->setLayout($page->getLayout()->layout_file);
-    	} else
-			$layout->setLayout('frontend');
-    	
+        
+//
+//    	if ($page) {
+//			$layout->setLayout($page->getLayout()->layout_file);
+//    	} else
+
+        //$layout->setLayout('default');
+        // TODO add code to get them for current page.
+        $layout->setLayoutPath(PUBLIC_PATH.'/themes/default/views/layouts');
     }
-		
 }

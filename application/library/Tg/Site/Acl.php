@@ -110,7 +110,10 @@ class Tg_Site_Acl
 			// now add roles with access
 			foreach ($this->_pageRoles[$page->id] as $role) {
 				// grant access to role
-				$this->_acl->allow(Tg_User::getRole($role['roleId'])->aclId, $page->path, $role['privilege']);
+                $roleO = Tg_User::getRole($role['roleId']);
+                if ($roleO==null)
+                    throw new Zend_Acl_Exception ("Role not found: ".$role['roleId']);
+				$this->_acl->allow($roleO->aclId, $page->path, $role['privilege']);
 
 			}
 		}

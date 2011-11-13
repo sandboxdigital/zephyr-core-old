@@ -2,8 +2,9 @@
 
 - Version: 1.0.0
 - Date: November 8th, 2011
-- Release Notes: 
-- Github Repository: 
+- Release Notes:
+- Licenced under MIT: http://www.opensource.org/licenses/mit-license.php
+- Github Repository: https://github.com/sandboxdigital/zephyr-core
 
 ## Overview
 
