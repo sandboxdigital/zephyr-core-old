@@ -122,8 +122,8 @@ Tg.PageTree = Ext.extend(Ext.tree.TreePanel, {
 	    if (json['Pages'])
 	        json['pages'] = json['Pages'];
 
-	    if (!json['layoutId'])
-	        json['layoutId'] = 1;
+	    if (!json['themeId'])
+	        json['themeId'] = 1;
 
 	    for (var i = 0; i < json['pages'].length; i++) {
 	        var sub = this.createTreeNode(json['pages'][i]);

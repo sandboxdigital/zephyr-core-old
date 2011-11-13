@@ -1,0 +1,15 @@
+<h3><?php echo $this->sitePageTitle($this->page->getAncestor(2))?></h3>
+<h1><?php echo $this->sitePageTitle()?></h1>
+<div class="pageContent" id='content-div' style="width:100%"></div>
+<script type="text/javascript">
+var contentPanel = null;
+
+Tg.PageFactory.setPages (<?php echo $this->pageNodes?>);
+Tg.PageFactory.setTemplates (<?php echo $this->templateNodes?>);
+Tg.PageFactory.setLayouts (<?php echo $this->layoutNodes?>);
+
+Tg.ContentPanelDefaults = {
+		loadUrl : "/admin/content/load"
+}
+
+</script>

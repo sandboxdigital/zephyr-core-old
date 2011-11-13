@@ -1,0 +1,14 @@
+<h3>User Management</h3>
+<h1><?php echo $this->sitePageTitle() ?></h1>
+
+<div id="PmPagesPageList">
+	<?php echo $this->partial('user/role-list.phtml', $this)?>
+</div>
+<div id="PmPagesPageDetails">
+</div> 
+
+<script>
+$("a.inPageForm").inPageForm ({
+	container :'#PmPagesPageDetails'	
+	});
+</script>

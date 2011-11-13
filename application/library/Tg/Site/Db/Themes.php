@@ -16,20 +16,17 @@
  * @license    New BSD License
  */
 
+/**
+ * Tg Site Layout Database Gateway Class 
+ */
 
-class Tg_Site_Controller_Plugin_Layout extends Zend_Controller_Plugin_Abstract
+
+require_once 'Zend/Db/Table/Abstract.php';
+
+class Tg_Site_Db_Themes extends Tg_Db_Table
 {
-    public function preDispatch(Zend_Controller_Request_Abstract $request)
-    {
-        // set the layout based on the current page(template)
-		$layout = Zend_Layout::getMvcInstance();
-    	$page = Tg_Site::getInstance()->getCurrentPage();
-//
-//    	if ($page) {
-//			$layout->setLayout($page->getLayout()->layout_file);
-//    	} else
-
-    	$theme = $page->getTheme();
-        $layout->setLayoutPath(PUBLIC_PATH.'/themes/'.$theme->folder.'/views/layouts');
-    }
+	protected $_name = 'site_theme';
+	protected $_sequence = true;
+	protected $_rowClass = 'Tg_Site_Db_Theme';
 }
+?>

@@ -1,0 +1,49 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"> 
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+	<script type="text/javascript" src="/core/js/jquery.js"></script>
+	<script type="text/javascript" src="/core/js/swfupload/swfupload.js"></script>
+	<script type="text/javascript" src="/core/js/tg/core.js"></script>
+	<script type="text/javascript" src="/core/js/tiny_mce/tiny_mce.js"></script>
+	<script type="text/javascript" src="/core/js/tiny_mce/tiny_mce_popup.js"></script>
+	<script type="text/javascript" src="/core/js/tg/fileupload.js"></script>
+	<script type="text/javascript" src="/core/js/filebrowser.js"></script>
+	
+	<link href="/core/themes/backend_v2/css/global.css" media="screen" rel="stylesheet" type="text/css" />
+	<link href="/core/css/filebrowser.css" media="screen" rel="stylesheet" type="text/css" />
+	<script language="javascript" type="text/javascript">
+	$(document).ready(function() {
+		var swfupload_file_thumbnail = {
+			name:"file_thumbnail",
+			progress:"#file_thumbnail_progress",
+			preview:"#file_thumbnail_table",
+			upload:"#file_thumbnail_btnUpload",
+			cancel:"#file_thumbnail_btnCancel",
+			callback:"swfUploadCallback_file_thumbnail",
+			onSuccess:function (file) {
+				fileList.addFile (file);
+	            this._upload.attr('value', 'Upload file');
+			}
+		}
+	
+		$.swfupload.addField(swfupload_file_thumbnail);
+		
+		var files = <?php echo $this->files?>;
+		var fileList = new Tg.FileList (files, {container:"#fileListContainer"});
+	});
+	</script>
+</head> 
+<body>
+<div id="fileBrowser">
+	<h2>Files</h2>
+	<div id="fileUpload">			
+		<table id="file_thumbnail_table" style="display:none;"></table>
+		<div id="file_thumbnail_progress"></div>
+		<input id="file_thumbnail_btnUpload" class="file_thumbnail_btnUpload btnUpload" value="Upload file" type="button">
+		<input id="file_thumbnail_btnCancel" class="file_thumbnail _btnCancel btnCancel" value="Cancel upload" style="display: none;" type="button">
+	</div>
+	<div id="fileListContainer"></div>
+</div>
+</body> 
+</html>

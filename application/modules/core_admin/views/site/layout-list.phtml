@@ -1,0 +1,24 @@
+<table class="list" cellspacing="0" width="100%">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>File</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+<?
+foreach ($this->layouts as $layout) {?>
+<tr>
+	<td><a href="/admin/site/layout-edit?id=<?php echo $layout->id?>" class="name inPageForm"><?php echo $layout->name?></a></td>
+	<td><?php echo $layout->layout_file?></td>
+	<td><a href="/admin/site/layout-delete?id=<?php echo $layout->id?>" class="control delete inPageForm" title="Delete">Delete</a>
+	<a href="/admin/site/layout-edit?id=<?php echo $layout->id?>" class="control edit inPageForm" title="Edit">Edit</a></td>
+</tr>
+<?
+ }
+?>
+	</tbody>
+</table>
+<a href="/admin/site/layout-add" class="controlLeft add inPageForm">Add</a>
+<p style="clear:both">Note: Adding, editing and deleting not yet supported</p>

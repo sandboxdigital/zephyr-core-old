@@ -1,0 +1,33 @@
+<style>
+input.x-tbar-page-number
+{
+	width:50px;
+}
+
+</style>
+
+<div class="pageContent" id='content-div' style="width:100%"></div>
+<script type="text/javascript" src="/core/extjs/ext/PagingStore.js"></script>
+<script type="text/javascript">
+ 
+Ext.onReady(function(){
+	var list = new Tg.File.FileList();
+    var panel = new Ext.Panel({
+        title: 'List Data View', 
+        frame: true, 
+        width: 600, 
+        height: 400,
+        renderTo: 'content-div', 
+        //layout:'border',
+        items: [
+                list
+			],
+        buttons: [{
+            text: 'Load',
+            handler: function(){
+        		list.load(-1);
+        	}
+        }]
+    });    
+});
+</script>

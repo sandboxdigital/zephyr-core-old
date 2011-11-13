@@ -1,0 +1,21 @@
+<div class="bodyLeft">
+	<h3>Site Management</h3>
+	<h1><?php echo $this->sitePageTitle() ?></h1>
+</div>
+<div class="bodyRight toolbar">
+	<a href="/admin/site/templates-parse" class="button">Parse templates</a>
+</div>
+
+<div id="PmPagesPageList">
+	<?php echo $this->partial('site/template-list.phtml', $this)?>
+</div>
+<div id="PmPagesPageDetails">
+
+</div>
+<div style="clear:both;">&nbsp;</div>
+
+<script>
+$("a.inPageForm").inPageForm ({
+	container :'#PmPagesPageDetails'	
+	});
+</script>

@@ -1,0 +1,51 @@
+<table class="list" width="100%" cellspacing="0">
+	<thead>
+		<tr>
+		<th>Edit - <?php echo $this->siteBreadcrumb ( 
+		array(
+		'urlPre'=>'/admin/site/page-edit?page=',
+		'includeRoot'=>true,
+		'seperator'=>'&nbsp;/&nbsp;',
+		'aNormalClass'=>'inPageForm'		
+		), $this->Page)?></th>
+	</tr>
+	<tr>
+		<td>
+		<?php echo $this->message?>
+		<?php echo $this->form?>
+		</td>
+	</tr>
+<?php if ($this->showSubPages != 'false') { ?>
+	<tr>
+		<td>
+			<b>Sub pages</b>
+<div class="PmPageList">
+<?php
+foreach ($this->Page->Pages as $ChildPage) {?>
+<div id="page_<?php echo $ChildPage->id?>" class="PmPageListPage">
+	<img src="/core/images/icons/icon_file.gif" class="controlLeft move" title="Move" />
+
+<a href="/admin/site/page-edit?id=<?php echo $ChildPage->id?>" class="name inPageForm"><?php echo $ChildPage->title?></a>
+<?php if (!$ChildPage->locked) { ?>
+	<a href="/admin/site/page-delete?id=<?php echo $ChildPage->id?>" class="control delete" title="Delete">Delete</a>
+	<a href="/admin/site/page-edit?id=<?php echo $ChildPage->id?>" class="control edit inPageForm" title="Edit">Edit</a>
+<?php } ?>
+</div>
+<?php
+ }
+?>
+</div>
+<a href="/admin/site/page-add?parentId=<?php echo $this->Page->id?>" class="controlLeft add inPageForm">Add</a>
+		</td>
+	</tr>
+<?php } ?>
+	</tbody>
+</table>	
+
+<?php if ($this->updatePageList) { ?>
+<script type="text/javascript" language="javascript">
+$(document).ready(function() {
+	$('#PmPagesPageList').load("/admin/site/page-list");
+});
+</script>
+<?php } ?>

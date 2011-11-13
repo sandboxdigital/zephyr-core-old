@@ -49,6 +49,8 @@ class Tg_Site_Controller extends Zend_Controller_Action
 			if (isset($this->_page->metaKeywords))
 				$this->view->headMeta($this->_page->metaKeywords, 'keywords');
     	}
+    	
+    	$this->view->addScriptPath(PUBLIC_PATH.'/themes/'.$this->_page->getTheme()->folder.'/views/');
 
 		Zend_Controller_Action_HelperBroker::addPrefix('Tg_Controller_Helper');
 		$this->view->addHelperPath('Tg/View/Helper', 'Tg_View_Helper');

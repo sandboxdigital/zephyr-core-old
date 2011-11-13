@@ -1,0 +1,5 @@
+<div id="body">
+   	<h1><?php echo $this->sitePageTitle() ?></h1>
+   	<p><?php echo $this->siteBreadCrumb(array ('seperator'=>' > ', null)) ?></p>
+	<?php echo $this->contentPartial($this->content->body) ?>
+</div>

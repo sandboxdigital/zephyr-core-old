@@ -60,7 +60,7 @@ Tg.TemplateGrid = Ext.extend(Ext.grid.GridPanel, {
 
 		// load the store at the latest possible moment
 		//   this.on({
-		//       afterlayout:{scope:this, single:true, fn:function() {
+		//       aftertheme:{scope:this, single:true, fn:function() {
 		//        //   this.store.load({params:{start:0, limit:10}});
 		//       }}
 		//   });

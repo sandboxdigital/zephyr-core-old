@@ -1,0 +1,37 @@
+<table class="list" width="100%" cellspacing="0">
+	<thead>
+		<tr>
+			<th>Folder - <?php echo $this->folder->name ?></th>
+		</tr>
+	</thead>
+	<tbody>
+<?php 
+		foreach ($this->folder->childNodes as $childFolder) {
+?>
+		<tr>
+			<td><img src="/core/images/icons/folder.png" class="controlLeft move" width="16" height="16" title="Move" folderid="<?php echo $folderNode->id?>" /> <?php echo $childFolder->name?></td>
+		</tr>
+<?php 
+		}
+?>
+<!--		-->
+<!--	</tbody>-->
+<!--</table>-->
+<!--<table class="list" width="100%" cellspacing="0">-->
+<!--	<thead>-->
+<!--		<tr>-->
+<!--			<th>Files</th>-->
+<!--		</tr>-->
+<!--	</thead>-->
+<!--	<tbody>-->
+<?php 
+		foreach ($this->folder->getFiles() as $file) {
+?>
+		<tr>
+			<td><img src="<?php echo $file->getUrl('16x16')?>" class="controlLeft move" width="16" height="16" title="Move" fileid="<?php echo $file->id?>" /> <?php echo $file->name?></td>
+		</tr>
+<?php 
+		}
+?>
+	</tbody>
+</table>

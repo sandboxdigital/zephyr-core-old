@@ -1,0 +1,30 @@
+<table class="list" width="100%" cellspacing="0">
+	<thead>
+		<tr>
+			<th>Pages</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>
+<?php
+echo Tg_Site_Utils::printPages();
+?>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<script>
+$('.PmRootUl').jTree({
+	'handle':'.move',
+	'update':
+		function (ev) {
+			var s = $('.PmPageList').jTree('serialize');
+			s = $.toJSON(s);
+			$.get ("/admin/site/page-reorder?json="+s, 
+				function () {
+					//$('#PmPagesPageList').load("/admin/site/page-list");
+				});			
+		}
+	});
+</script>

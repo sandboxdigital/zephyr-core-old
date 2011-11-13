@@ -1,0 +1,47 @@
+<table class="list" width="100%" cellspacing="0">
+	<thead>
+		<tr>
+		<th><a href="/admin/site/page-list">Pages</a> - <?php echo $this->siteBreadcrumb (
+		array(
+			'urlPre'=>'/admin/site/page-edit?page=',
+			'includeRoot'=>true,
+			'seperator'=>'&nbsp;/&nbsp;',
+			'aNormalClass'=>'inPageForm'		
+			),$this->page)?></th>
+	</tr>
+	</thead>
+	<tbody>	
+	<tr>
+		<td>
+			<b>Assigned Page Roles</b>
+			<table class="list" width="100%" cellspacing="0">
+			<tbody>
+			<?php foreach ($this->pageRoles as $role) {?>
+			<tr>
+				<td><?php echo( $this->roles[$role['roleId']]->name)?></td>
+				<td><a href="/admin/site/page-role-delete?page=<?php echo $this->page->id?>&role=<?php echo $this->roles[$role['roleId']]->id?>" class="control delete inPageForm" title="Delete">Delete</a></td>
+			</tr>
+			<?php }?>
+			</tbody>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<b>Available Roles</b>
+			<table class="list" width="100%" cellspacing="0">
+			<tbody>
+			<?php foreach ($this->roles as $role) {
+				if (!in_array($role->id,$this->pageRoles)){?>
+			<tr>
+				<td><?php echo $role->name?></td>
+				<td><a href="/admin/site/page-role-add?page=<?php echo $this->page->id?>&role=<?php echo $role->id?>" class="control add inPageForm" title="Add">Add</a></td>
+			</tr>
+			<?php }
+			}?>
+			</tbody>
+			</table>
+		</td>
+	</tr>
+	</tbody>
+</table>	

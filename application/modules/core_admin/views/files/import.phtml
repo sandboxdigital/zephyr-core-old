@@ -1,0 +1,58 @@
+<form>
+<style type="text/css">
+.fileRow 
+{
+	cursor:pointer;
+}
+</style>
+<div style="padding:10px;">
+<input type="hidden" name="folderId" value="<?php echo $this->folderId?>" />
+<?php if ($this->filesImported) { ?>
+<b>File(s) imported</b><br />
+<br />
+<?php 
+foreach ($this->filesImported as $file)
+	echo $file . '<br />';
+?>
+<br />
+<?php }?>
+<?php if ($this->files) { ?>
+<b>Select files to import</b><br />
+<br />
+<table style="width:100%" class="list" cellpadding="0" cellspacing="0">
+<thead>
+<tr>
+	<th></th>
+	<th></th>
+	<th style="width:50%">Name</th>
+	<th style="width:50%">Size</th>
+</tr>
+</thead>
+<?php
+foreach ($this->files as $file) {
+?>
+	<tr class="fileRow">
+		<td><input type="checkbox" name="filesToImport[]" value="<?php echo $file->name?>" /></td>
+		<td><?php echo Tg_File_Utils::getThumbnailImg($file->name)?></td>
+		<td><?php echo $file->name?></td>
+		<td><?php echo Tg_File_Utils::getFileSize($file->path)?></td>
+	</tr>
+<?php 
+}
+?>
+</table>
+<?php 
+} else 
+	echo '<b>No files to import</b><br /><br />';
+?>
+<br /><br /><b>To import files upload them (via FTP) to:</b><br />
+<?php echo $this->incomingPath?><br /><br />
+(Once imported files will be removed from this folder)<br />
+</div>
+<script type="text/javascript">
+$('.fileRow').click (function(){
+	$(this).find('input').attr("checked","checked");
+	
+});
+</script>
+</form>

@@ -37,9 +37,9 @@ function createForm() {
         templates.push(new Array(el.id, el.name));
     });
 
-    var layouts = new Array();
-    Ext.each(Tg.PageFactory.layouts, function (el) {
-        layouts.push(new Array(el.id, el.name));
+    var themes = new Array();
+    Ext.each(Tg.PageFactory.themes, function (el) {
+        themes.push(new Array(el.id, el.name));
     });
 
     return new Ext.FormPanel({
@@ -95,16 +95,16 @@ function createForm() {
 				        anchor: '95%'
 				    }),
 				    new Ext.form.ComboBox({
-				        fieldLabel: 'Layout',
-				        name: 'layoutId_test',
+				        fieldLabel: 'Theme',
+				        name: 'themeId_test',
 				        allowBlank: false,
 				        triggerAction: 'all',
 				        lazyRender: true,
 				        typeAhead: false,
 				        mode: 'local',
 				        forceSelection: true,
-				        store: layouts,
-				        hiddenName: 'layoutId',
+				        store: themes,
+				        hiddenName: 'themeId',
 				        anchor: '95%'
 				    }),
 				    new Ext.form.ComboBox({

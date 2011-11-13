@@ -4,7 +4,7 @@
 Tg.PageFactory = Ext.extend(Ext.util.Observable, {
     name: 'barfoo'
 	, templates: null
-	, layouts: null
+	, themes: null
 	, pages: null
 	, pageTree: null
     , urlAddPage: "/admin/site-page-save"
@@ -24,8 +24,8 @@ Tg.PageFactory = Ext.extend(Ext.util.Observable, {
 	    this.templates = a;
 	}
 
-	, setLayouts: function (a) {
-	    this.layouts = a;
+	, setThemes: function (a) {
+	    this.themes = a;
 	}
 
 	, findTemplate: function (templateId) {
@@ -72,9 +72,9 @@ Tg.PageFactory = Ext.extend(Ext.util.Observable, {
 	        templates.push(new Array(el.id, el.name));
 	    });
 
-	    var layouts = new Array();
-	    Ext.each(this.layouts, function (el) {
-	        layouts.push(new Array(el.id, el.name));
+	    var themes = new Array();
+	    Ext.each(this.themes, function (el) {
+	        themes.push(new Array(el.id, el.name));
 	    });
 
 	    return new Ext.FormPanel({
@@ -116,16 +116,16 @@ Tg.PageFactory = Ext.extend(Ext.util.Observable, {
 				}),
 
 				new Ext.form.ComboBox({
-				    fieldLabel: 'Layout',
-				    name: 'layoutId_test',
+				    fieldLabel: 'Theme',
+				    name: 'themeId_test',
 				    allowBlank: false,
 				    triggerAction: 'all',
 				    lazyRender: true,
 				    typeAhead: false,
 				    mode: 'local',
 				    forceSelection: true,
-				    store: layouts,
-				    hiddenName: 'layoutId',
+				    store: themes,
+				    hiddenName: 'themeId',
 				    width: 290
 				}),
 
@@ -161,7 +161,7 @@ Tg.PageFactory = Ext.extend(Ext.util.Observable, {
 	    var pageClone = {
 	        'id': 0
 			, 'templateId': defaultSubPageTemplate
-			, 'layoutId': page.layoutId
+			, 'themeId': page.themeId
 			, 'parentId': parentId
 			, 'visible': 1
 	    };

@@ -70,14 +70,14 @@ class Tg_Site_Factory {
 		
 		$this->loadPageTemplates ();
 		$this->loadPages ();
-		$this->loadLayouts ();
+		$this->loadThemes ();
 	}
 	
-	public function loadLayouts () {
-		$pt = new Tg_Site_Db_Layouts();
+	public function loadThemes () {
+		$pt = new Tg_Site_Db_Themes();
 		$rows = $pt->fetchAll(null,'name');
 		if (!$rows)
-			throw new Zend_Exception('CMS Error: No Page Layouts');
+			throw new Zend_Exception('CMS Error: No Page Themes');
 					
 		foreach ($rows as $row)
 			$this->_layouts[$row->id] = $row;
@@ -319,7 +319,7 @@ class Tg_Site_Factory {
      * 
      * @return array $layouts
      */
-	public static function getLayouts () 
+	public static function getThemes () 
 	{
 		$inst = self::getInstance();
 		$inst->load ();
@@ -331,7 +331,7 @@ class Tg_Site_Factory {
      * 
      * @return array $templates
      */
-	public static function getLayoutsAsArray () 
+	public static function getThemesAsArray () 
 	{
 		$inst = self::getInstance();
 		$inst->load ();
@@ -349,9 +349,9 @@ class Tg_Site_Factory {
      * Returns a layout
      * 
      * @param  int $id 
-     * @return Tg_Site_Db_Layout $layout
+     * @return Tg_Site_Db_Theme $layout
      */
-	public static function getLayout ($id) 
+	public static function getTheme ($id) 
 	{
 		$inst = self::getInstance();
 		

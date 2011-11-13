@@ -1,0 +1,50 @@
+<h3>System</h3>
+<h1><?php echo $this->sitePageTitle() ?></h1>
+
+<h3>Installed Modules</h3>
+<table class="list" width="500" cellspacing="0">
+<thead>
+<tr>
+	<th width="250">Name</th>
+	<th width="200">Path</th>
+	<th width="50">&nbsp;</th>
+</tr>
+</thead>
+<tbody>
+<?php foreach($this->installedModules as $module) {
+?>
+<tr>
+	<td><?php echo $module->name?></td>
+	<td><?php echo $module->path?></td>
+	<?php if ($module->locked=='no') { ?>
+	<td><a href="/admin/system/module-uninstall">Uninstall</a></td>
+	<?php } else { ?>
+	<td>Locked</td>
+	<?php }?>
+</tr>
+<?php } ?>
+</tbody>
+</table>
+<p> </p>
+<h3>Available Modules</h3>
+<table class="list" width="500" cellspacing="0">
+<thead>
+<tr>
+	<th width="250">Name</th>
+	<th width="200">Path</th>
+	<th width="50">&nbsp;</th>
+</tr>
+</thead>
+<tbody>
+<?php foreach($this->availableModules as $module) {
+?>
+<tr>
+	<td><?php echo $module['name']?></td>
+	<td><?php echo $module['path']?></td>
+	<td><a href="/admin/system/module-install">Install</a></td>
+</tr>
+<?php } ?>
+</tbody>
+</table>
+
+<p>Note: this page doesn't do anything yet - it's just a proof of concept</p>

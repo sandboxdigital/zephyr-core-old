@@ -1,0 +1,19 @@
+<div id="body">
+   	<h1><?php echo $this->sitePageTitle() ?></h1>
+<?php 
+
+if ($this->content->body) {
+	foreach ($this->content->body as $groupOption) {
+		if ($groupOption->id == 'heading') {
+			echo '<h2>'.$groupOption->heading.'</h2>';
+		} elseif ($groupOption->id == 'body') {
+			echo $groupOption->body;
+		} elseif ($groupOption->id == 'file') {
+			$file = $groupOption->file->getFile();
+			echo $file->getImg('300x300');
+		}
+			
+	}
+}
+?>
+</div>

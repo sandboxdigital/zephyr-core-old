@@ -1,0 +1,24 @@
+<table class="list" width="100%" cellspacing="0">
+	<thead>
+	<tr>
+		<th><?php echo $this->title?></th>
+	<th/>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>
+		<?php echo $this->message?>
+		<?php echo $this->form?>
+		</td>
+	</tr>
+	</tbody>
+</table>
+
+<?php if ($this->updateTemplateList) { ?>
+<script type="text/javascript" language="javascript">
+$(document).ready(function() {
+	$('#PmPagesPageList').load("/admin/site/template-list");
+});
+</script>
+<?php } ?>

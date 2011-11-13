@@ -1,0 +1,27 @@
+<h3>System</h3>
+<h1><?php echo $this->sitePageTitle() ?></h1>
+<?php if ( $this->response ) {?>
+<p style="margin-bottom:15px;"><?php echo $this->response  ?></p>
+<?php }?>
+<h3>Database scripts</h3>
+<table class="list" width="500" cellspacing="0">
+<thead>
+<tr>
+	<th width="250">Name</th>
+	<th width="200">Date</th>
+	<th width="50">&nbsp;</th>
+	<th width="50">&nbsp;</th>
+</tr>
+</thead>
+<tbody>
+<?php foreach($this->scripts as $script) {
+?>
+<tr>
+	<td><?php echo $script->name?></td>
+	<td><?php echo date('j M Y',$script->date)?></td>
+	<td><a href="<?php echo $this->url(array('action'=>'database-view','script'=>$script->name))?>">View</a></td>
+	<td><a href="<?php echo $this->url(array('script'=>$script->name))?>">Run</a></td>
+</tr>
+<?php } ?>
+</tbody>
+</table>

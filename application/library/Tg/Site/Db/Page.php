@@ -202,13 +202,13 @@ class Tg_Site_Db_Page extends Tg_Db_Table_Row implements Zend_Acl_Resource_Inter
 	}
 
 	/**
-	 * Returns the pages layout
+	 * Returns the pages theme
 	 *
-	 * @return Tg_Site_Db_Layout $layout
+	 * @return Tg_Site_Db_Theme $theme
 	 */
-	public function getLayout ()
+	public function getTheme ()
 	{
-		return Tg_Site::getLayout($this->layoutId);
+		return Tg_Site::getTheme($this->themeId);
 	}
 
 	public function getUrl ($lang = null)
@@ -422,7 +422,7 @@ class Tg_Site_Db_Page extends Tg_Db_Table_Row implements Zend_Acl_Resource_Inter
 		    	'id'=>$this->id,
 		    	'name'=>$this->name,
 		    	'templateId'=>$this->templateId,
-		    	'layoutId'=>$this->layoutId,
+		    	'themeId'=>$this->themeId,
 				'visible'=>$this->visible,
 				'action'=>$this->action,
 				'pages' => array ()

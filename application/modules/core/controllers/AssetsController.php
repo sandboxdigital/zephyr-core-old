@@ -16,20 +16,11 @@
  * @license    New BSD License
  */
 
-
-class Tg_Site_Controller_Plugin_Layout extends Zend_Controller_Plugin_Abstract
+class AssetsController extends Tg_Content_Controller
 {
-    public function preDispatch(Zend_Controller_Request_Abstract $request)
+    public function indexAction()
     {
-        // set the layout based on the current page(template)
-		$layout = Zend_Layout::getMvcInstance();
-    	$page = Tg_Site::getInstance()->getCurrentPage();
-//
-//    	if ($page) {
-//			$layout->setLayout($page->getLayout()->layout_file);
-//    	} else
-
-    	$theme = $page->getTheme();
-        $layout->setLayoutPath(PUBLIC_PATH.'/themes/'.$theme->folder.'/views/layouts');
+    	$tree = Tgx_Asset::getInstance()->getTree ();
     }
 }
+

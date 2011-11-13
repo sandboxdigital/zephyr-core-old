@@ -1,0 +1,22 @@
+<error> 
+  <message><?php echo $this->message ?></message> 
+
+  <?php if ('development' == APPLICATION_ENV): ?> 
+  
+  <exception> 
+      <message>
+      	<![CDATA[<?php  $this->exception->getMessage() ?>]]>
+      </message> 
+	
+	  <stackTrace>
+	  	<![CDATA[<?php echo $this->exception->getTraceAsString() ?>]]>
+	  </stackTrace> 
+  </exception> 
+
+  <requestParams>
+  <?php var_dump($this->request->getParams()) ?> 
+  </requestParams> 
+  <?php endif ?>
+  
+</error> 
+            

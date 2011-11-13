@@ -1,0 +1,25 @@
+<table class="list" width="100%" cellspacing="0">
+	<thead>
+		<tr>
+			<th>Template</th>
+			<th>Module</th>
+			<th>Controller</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+<?php
+foreach ($this->Templates as $Template) {?>
+<tr>
+	<td><a href="/admin/site/template-edit?id=<?php echo $Template->id?>" class="name inPageForm"><?php echo $this->trim ($Template->name, 30)?></a></td>
+	<td><?php echo $Template->module?></td>
+	<td><?php echo $Template->controller?></td>
+	<td><a href="/admin/site/template-delete?id=<?php echo $Template->id?>" class="control delete inPageForm" title="Delete">Delete</a>
+	<a href="/admin/site/template-edit?id=<?php echo $Template->id?>" class="control edit inPageForm" title="Edit">Edit</a></td>
+</tr>
+<?php
+ }
+?>
+	</tbody>
+</table>
+<a href="/admin/site/template-add" class="controlLeft add inPageForm">Add</a>

@@ -281,13 +281,18 @@ class Tg_Application_Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         return $view;
     }
     
-    protected function _initRoutes ()
+    protected function _initMVC()
     {
     	if (isset($this->_options['routes'])) {
     		if ((isset($this->_options['routes']['site'])) && $this->_options['routes']['site'] == true) {
 				$this->bootstrap('FrontController'); // make sure we've loaded the db resource
 				$frontController = $this->getResource('FrontController');
+				
+				
 				$router = $frontController->getRouter(); // returns a rewrite router by default
+				Zend_Controller_Front::getInstance()->addModuleDirectory(APPLICATION_PATH ."/modules");
+				Zend_Controller_Front::getInstance()->addModuleDirectory(CORE_PATH ."/modules");
+
 				
 				$options = array ('ignore' => array ('js', 'css', 'images',  'file', 'error', 'core'));
 				$route = new Tg_Site_Route ($options);

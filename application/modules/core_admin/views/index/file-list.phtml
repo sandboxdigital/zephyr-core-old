@@ -1,0 +1,14 @@
+[<?php 
+if ($this->files) {
+	$NotFirst = false;
+	foreach ($this->files as $file) {
+		if ($NotFirst)
+			echo ',';
+		else 
+			$NotFirst = true;
+?>
+<?php echo Zend_Json::encode($file->toObject ()) ?>
+<?php 
+	}
+}
+?>]

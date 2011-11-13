@@ -1,0 +1,42 @@
+<table class="list" width="100%" cellspacing="0">
+	<thead>
+		<tr>
+			<th>Folders</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>
+<ul class="PmPageList">
+<?php printFolder ($this->rootNode) ;?>
+</ul>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<?php 
+function printFolder (&$folderNode)
+{
+?>
+	<li class="PmPageListPage" folderid="<?php echo $folderNode->id?>">
+	<div class="TreeItem"><img src="/core/images/icons/folder.png" class="controlLeft move" width="16" height="16" title="Move" folderid="<?php echo $folderNode->id?>" /><a href="/admin/files/folder-view?id=<?php echo $folderNode->id?>" folderid="<?php echo $folderNode->id?>" class="name inPageForm"><?php echo $folderNode->name?></a>
+	<a href="#" class="control menu" title="Roles">Menu</a>
+	</div>
+<?php
+	if (count($folderNode->childNodes)>0) {
+?>
+		<ul class="'.($PmPage->left==1?'PmRootUl':'').'">
+<?php 
+		foreach ($folderNode->childNodes as $childFolder) {
+			printFolder ($childFolder);
+		}
+?>
+		</ul>
+<?php 
+	}
+?>
+</li>
+<?php 
+}
+?>

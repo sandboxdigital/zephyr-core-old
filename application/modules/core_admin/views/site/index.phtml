@@ -1,0 +1,385 @@
+<h3>Admin</h3>
+<h1><?php echo $this->sitePageTitle() ?></h1>
+<div id="form-ct"></div>
+
+<div class="pageList" id="tree-div"></div>
+<div class="pageContent" id='content-div'></div>
+<!-- Fixes drag drop bug -->
+<style type="text/css">
+#submit-element,
+#submit-label
+{
+	display:none;
+}
+</style>
+<script>
+Ext.form.Field.prototype.msgTarget = 'side';
+
+var contentPanel;
+var win;
+var pageId;
+var nodeJSON = <?php echo $this->pageNodes?>;
+var selectedPath = "";
+var pageTreeNode = null;
+
+var expandedNodes = $.cookie ('content_expanded');
+if (expandedNodes)
+	expandedNodes = expandedNodes.split(",");
+else
+	expandedNodes = new Array ();
+
+pageId = $.cookie ('content_loadContent');
+
+if (!pageId)
+	pageId = nodeJSON.pageId;
+
+var root = createTreeNode (nodeJSON);
+root.draggable = false;
+
+function createTreeNode (json)
+{
+	var root = new Ext.tree.TreeNode({
+		text:json['title'],
+		title:json['title'],
+		id:json['id'],
+		pageId:json['id'],
+		templateId:json['templateId'],
+		name:json['name'],
+		allowChildren:true,
+		expanded:expandedNodes.indexOf(json['id'])>-1?true:false
+		});
+	
+	for (var i=0;i<json['children'].length;i++ )
+	{
+		var sub = createTreeNode (json['children'][i]);
+		root.appendChild (sub);
+	}
+	
+	return root;
+}
+
+function loadContent (pageIdx)
+{
+	//return;
+	
+	pageId = pageIdx;
+		
+	$.cookie ('content_loadContent', pageId, {expires: 7, path: '/'});
+	var data = {
+			'id':pageId,
+			'showSubPages':false,
+			'hideSave':'true'
+			};			
+	$.get (
+		"/admin/site/page-meta", 
+		data,
+		function (data) {
+			if (data.indexOf(") not found")>0)
+				data = "Page has no content managed elements";
+			$('#contentPanelBody').html(data);
+		});
+ }
+
+
+Ext.onReady(function() {
+	var tree = new Ext.tree.TreePanel({
+	    renderTo: 'tree-div',
+//	    useArrows: true,
+	    autoScroll: true,
+	    animate: true,
+	    enableDD: true,
+	    containerScroll: true,
+	    border: false,
+	    root: root,
+        listeners: {
+            click: function(n) {
+				loadContent (n.attributes.pageId);
+				pageTreeNode = n;
+        	},
+        	expandnode : function (n)
+        	{
+				var pageId = n.attributes.pageId;
+				var pos = expandedNodes.indexOf(pageId)
+				if (pos==-1)
+					expandedNodes.push (pageId);
+				$.cookie ('content_expanded', expandedNodes, {expires: 7, path: '/'});
+        	},
+        	collapsenode : function (n)
+        	{
+				var pageId = n.attributes.pageId;
+				var pos = expandedNodes.indexOf(pageId)
+				while (pos>-1){
+					expandedNodes.splice (pos,1);
+					pos = expandedNodes.indexOf(pageId)
+				}
+				$.cookie ('content_expanded', expandedNodes, {expires: 7, path: '/'});
+        	}
+		},
+		tbar: [{
+		    text: 'Add',        
+		    icon: '/core/images/icons/add.png',
+	        cls: 'x-btn-icon-text',
+		    handler: function() {
+		      addPage (this.el)
+		    }
+		 },{
+		    text: 'Edit',        
+		    icon: '/core/images/icons/edit.png',
+	        cls: 'x-btn-icon-text',
+		    handler: function() {
+		      editPage (this.el)
+		    }
+		 },{
+		    text: 'Delete',
+		    icon: '/core/images/icons/cross.png',
+	        cls: 'x-btn-icon-text',
+		    handler: function(t){
+		      deletePage ();
+		    }
+		  }]
+		});
+
+	var r = tree.getRootNode()
+	var cn = r.findChild ("pageId", pageId);
+	r.expand();
+
+	if (!cn) {
+		cn = r
+	} 
+	cn.select ();
+
+	//editPage (null);
+
+	// set up content panel
+	contentPanel = new Ext.Panel({
+	    renderTo: 'content-div',
+	    border: false,
+	    bodyBorder: false,
+	    bodyCssClass: 'x-panel-body-noborder',
+	    bodyStyle:'border:none;',
+		tbar: [{
+		    text: 'Save',        
+		    icon: '/core/images/icons/icon_file.gif',
+	        cls: 'x-btn-icon-text',
+		    handler: function() {
+		    	c(form);
+		    	var form = $('#contentPanelBody form');
+				var url = '/admin/site/page-meta';
+				var data = form.serialize();
+				$.post(url, data,function (){c("saved")});
+		    }
+		 }],
+		 items: [{
+	            html: '<div id="contentPanelBody">Loading</div>',
+	            xtype: "panel"
+	        }] 
+		});
+
+	// load content	
+	loadContent (cn.id);
+
+	pageTreeNode = cn;
+});
+
+function addPage (menu)
+{
+	// create the window on the first click and reuse on subsequent clicks
+	if (!win) {
+		win = new Tg.FormWindow ();
+	}
+	win.show(menu);
+	win.loadUrl ('/admin/site/page-add?showSubPages=false&parentId='+pageId);
+}
+
+function editPage (menu)
+{
+	var form = new Ext.FormPanel({
+	    labelAlign: 'right',
+	    labelWidth: 85,
+	    width:400,
+	    waitMsgTarget: true,
+	    defaultType: 'textfield',
+	    items: [
+			new Ext.form.Hidden({
+			    name:'pageId'
+			}),
+	        {
+				fieldLabel: 'Title',
+				name: 'title',
+				width:290
+			}, 
+			{
+				fieldLabel: 'Path',
+				name: 'name',
+				width:290
+			},
+			
+			new Ext.form.ComboBox({
+				fieldLabel: 'Template',
+				name:'templateId_test',
+				allowBlank:false,
+				triggerAction: 'all',
+				lazyRender:true,
+				typeAhead:false,
+				mode: 'local',
+				forceSelection: true,
+				store: [[1, 'item1'], [2, 'item2']],
+				hiddenName:'templateId',
+				width:290
+			})
+		]
+	});
+	
+	form.form.setValues (pageTreeNode.attributes);
+
+	win = new Tg.FormPanelWindow (form);
+	win.show ();
+
+}
+
+function deletePage (menu)
+{
+	Ext.Msg.confirm(
+		'Delete?',
+		'Are you sure you want to delete this page?',
+		function (r) {
+			if(r=='yes') {
+				pageTreeNode.remove ();
+				$.ajax({url:'/admin/site/page-delete?id='+pageId});
+			}
+		});
+	
+}
+
+var Tg = {}
+Tg.FormWindow = Ext.extend(Ext.Window, {
+	url : "",
+	constructor: function(form) {
+
+		var config = {};
+		if (form)
+			config["items"]=form;
+		
+	    config = Ext.apply({
+			autoScroll:true,
+			width:500,
+			height:300,
+			buttons: [
+				{
+					text:'Submit',
+					disabled:true,
+					scope: this,
+					handler: this.handleSubmit
+				},
+				{
+					text: 'Close',
+					scope:this,
+					handler:this.handleClose
+				}
+			]
+		}, config);
+	
+	    Tg.FormWindow.superclass.constructor.call(this, config);
+	},
+
+    loadUrl : function (url, params)
+    {
+	  	this.buttons[0].disable();
+	    this.url = url;
+		this.load({
+		    url: this.url,
+		    params: params, // or a URL encoded string
+		    callback: this.handleLoad,
+		    scope: this, // optional scope for the callback
+		    discardUrl: false,
+		    nocache: false,
+		    text: 'Loading...',
+		    timeout: 30,
+		    scripts: true
+		});
+    },
+
+	handleClose : function (x)
+    {
+    	this.hide();
+    },
+    
+	handleLoad : function (x)
+    {
+  	  this.buttons[0].enable();
+    },
+
+    handleSubmit : function ()
+    {
+		var form = $(this.body.dom).find ("form");
+		var data = form.serialize();
+		this.loadUrl(this.url,data);
+//				win.hide();
+    }
+});
+
+Tg.FormPanelWindow = Ext.extend(Ext.Window, {
+	url : "",
+	constructor: function(form) {
+
+		var config = {};
+		
+	    config = Ext.apply({
+			autoScroll:true,
+			width:414,
+			cls:'formPanelWindow',
+			buttons: [
+				{
+					text:'Submit',
+					disabled:true,
+					scope: this,
+					handler: this.handleSubmit
+				},
+				{
+					text: 'Close',
+					scope:this,
+					handler:this.handleClose
+				}
+			],
+			items:form
+		}, config);
+	
+	    Tg.FormPanelWindow.superclass.constructor.call(this, config);
+	},
+
+    loadUrl : function (url, params)
+    {
+	  	this.buttons[0].disable();
+	    this.url = url;
+		this.load({
+		    url: this.url,
+		    params: params, // or a URL encoded string
+		    callback: this.handleLoad,
+		    scope: this, // optional scope for the callback
+		    discardUrl: false,
+		    nocache: false,
+		    text: 'Loading...',
+		    timeout: 30,
+		    scripts: true
+		});
+    },
+
+	handleClose : function (x)
+    {
+    	this.hide();
+    },
+    
+	handleLoad : function (x)
+    {
+  	  this.buttons[0].enable();
+    },
+
+    handleSubmit : function ()
+    {
+		var form = $(this.body.dom).find ("form");
+		var data = form.serialize();
+		this.loadUrl(this.url,data);
+//				win.hide();
+    }
+});
+</script>

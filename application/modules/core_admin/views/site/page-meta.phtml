@@ -1,0 +1,86 @@
+<h3>Admin</h3>
+<h1><?php echo $this->sitePageTitle() ?></h1>
+<div id="form-ct"></div>
+
+<div class="pageList" id="tree-div"></div>
+<div class="pageContent" id='content-div'></div>
+<!-- Fixes drag drop bug -->
+<style type="text/css">
+#submit-element,
+#submit-label
+{
+	display:none;
+}
+</style>
+<script>
+var contentPanel = null;
+Tg.PageFactory.setPages (<?php echo $this->pageNodes?>);
+Tg.PageFactory.setTemplates (<?php echo $this->templateNodes?>);
+Tg.PageFactory.setLayouts (<?php echo $this->layoutNodes?>);
+
+Ext.onReady(function() {
+	var pageTree = new Tg.PageTree ({
+	    renderTo: 'tree-div'
+	    });
+    
+	pageTree.on ('click', function (p) 
+	{
+		loadContent (p.attributes.id);
+	});
+	// set up content panel
+	contentPanel = new Ext.Panel({
+	    renderTo: 'content-div',
+	    border: false,
+	    bodyBorder: false,
+	    bodyCssClass: 'x-panel-body-noborder',
+	    bodyStyle:'border:none;',
+	    tbar: [{
+		    text: 'Save',        
+		    icon: '/core/images/icons/icon_file.gif',
+	        cls: 'x-btn-icon-text',
+		    handler: function() {
+	    		contentPanel.el.mask('Saving...', 'loadingMask');
+		    	var form = $('#contentPanelBody form');
+				var url = '/admin/site/page-meta-edit';
+				var data = form.serialize();
+				$.post(url, data,function () {
+		    		contentPanel.el.unmask ();
+		    		});
+		    }
+		 }],
+		 items: [{
+	            html: '<div id="contentPanelBody">Loading</div>',
+	            xtype: "panel"
+	        }] 
+		});
+
+	// load content for default page	
+	//
+	loadContent (pageTree.currentNodeId);
+
+	Tg.PageFactory.pageTree = pageTree;
+});
+
+function loadContent (pageIdx)
+{
+	//return;
+	
+	pageId = pageIdx;
+		
+	$.cookie ('content_loadContent', pageId, {expires: 7, path: '/'});
+	var data = {
+			'id':pageId,
+			'showSubPages':false,
+			'hideSave':'true'
+			};			
+	$.get (
+		"/admin/site/page-meta-edit", 
+		data,
+		function (data) {
+			if (data.indexOf(") not found")>0)
+				data = "Page has no content managed elements";
+			$('#contentPanelBody').html(data);
+		});
+ }
+
+</script>

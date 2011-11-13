@@ -1,0 +1,32 @@
+<table class="list" width="100%" cellspacing="0">
+	<thead>
+		<tr>
+			<th>Name</th>
+<!--			<th>Email</th>-->
+			<th>Role</th>
+			<th>Credits Used</th>
+<!--			<th>Roles</th>-->
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+<?php
+foreach ($this->users as $user) {?>
+<tr>
+	<td><a href="/admin/user/user-edit?id=<?php echo $user->id?>" class="name inPageForm"><?php echo $user->firstname?></a></td>
+	<td><?php echo $user->isRightsholder=='yes'?'Rh ':''?><?php echo $user->isSponsor=='yes'?'Sp':''?> </td>
+	<td><?php echo $user->creditsUsed?></td>
+<!--	<td><?php echo $user->roleAcls?></td>-->
+	<td>
+	<a href="/admin/user/user-delete?id=<?php echo $user->id?>" class="control delete inPageForm" title="Delete">Delete</a>
+	<a href="/admin/user/user-edit?id=<?php echo $user->id?>" class="control edit inPageForm" title="Edit">Edit</a> <a href="/admin/user/user-roles?user=<?php echo $user->id?>" class="control roles inPageForm" title="Roles">Roles</a></td>
+</tr>
+<?php
+ }
+?>
+	</tbody>
+</table>
+<!--<a href="/admin/user/user-add" class="controlLeft add inPageForm">Add</a>-->
+<script type="text/javascript">
+$('.delete').confirm ({message:'Are you sure you want to delete this user?'});
+</script>

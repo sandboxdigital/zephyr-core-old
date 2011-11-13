@@ -1,0 +1,15 @@
+<h3>Site Management</h3>
+<h1><?php echo $this->sitePageTitle() ?></h1>
+
+<div id="PmPagesPageList">
+	<?php $this->partial('site/layout-list.phtml', $this)?>
+</div>
+<div id="PmPagesPageDetails">
+
+</div>
+
+<script>
+$("a.inPageForm").inPageForm ({
+	container :'#PmPagesPageDetails'	
+	});
+</script>

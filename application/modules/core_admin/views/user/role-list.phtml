@@ -1,0 +1,24 @@
+<table class="list" width="100%" cellspacing="0">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>ACL</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+<?php
+foreach ($this->roles as $user) {?>
+<tr>
+	<td><a href="/admin/user/role-edit?id=<?php echo $user->id?>" class="name inPageForm"><?php echo $user->name?></a></td>
+	<td><?php echo $user->aclId?></td>
+	<td>
+	<a href="/admin/user/role-delete?id=<?php echo $user->id?>" class="control delete inPageForm" title="Delete">Delete</a>
+	<a href="/admin/user/role-edit?id=<?php echo $user->id?>" class="control edit inPageForm" title="Edit">Edit</a> </td>
+</tr>
+<?php
+ }
+?>
+	</tbody>
+</table>
+<a href="/admin/user/role-edit" class="controlLeft add inPageForm">Add</a>

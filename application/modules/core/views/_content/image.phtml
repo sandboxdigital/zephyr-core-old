@@ -1,0 +1,8 @@
+<?php 
+
+$file = $this->content->image->getFile ();
+$alt = $this->content->alt;
+?>
+
+
+<p class="image"><img src="<?php echo  $file->getUrl()?>" alt="<?php echo $alt?>" /></p>
