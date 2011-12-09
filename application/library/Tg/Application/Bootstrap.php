@@ -193,8 +193,13 @@ class Tg_Application_Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		// Hmmm this seems to cause issues with rememberMe
 //        $session = new Zend_Session_Namespace('tg', true);
 //        Zend_Registry::set('session', $session);
-        
-    	$options = Zend_Registry::get('config');
+
+        if (!is_dir($this->_options['session']['save_path']))
+        {
+            echo 'session directory doesn\'t exist <br/>';
+            echo $this->_options['session']['save_path'];
+            die;
+        }
    		Zend_Session::setOptions($this->_options['session']);
     	
         return true;        

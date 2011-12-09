@@ -139,7 +139,7 @@ class Tg_Site_Route extends Zend_Controller_Router_Route_Abstract
 	            	return false;            	
 	            } else {
 					// not in ignore list so redirect everything else to Site page
-					
+
 	//            	if (Tg_Site::isMultiLingual()) {
 	//            		die;
 	//            	}
@@ -174,7 +174,7 @@ class Tg_Site_Route extends Zend_Controller_Router_Route_Abstract
 	            }	
 			} 
         }
-			
+
 		if ($Page == $Pm->getRootPage()) {
 			// hmmmm still on the rootpage - if there is an action then let's presume we're trying to route to a static controller not the homepage
 			// TODO - change so the below works - it tests the rootpage controller to see 
@@ -199,25 +199,25 @@ class Tg_Site_Route extends Zend_Controller_Router_Route_Abstract
 //			//var_dump(method_exists($controller, $this->_values['action'].'Action'));
 //			echo $this->_values['action'];
 //			die;
-		
+
 			if ($this->_values['action'] != 'index')
 			{
 				if (!Tg_Config::get('site.route404ToHome'))
 					return false;	
-//				else 
+//				else
 //				{
 //			        dump ($this->_values);
 //			        dump ($pathArray);
 //			        die;
-//				} 			
+//				}
 			}
 		}
-		
+
 		// check if our logged in user has access to this resource 
 		// possibly this should be in a FrontController Plugin
 		$user = Tg_Auth::getAuthenticatedUser();
 		$allowed = Tg_Site_Acl::isUserAllowed($user, $Page->path);
-			
+
 		if (!$allowed) 
 		{
 			// redirect to login controller	
