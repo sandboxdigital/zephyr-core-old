@@ -20,7 +20,7 @@
  * Tg Site
  */
 
-class Tg_Site_Form_Layout extends Tg_Form  
+class Tg_Site_Form_Theme extends Tg_Form
 { 
     public function __construct($data = null, $options = null) 
     { 
@@ -41,7 +41,7 @@ class Tg_Site_Form_Layout extends Tg_Form
 			));
 			
 		$this->addElement('text', 'layout_file', array(
-			'label'=>'Layout file',
+			'label'=>'Theme file',
 			'required'=>true,
 			'class'=>'text'
 			));

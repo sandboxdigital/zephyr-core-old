@@ -17,7 +17,7 @@
  */
 
 /**
- * Tg Site Layout Database Gateway Class 
+ * Tg Site Theme Database Gateway Class
  */
 
 

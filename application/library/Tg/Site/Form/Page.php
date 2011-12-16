@@ -53,11 +53,11 @@ class Tg_Site_Form_Page extends Tg_Form
 			'multiOptions'=>$options
 			));
 			
-		$layouts = new Tg_Site_Db_Layouts();
+		$layouts = new Tg_Site_Db_Themes();
 		$options = $layouts->fetchPairs('id','name',null,'name');
 			
     	$this->addElement('select', 'layoutId', array(
-			'label'=>'Layout',
+			'label'=>'Theme',
 			'required'=>true,
 			'multiOptions'=>$options
 			));

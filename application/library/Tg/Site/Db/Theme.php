@@ -17,7 +17,7 @@
  */
 
 /**
- * Tg Site Layout Database Gateway Class 
+ * Tg Site Theme Database Gateway Class
  */
 
 class Tg_Site_Db_Theme extends Tg_Db_Table_Row

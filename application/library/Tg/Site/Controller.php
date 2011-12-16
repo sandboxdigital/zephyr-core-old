@@ -62,4 +62,10 @@ class Tg_Site_Controller extends Zend_Controller_Action
     	} else 
     		$this->view->isAjax = false;
 	}
+
+    public function _setLayout ($layoutFile)
+    {
+        $layout = Zend_Layout::getMvcInstance();
+        $layout->setLayout($layoutFile);
+    }
 }
