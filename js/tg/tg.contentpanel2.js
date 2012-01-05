@@ -6,7 +6,7 @@
 */
 
 Tg.ContentPanelDefaults = {
-	loadUrl : "/Admin/Content/Capture"
+	loadUrl : "/admin/content/load"
 }
 
 Tg.ContentPanel2 = Ext.extend(Ext.Panel, {
@@ -179,7 +179,6 @@ Tg.ContentPanel2 = Ext.extend(Ext.Panel, {
         Ext.apply(data, { version: version });
         	
         this.loadData = data;
-        
         $.ajax({
             url: Tg.ContentPanelDefaults.loadUrl,
             dataType: 'json',

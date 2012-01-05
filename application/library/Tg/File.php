@@ -145,7 +145,6 @@ class Tg_File
 	public static function getStorageFolder ()
 	{
 		$inst = self::getInstance();
-
 		return $inst->_storageFolder;
 	}
 
@@ -341,4 +340,5 @@ class Tg_File
 		return $filename;
 	}
 }
+
 

@@ -26,14 +26,15 @@ class Core_Admin_ContentController extends Tg_Content_Controller
     public function indexAction() 
     {
 		$this->view->headLink()->appendStylesheet('/core/css/admin/content.css');
-		
+
+        $this->view->headScript()->appendFile('/core/js/tg/tg.contentpanel2.js');
 		$this->view->headScript()->appendFile('/core/js/tg/tg.pagetree.js');
 		$this->view->headScript()->appendFile('/core/js/tg/tg.pagefactory.js');
 		$this->view->headScript()->appendFile('/core/js/tg/tg.contentpanel2.js');
 		$this->view->headScript()->appendFile('/core/js/admin/content_index.js');
 		
 		$this->view->pageNodes = Tg_Site::getInstance()->getRootPage()->toJson('read') ;
-		$this->view->layoutNodes = Zend_Json::encode (Tg_Site::getLayoutsAsArray());
+		$this->view->layoutNodes = Zend_Json::encode (Tg_Site::getThemesAsArray());
 		$this->view->templateNodes = Zend_Json::encode (Tg_Site::getTemplatesAsArray());
     }
     

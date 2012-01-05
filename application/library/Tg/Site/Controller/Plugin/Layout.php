@@ -25,9 +25,10 @@ class Tg_Site_Controller_Plugin_Layout extends Zend_Controller_Plugin_Abstract
 		$layout = Zend_Layout::getMvcInstance();
     	$page = Tg_Site::getInstance()->getCurrentPage();
 //
-    	if ($page) {
-            $theme = $page->getTheme();
-            $layout->setLayoutPath(PUBLIC_PATH.'/themes/'.$theme->folder.'/views/layouts');
-    	}
+    	if (!$page) {
+            $page = Tg_Site::getInstance()->getRootPage();
+        }
+        $theme = $page->getTheme();
+        $layout->setLayoutPath(PUBLIC_PATH.'/themes/'.$theme->folder.'/views/layouts');
     }
 }

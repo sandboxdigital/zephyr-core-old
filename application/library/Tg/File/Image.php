@@ -27,7 +27,7 @@ class Tg_File_Image
 	}
 
 	function resize($max_width, $max_height, $destination, $options = null) {
-
+		echo $destination;
 		$source = $this->_file;
 		$orig_width = $this->_info[0];
 		$orig_height = $this->_info[1];
