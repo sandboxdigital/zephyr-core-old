@@ -49,8 +49,18 @@ class Tg_Site_Controller extends Zend_Controller_Action
 			if (isset($this->_page->metaKeywords))
 				$this->view->headMeta($this->_page->metaKeywords, 'keywords');
     	}
-    	
-    	$this->view->addScriptPath(PUBLIC_PATH.'/themes/'.$this->_page->getTheme()->folder.'/views/');
+
+        if ($this->_page)
+        {
+        	$this->view->addScriptPath(PUBLIC_PATH.'/themes/'.$this->_page->getTheme()->folder.'/views/');
+            $this->view->addScriptPath(PUBLIC_PATH.'/themes/'.$this->_page->getTheme()->folder.'/views/layouts');
+        } else
+        {
+            $page = $Pm->getRootPage();
+            $this->view->addScriptPath(PUBLIC_PATH.'/themes/'.$page->getTheme()->folder.'/views/');
+            $this->view->addScriptPath(PUBLIC_PATH.'/themes/'.$page->getTheme()->folder.'/views/layouts');
+        }
+
 
 		Zend_Controller_Action_HelperBroker::addPrefix('Tg_Controller_Helper');
 		$this->view->addHelperPath('Tg/View/Helper', 'Tg_View_Helper');
@@ -63,7 +73,8 @@ class Tg_Site_Controller extends Zend_Controller_Action
     		$this->view->isAjax = false;
 	}
 
-    public function _setLayout ($layoutFile)
+
+    public function setLayout ($layoutFile)
     {
         $layout = Zend_Layout::getMvcInstance();
         $layout->setLayout($layoutFile);
