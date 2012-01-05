@@ -1,55 +1,45 @@
+
 /**
 * Tg.ContentPanel
 * @extends Ext.Panel
 * @author Thomas Garrood
 */
 
-function updateVersions() {
-
-}
-
 Tg.ContentPanelDefaults = {
-	loadUrl : "/Admin/Content/Capture"
+	loadUrl : "/admin/content/load"
 }
 
 Tg.ContentPanel = Ext.extend(Ext.Panel, {
     url: ""
-    , hideVersions: true
-    , form: null
-    , currentVersion: 1
-    , versions: []
+    ,hideVersions: false
+    ,form: null
+    ,currentVersion: 1
+    ,versions: []
+	,loadData : null
 
 	, constructor: function (config) {
 	    //this.updateVersions (versions);
 
-	    var versionsMenu = new Ext.menu.Menu({
+		this.grid = new Tg.VersionGrid({
+			title: 'Versions',
+			xtype: "versiongrid",
+		    autoScroll: true
+			});
+		this.grid.contentPanel = this;
+	
+	    this.versionsMenu = new Ext.menu.Menu({
 	        id: 'mainMenu',
 	        items: []
 	    });
+	    
 
-	    var versionsButton = new Ext.Button({
+	    this.versionsButton = new Ext.Button({
 	        cls: 'x-btn-text', // text class
 	        text: 'Version: 1',
-	        menu: versionsMenu
+	        menu: this.versionsMenu
 	    });
 
 	    var tbar = [];
-
-	    if (!this.hideVersions) {
-	        tbar.push("|");
-
-	        tbar.push({
-	            text: 'Publish',
-	            icon: '/core/images/icons/world.png',
-	            cls: 'x-btn-icon-text',
-	            scope: this,
-	            handler: this.onPublish
-	        });
-
-	        tbar.push(versionsButton);
-	    }
-
-	    tbar.push("->");
 	    tbar.push({
 	        text: 'Save',
 	        icon: '/core/images/icons/disk.png',
@@ -57,31 +47,58 @@ Tg.ContentPanel = Ext.extend(Ext.Panel, {
 	        scope: this,
 	        handler: this.onSave
 	    });
-	    tbar.push({
-	        text: 'Preview',
-	        icon: '/core/images/icons/page_white_magnify.png',
-	        cls: 'x-btn-icon-text',
-	        scope: this,
-	        handler: this.onPreview
-	    });
+//	    tbar.push({
+//	        text: 'Preview',
+//	        icon: '/core/images/icons/page_white_magnify.png',
+//	        cls: 'x-btn-icon-text',
+//	        scope: this,
+//	        handler: this.onPreview
+//	    });
+	    
+	    
+	    if (!this.hideVersions) {
+			tbar.push("->");
+
+//	        tbar.push({
+//	            text: 'Publish',
+//	            icon: '/core/images/icons/world.png',
+//	            cls: 'x-btn-icon-text',
+//	            scope: this,
+//	            handler: this.onPublish
+//	        });
+
+	        tbar.push(this.versionsButton);
+	    }
+	    
+	    this.tabPanel = new Ext.TabPanel ({
+			region: 'center',
+			xtype: 'tabpanel',
+			stateful:true,
+			items: [
+			    {
+				title: 'Content',
+				tbar: tbar,
+				html: '<div id="contentPanelBody">Loading</div>',
+				xtype: "panel",
+			    autoScroll: true
+				}
+				,this.grid
+			]
+			});
 
 	    config = config || {};
 	    
 	    config = Ext.apply(
             {
-            	cls:'CmsContentPanel',
-                region: 'center',
-                xtype: 'container',
-                layout: 'fit',
-     	       margins: '3 3 3 0',
-                collapsed: false,
-		        tbar: tbar,
-                items: [{
-                    html: '<div id="contentPanelBody">Loading</div>',
-	                xtype: "panel",
-                    autoScroll: true
-                }]
-            }, config);
+//            title:'Content',
+			cls:'CmsContentPanel',
+			region: 'center',
+			xtype: 'tabpanel',
+			layout: 'fit',
+			margins: '3 3 3 0',
+			collapsed: false,
+			items: this.tabPanel
+           }, config);
 
 	    Tg.ContentPanel.superclass.constructor.call(this, config);
 
@@ -99,8 +116,6 @@ Tg.ContentPanel = Ext.extend(Ext.Panel, {
     , showSource: function () {
         this.form.isValid();
         var xml = this.form.toXml();
-
-        c(xml);
 
         var win = new Ext.Window({
             autoScroll: false,
@@ -132,7 +147,7 @@ Tg.ContentPanel = Ext.extend(Ext.Panel, {
             , 'subForm': false
             , 'hideSave': 'true'
             , 'container': '#contentPanelBody'
-            , "onSave": jQuery.inScope(this.unmask, this)
+            , "onSave": jQuery.inScope(this.onSaveComplete, this)
         };
         form = new CMS.Form(formOptions);
 
@@ -147,6 +162,31 @@ Tg.ContentPanel = Ext.extend(Ext.Panel, {
         this.el.mask('Working...', 'loadingMask');
     }
 
+    , loadVersion: function (version) 
+    {
+    	this.load(this.loadData, version); 
+    }
+    
+    , load: function (data, version) 
+    {
+    	this.tabPanel.setActiveTab (0);
+    	
+        version = version || 0;
+
+        this.createForm();
+        this.mask();
+
+        Ext.apply(data, { version: version });
+        	
+        this.loadData = data;
+        $.ajax({
+            url: Tg.ContentPanelDefaults.loadUrl,
+            dataType: 'json',
+            data: data,
+            success: jQuery.inScope(this.onLoad, this)
+        });
+    }
+
     , onAfterRender: function () {
         //c("onAfterRender");
     }
@@ -156,9 +196,11 @@ Tg.ContentPanel = Ext.extend(Ext.Panel, {
 	}
 
     , onItemCheck: function (cb) {
-        this.currentVersion = cb.id;
-        this.updateVersions(this.versions);
-        this.load(pageTree.currentNode, currentVersion);
+    	if (this.currentVersion != cb.id) {
+	        this.currentVersion = cb.id;
+	        this.loadVersion(this.currentVersion);
+    	} else
+    		return false;
     }
 
     , onPublish: function () {
@@ -169,7 +211,7 @@ Tg.ContentPanel = Ext.extend(Ext.Panel, {
             "contentTemplateId": template.contentTemplateId,
             "contentId": "SitePage" + pageTree.currentNode.attributes.id,
             'showSubPages': false,
-            "version": currentVersion,
+            "version": this.currentVersion,
             'hideSave': 'true'
         };
 
@@ -185,80 +227,221 @@ Tg.ContentPanel = Ext.extend(Ext.Panel, {
         this.mask();
         this.form.save()
     }
-
-    , load: function (data, version) {
-        version = version || 0;
-
-        this.createForm();
-        this.mask();
-
-        Ext.apply(data, { version: version });
-
-        $.ajax({
-            url: Tg.ContentPanelDefaults.loadUrl,
-            dataType: 'json',
-            data: data,
-            success: jQuery.inScope(this.onLoad, this)
-        });
+    
+    , onSaveComplete : function (response)
+    {
+    	this.currentVersion = response.data.currentVersion;
+    	this.updateVersions (response.data.versions);
+    	this.unmask ();
     }
     
-    , onLoad : function (reponse)
+    , onLoad : function (response)
     {
     	this.unmask ();
-    	if (reponse.success) {
-    		reponse.data.options['hideSave'] = "true";
-	    	this.form.setOptions(reponse.data.options);
-	    	this.form.loadXml (reponse.data.formXml);
-	    	this.form.populateXml (reponse.data.dataXml);
+    	if (response.success) {
+    		response.data.options['hideSave'] = "true";
+	    	this.form.setOptions(response.data.options);
+	    	this.form.loadXml (response.data.formXml);
+	    	this.form.populateXml (response.data.dataXml);
+	    	this.currentVersion = response.data.currentVersion;
+	    	this.updateVersions (response.data.versions);
     	} else
     	{
     		this.form.clear ();
+    		//alert (response.error);
     	}    	
     }
 
-    //    , updateVersions : function (versions)
-    //    {
-    //        if (hideVersions)
-    //            return;
-    //    
-    //        versionsMenu.removeAll ();
-    //    
-    //        var foundPublished = false;
-    //        var currentVersionName = "";
+    , updateVersions : function (versions)
+    {
+        
+    	this.versions = versions;
+        if (this.hideVersions)
+            return;
+    
+        this.versionsMenu.removeAll ();
+    
+        var foundPublished = false;
+        var currentVersionName = "";
 
-    //        for (var i=0;i<versions.length;i++)
-    //        {
-    //            var version = versions[i];
-    //            var versionName = version.version;
-    //            var checked = false;
-    //        
-    //            if (version.published)
-    //            {
-    //                versionName += " published";
-    //                foundPublished = true;
-    //            } else if (foundPublished)
-    //            {
-    //                versionName += " draft";
-    //            }
+        for (var i=0;i<this.versions.length;i++)
+        {
+            var version = this.versions[i];
+            var versionName = version.version;
+            var versionStatus = '';
+            var checked = false;
+        
+//            if (version.published)
+//            {
+//                versionName += " published";
+//                foundPublished = true;
+//            } else if (foundPublished)
+//            {
+//                versionName += " draft";
+//            }
 
-    //            if (currentVersion == version.version)
-    //            {
-    //                currentVersionName = versionName;
-    //                checked = true;
-    //            }
+            if (i == 0)
+            {
+            	version.status = "Published";
+            	versionStatus = " (published)";
+            }
+            
+            if (this.currentVersion == version.version)
+            {
+                currentVersionName = versionName + versionStatus;
+                checked = true;
+            }
 
-    //            versionsMenu.add(
-    //             new Ext.menu.CheckItem({
-    //                    id: version.version
-    //                    ,text: versionName
-    //                    ,checked:checked
-    //                    ,checkHandler: onItemCheck
-    //                })
-    //                );
-    //        }
+            this.versionsMenu.add(
+             new Ext.menu.CheckItem({
+                    id: version.version
+                    ,text: versionName + versionStatus
+                    ,checked:checked
+                    ,checkHandler: this.onItemCheck
+                    ,scope:this
+                })
+                );
+        }
 
-    //        versionsMenu.doLayout(); 
+        this.versionsMenu.doLayout(); 
 
-    //        versionsButton.setText ("Version: "+currentVersionName);
-    //    }
+        this.versionsButton.setText ("Version: "+currentVersionName);
+        
+        // TODO - move to onTabClick or similar
+        this.grid.getStore().loadData(versions);
+    }
 }); 
+
+
+//example grid
+Tg.VersionGrid = Ext.extend(Ext.grid.GridPanel, {
+ contentPanel : null,
+ 
+ initComponent:function() {
+     var config = {
+    		 tbar:[
+	       /*{
+	         text: 'Approve',
+	         icon: '/core/images/icons/world.png',
+	         cls: 'x-btn-icon-text'
+	       },{
+	        text: 'Preview',
+	        icon: '/core/images/icons/page_white_magnify.png',
+	        cls: 'x-btn-icon-text',
+	        scope: this,
+	        handler: this.onPreview
+	    },*/
+    	//'->'
+	    /*,{
+            text: 'Add',
+            icon: '/core/images/icons/add.png',
+            cls: 'x-btn-icon-text',
+            scope: this,
+            handler: this.handleToolbarAddPage
+        }
+        */
+    	{
+            text: 'Edit',
+            icon: '/core/images/icons/edit.png',
+            cls: 'x-btn-icon-text',
+            scope: this,
+            handler: this.onToolbarEditPage
+        }
+        /*, {
+            text: 'Delete',
+            icon: '/core/images/icons/cross.png',
+            cls: 'x-btn-icon-text',
+            scope: this,
+            handler: this.handleToolbarDeletePage
+        }*/
+	    
+	    ],
+          store:new Ext.data.JsonStore({
+        	  data:[
+        	        {status:'Live',version:'1',date:'2/2/2011',author:'Superuser',approver:'Superuser'},
+        	        {status:'',version:'1',date:'2/2/2011',author:'Superuser',approver:'Superuser'},
+        	        {status:'',version:'1',date:'2/2/2011',author:'Superuser',approver:'Superuser'},
+        	        {status:'',version:'1',date:'2/2/2011',author:'Superuser',approver:'Superuser'},
+        	        {status:'',version:'1',date:'2/2/2011',author:'Superuser',approver:'Superuser'},
+        	        {status:'',version:'1',date:'2/2/2011',author:'Superuser',approver:'Superuser'}
+        	        ]
+             ,id:'versions'
+             ,fields:[
+                  'status'
+                 ,'version'
+                 ,'approver'
+                ,'author'
+                ,{name:'created_at', type:'date'}
+                 ,{name:'updated_at', type:'date'}
+             ]
+         })
+         ,columns:[{
+                 header:"Status"
+                 ,width:20, 
+                 sortable:true
+                 ,dataIndex:'status'
+             },{
+              id:'version'
+             ,header:"Version"
+             ,width:20, 
+             sortable:true
+             ,dataIndex:'version'
+         },{
+             header:"Date"
+            ,width:30, 
+            sortable:true
+            ,renderer:Ext.util.Format.dateRenderer('d/m/Y h:m:s')
+            ,dataIndex:'updated_at'
+         }/*,{
+             header:"Author"
+             ,width:30
+             ,sortable:true
+             ,dataIndex:'author'
+         },{
+             header:"Approver"
+                 ,width:30
+                 ,sortable:true
+                 ,dataIndex:'approver'
+             }*/]
+         ,viewConfig:{forceFit:true}
+         ,loadMask:true
+         ,listeners : {
+        	 rowclick:{fn:this.onRowClick,scope:this}
+         }
+                       
+                       
+     }; // eo config object
+
+     // apply config
+     Ext.apply(this, Ext.apply(this.initialConfig, config));
+
+     // call parent
+     Tg.VersionGrid.superclass.initComponent.apply(this, arguments);
+
+     // load the store at the latest possible moment
+//     this.on({
+//         afterlayout:{scope:this, single:true, fn:function() {
+//          //   this.store.load({params:{start:0, limit:10}});
+//         }}
+//     });
+
+ } // eo function initComponent
+
+,onRowClick : function (grid, rowIndex, e)
+{
+	this.rowIndex = rowIndex;
+}
+
+,onPublish : function ()
+{
+	
+}
+
+,onToolbarEditPage : function ()
+{
+	var row = this.getStore().getAt(this.rowIndex);
+	this.contentPanel.loadVersion (row.data.version);
+}
+});
+
+Ext.reg('versiongrid', Tg.VersionGrid);

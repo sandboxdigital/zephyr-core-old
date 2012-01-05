@@ -27,10 +27,9 @@ class Core_Admin_ContentController extends Tg_Content_Controller
     {
 		$this->view->headLink()->appendStylesheet('/core/css/admin/content.css');
 
-        $this->view->headScript()->appendFile('/core/js/tg/tg.contentpanel2.js');
 		$this->view->headScript()->appendFile('/core/js/tg/tg.pagetree.js');
 		$this->view->headScript()->appendFile('/core/js/tg/tg.pagefactory.js');
-		$this->view->headScript()->appendFile('/core/js/tg/tg.contentpanel2.js');
+		$this->view->headScript()->appendFile('/core/js/tg/tg.contentpanel.js');
 		$this->view->headScript()->appendFile('/core/js/admin/content_index.js');
 		
 		$this->view->pageNodes = Tg_Site::getInstance()->getRootPage()->toJson('read') ;
@@ -44,7 +43,7 @@ class Core_Admin_ContentController extends Tg_Content_Controller
 		
 		$this->view->headScript()->appendFile('/core/js/tg/tg.pagetree.js');
 		$this->view->headScript()->appendFile('/core/js/tg/tg.pagefactory.js');
-		$this->view->headScript()->appendFile('/core/js/tg/tg.contentpanel2.js');
+		$this->view->headScript()->appendFile('/core/js/tg/tg.contentpanel.js');
 		$this->view->headScript()->appendFile('/core/js/admin/content_templates.js');
 		
 		$this->view->templateNodes = Zend_Json::encode (Tg_Site::getTemplatesAsArray());
@@ -219,7 +218,7 @@ class Core_Admin_ContentController extends Tg_Content_Controller
 		$value = iconv("UTF-8","UTF-8//IGNORE",$value); 
 		
 	    $ret = "";
-	    $current;
+	    $current = null;
 	    if (empty($value)) 
 	    {
 	        return $ret;

@@ -4,7 +4,7 @@ Ext.onReady(function() {
 	pageTree = new Tg.TemplateGrid({data:Tg.PageFactory.templates});
 	pageTree.on ('rowclick', loadContent);
 
-    contentPanel = new Tg.ContentPanel2 ();
+    contentPanel = new Tg.ContentPanel ();
     doublePanel = new Tg.DoublePanel (pageTree, contentPanel);
         
 	// load content for default page
