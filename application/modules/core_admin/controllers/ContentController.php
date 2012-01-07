@@ -65,14 +65,17 @@ class Core_Admin_ContentController extends Tg_Content_Controller
     		} else if (strpos($contentId, 'SitePage')===0)
     		{
 	    		$content = Tg_Content::getPageContent($contentId, $contentVersion);
-	    		$form = $this->getTemplateForm($contentId); // TODO - change to use contentTemplateId
+
+
+                $form = $this->getTemplateForm($contentId); // TODO - change to use contentTemplateId
+
     		} else 
     		{
     			
     		}
 	    	
 			$options = array (
-				'url'=>'/admin/content/save2',
+				'url'=>'/admin/content/save',
 				'contentId'=>$content->name
 			);
 				    	
@@ -90,6 +93,8 @@ class Core_Admin_ContentController extends Tg_Content_Controller
     
     // wrapper to load content from site_page if it doesn't exist in content
     // TODO - should probably have a content_template table same as .Net framework
+    // TODO - change to loop through module dirs configured in FrontController to find content
+    // TODO - change to also use the action as well as the controller
     public function getTemplateForm ($contentId)
     {	
     	$pageId = substr($contentId, 8); // SitePage
@@ -98,10 +103,13 @@ class Core_Admin_ContentController extends Tg_Content_Controller
 			throw new Exception('Page not found '.$pageId);
 			
 		$template = $page->getTemplate();
+
+        $path = APPLICATION_PATH.'/modules/'.$template->module.'/content/';
+
 		if (!empty($template->form))
-    		return $template->form;
+    		return $path.$template->form;
     	else
-    		return  $template->controller.'.xml';
+    		return  $path.$template->controller.'.xml';
     }
     
     // wrapper to load content from site_page if it doesn't exist in content
@@ -119,10 +127,8 @@ class Core_Admin_ContentController extends Tg_Content_Controller
     		return  $template->controller.'.xml';
     }
 	
-    public function save2Action() 
+    public function saveAction()
     {
-    	Tg_Log::logToDb("save2: ".$this->_getParam('contentId')."\n".$_POST['cmsForm']);
-
     	$response = new stdClass();
 	    $response->success = true;
     	try {
@@ -130,7 +136,6 @@ class Core_Admin_ContentController extends Tg_Content_Controller
     		$bodytext = $_POST['cmsForm'];
     		
     		// Shouldn't need to do this as it's done in the Javascript
-			//$bodytext = $this->stripInvalidXml($bodytext);
 			$content = Tg_Content::saveContent ($contentId, $bodytext);
 			
 			$response->data = new stdClass();
@@ -142,74 +147,9 @@ class Core_Admin_ContentController extends Tg_Content_Controller
 			$response->error = $e->getMessage();
 		}
 		
-    	Tg_Log::logToDb("save2 response: \n".Zend_Json::encode ($response));
-		
-		echo Zend_Json::encode ($response);
-		die;
-    } 
-        
-    // depreciated
-    public function captureAction() 
-    {
-    	$hideSave = $this->_getParam('hideSave','false');
-    	$pageId = $this->_getParam('pageId');
-		$page = Tg_Site::getInstance()->getPageById($pageId);
-		$template = $page->getTemplate();
-		
-		$options = array (
-			'url'=>'/admin/content/save2',
-			'pageId'=>$pageId,
-			'contentId'=>'SitePage'.$pageId,
-			'hideSave'=>$hideSave
-		);
-    	
-    	$this->view->form = Tg_Content::getInstance()->getFormFromFile ($template->form, $page->dataXML, $options);
-    }
-        
-    // depreciated
-    public function capture2Action() 
-    {
-    	$response = new stdClass();
-	    $response->success = true;
-    	try {
-	    	$contentId = $this->_getParam('contentId');
-	    	$pageId = substr($contentId, 8); // SitePage
-			$page = Tg_Site::getInstance()->getPageById($pageId);
-			if (!$page)
-				throw new Exception('Page not found '.$pageId);
-				
-			$template = $page->getTemplate();
-			
-			$options = array (
-				'url'=>'/admin/content/save2',
-				'pageId'=>$pageId,
-				'contentId'=>$contentId
-			);
-	    	
-	    	$response->data = Tg_Content::getInstance()->getFormObject ($template->form, $page->dataXML, $options);
-    	} catch (Exception $e) {
-			$response->success = false;
-			$response->error = $e->getMessage();
-		}
-		
 		echo Zend_Json::encode ($response);
 		die;
     }
-	
-    // depreciated
-    public function saveAction() 
-    {
-    	$pageId = $this->_getParam('pageId');
-		$page = Tg_Site::getInstance()->getPageById($pageId);
-		$template = $page->getTemplate();
-		
-    	$page->dataXML = '<?xml version="1.0"?>'.stripslashes($_POST['cmsForm']);
-    	
-    	$page->save();
-    	
-    	echo '{"success":true}';
-		die;
-    }  
     
     function stripInvalidXml($value)
 	{
