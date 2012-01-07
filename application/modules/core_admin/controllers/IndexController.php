@@ -21,7 +21,8 @@ class Core_Admin_IndexController extends Tg_Site_Controller
 		} else {
 			$this->view->page = Tg_Site::getInstance()->getRootPage();
 		}
-		$this->_helper->layout->setLayout('ajax');	
+
+        $this->_helper->layout->disableLayout();
 	}
 	
 	
@@ -172,8 +173,8 @@ class Core_Admin_IndexController extends Tg_Site_Controller
 		}
 		
 		$this->view->files = $fileTable->fetchAll ($select);
-		
-		$this->_helper->layout->setLayout('ajax');
+
+        $this->_helper->layout->disableLayout();
 	}
 	
 	
