@@ -353,7 +353,7 @@ class Tg_Content_Factory {
 	{
 		$json = new stdClass ();
 		
-		$formXmlFile = $this->_formPath.'/'.$formXmlFile;
+//		$formXmlFile = $this->_formPath.'/'.$formXmlFile;
 		if (is_file($formXmlFile)) {
 			$formXml = file_get_contents($formXmlFile);
 		} else
