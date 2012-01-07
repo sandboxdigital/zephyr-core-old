@@ -13,7 +13,7 @@ class FileController extends Tg_Site_Controller
 	
 	function deleteAction ()
 	{
-		$this->_helper->Theme->disableTheme();
+		$this->_helper->layout->disableLayout();
 		$this->_helper->viewRenderer->setNoRender();
 		
 	    $params = $this->getRequest()->getParams();
@@ -38,7 +38,7 @@ class FileController extends Tg_Site_Controller
 	
 	function downloadAction ()
 	{
-		$this->_helper->Theme->disableTheme();
+		$this->_helper->layout->disableLayout();
 		$this->_helper->viewRenderer->setNoRender();
 		
 	    $params = $this->getRequest()->getParams();
@@ -105,7 +105,7 @@ class FileController extends Tg_Site_Controller
 	}
 
 	public function uploadAction () {
-		$this->_helper->Theme->disableTheme();
+		$this->_helper->layout->disableLayout();
 
 		$return = Tg_File::createFromUpload('Filedata');
 		if ($return instanceof Tg_File_Db_File)
@@ -116,7 +116,7 @@ class FileController extends Tg_Site_Controller
 	}
 
 	public function uploadValumsAction () {
-		$this->_helper->Theme->disableTheme();
+		$this->_helper->layout->disableLayout();
 
 		$result = Tg_File::createFromValumsUpload('');
     	
@@ -141,7 +141,7 @@ class FileController extends Tg_Site_Controller
 	public function uploadTestAction ()
 	{
 		
-		$this->_helper->Theme->disableTheme();
+		$this->_helper->layout->disableLayout();
 		
 		$form = new Tg_Form ();
 		$form->setAction('/file/upload');
@@ -171,7 +171,7 @@ class FileController extends Tg_Site_Controller
 		$file = Tg_File::getFileByName ($fullname);
 		
 		if ($file) {
-			$this->_helper->Theme->disableTheme();
+			$this->_helper->layout->disableLayout();
 			$this->_helper->viewRenderer->setNoRender();
 			$file->display(Tg_File_Utils::getExtension($fullname), Tg_File_Utils::getImageSize($fullname));
 		} else
