@@ -158,40 +158,39 @@ class Tg_File_Image
 		}
 
 
-		$this->_tmp = imagecreatetruecolor($output_width,$output_height);
+        $this->_tmp = imagecreatetruecolor($output_width,$output_height);
 
-		// imagecolortransparent($this->_tmp, imagecolorallocate($this->_tmp, 0, 0, 0));
-		//
-		// imagealphablending($this->_tmp, false);
-		// imagesavealpha($this->_tmp, true);
-		// // imagetruecolortopalette($this->_tmp, true, 256);
+        // imagecolortransparent($this->_tmp, imagecolorallocate($this->_tmp, 0, 0, 0));
+        //
 
-		imagecopyresampled($this->_tmp,$src,0,0,$cropLeft,$cropTop,$output_width, $output_height, $orig_width, $orig_height);
+        if($imageType == 'png') // and gif ?
+        {
+            // preserve transparency
+            imagealphablending($this->_tmp, false);
+            imagesavealpha($this->_tmp, true);
+        }
 
+        imagecopyresampled($this->_tmp,$src,0,0,$cropLeft,$cropTop,$output_width, $output_height, $orig_width, $orig_height);
 
+        if($imageType == 'gif')
+        {
+            imagegif($this->_tmp, $destination);
+        }
+        else if($imageType == 'png')
+        {
+            imagepng($this->_tmp, $destination, 9);
+        }
+        else
+        {
+            imagejpeg($this->_tmp, $destination, 95);
+        }
+        imagedestroy($src);
+        imagedestroy($this->_tmp);
 
-
-		/*
-		$colour = imagecolorallocate($this->_tmp, 0, 0, 0);
-		$colour2 = imagecolorallocate($this->_tmp, 255, 255, 255);
-		$time = date('H:i:s');
-		imagestring($this->_tmp, 5, 5, 5, $time, $colour);
-		imagestring($this->_tmp, 5, 6, 6, $time, $colour2);
-		*/
-
-		if($imageType == 'gif') {
-			imagegif($this->_tmp, $destination);
-		}
-		else {
-			imagejpeg($this->_tmp, $destination, 95);
-		}
-		imagedestroy($src);
-		imagedestroy($this->_tmp);
-
-		if(isset($temp_destination) && is_file($temp_destination)) {
-			@unlink($temp_destination);
-		}
-	}
+        if(isset($temp_destination) && is_file($temp_destination)) {
+            @unlink($temp_destination);
+        }
+    }
 
 	function crop($x, $y, $width, $height, $destination = null) {
 
