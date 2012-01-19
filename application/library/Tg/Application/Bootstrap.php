@@ -22,7 +22,17 @@ class Tg_Application_Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 	 * Initialize module loader
 	 * 
 	 * @return $moduleLoader Zend_Application_Module_Autoloader
-	 */	
+	 */
+
+    protected function _initApplication()
+    {
+        $this->bootstrap('frontcontroller');
+        $front = $this->getResource('frontcontroller');
+        $front->addModuleDirectory(APPLICATION_PATH ."/modules");
+        $front->addModuleDirectory(CORE_PATH ."/modules");
+    //        $front->addModuleDirectory(dirname(__FILE__) . '/modules');
+    }
+
 	protected function _initDisableMagicQuotes() 
     { 
     	if (get_magic_quotes_gpc()) { 
@@ -45,17 +55,24 @@ class Tg_Application_Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 	 * 
 	 * @return $moduleLoader Zend_Application_Module_Autoloader
 	 */	
-	protected function _initModuleAutoload() 
-    { 
-    	// Initialize module loader
-        // TODO - change to loop through module sub directors
-        $moduleLoader = new Zend_Application_Module_Autoloader(array( 
-            'namespace' => '', 
-            'basePath'  => APPLICATION_PATH.'/modules/stockland'));
-        
-        return $moduleLoader; 
-    }
-    
+//	protected function _initModuleAutoload()
+//    {
+////
+////
+////            $router = $frontController->getRouter(); // returns a rewrite router by default
+////            Zend_Controller_Front::getInstance()->addModuleDirectory(APPLICATION_PATH ."/modules");
+////            Zend_Controller_Front::getInstance()->addModuleDirectory(CORE_PATH ."/modules");
+//
+//
+//    	// Initialize module loader
+//        // TODO - change to loop through module sub directors
+//        $moduleLoader = new Zend_Application_Module_Autoloader(array(
+//            'namespace' => '',
+//            'basePath'  => APPLICATION_PATH.'/modules'));
+//
+//        return $moduleLoader;
+//    }
+//
     
 	/**
 	 * Initialize the environment 
@@ -197,7 +214,7 @@ class Tg_Application_Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 
         if (!is_dir($this->_options['session']['save_path']))
         {
-            echo 'session directory doesn\'t exist <br/>';
+            echo 'Session directory doesn\'t exist <br/>';
             echo $this->_options['session']['save_path'];
             die;
         }
@@ -292,13 +309,9 @@ class Tg_Application_Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     	if (isset($this->_options['routes'])) {
     		if ((isset($this->_options['routes']['site'])) && $this->_options['routes']['site'] == true) {
 				$this->bootstrap('FrontController'); // make sure we've loaded the db resource
-				$frontController = $this->getResource('FrontController');
-				
-				
-				$router = $frontController->getRouter(); // returns a rewrite router by default
-				Zend_Controller_Front::getInstance()->addModuleDirectory(APPLICATION_PATH ."/modules");
-				Zend_Controller_Front::getInstance()->addModuleDirectory(CORE_PATH ."/modules");
+				$frontController = $this->getResource('frontcontroller');
 
+				$router = $frontController->getRouter(); // returns a rewrite router by default
 				
 				$options = array ('ignore' => array ('js', 'css', 'images',  'file', 'error', 'core'));
 				$route = new Tg_Site_Route ($options);
