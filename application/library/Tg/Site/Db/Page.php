@@ -201,7 +201,7 @@ class Tg_Site_Db_Page extends Tg_Db_Table_Row implements Zend_Acl_Resource_Inter
 	}
 
     public function getContentRecord ($version = 0)
-    { 
+    {
         $contentId = 'SitePage'.$this->id;
         return Tg_Content::getContent($contentId, $version);
     }
