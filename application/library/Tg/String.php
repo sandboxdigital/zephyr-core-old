@@ -27,6 +27,14 @@ class Tg_String  {
 	    return trim($z, '-');
 	}
 
+    /**
+     * @static
+     * @param $hexStr
+     * @param bool $returnAsString
+     * @param string $seperator
+     * @return array|string
+     */
+
     public static function hex2RGB($hexStr, $returnAsString = false, $seperator = ',') {
         $hexStr = preg_replace("/[^0-9A-Fa-f]/", '', $hexStr); // Gets a proper hex string
         $rgbArray = array();
