@@ -39,6 +39,11 @@ class Tg_Content_Element_Date extends Tg_Content_Element_Abstract
 	{
 		return $this->__toString();
 	}
+
+    function toDate ()
+    {
+        return new Zend_Date(strtotime($this->_value));
+    }
 	
 	function fromPost ()
 	{

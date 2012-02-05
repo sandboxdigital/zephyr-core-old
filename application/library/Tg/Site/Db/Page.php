@@ -186,21 +186,19 @@ class Tg_Site_Db_Page extends Tg_Db_Table_Row implements Zend_Acl_Resource_Inter
 	 */
 	public function getContent ($version = 0)
 	{
-		$contentId = 'SitePage'.$this->id;
-		$content = Tg_Content::getContent($contentId, $version);
+		$content = $this->getContentRecord($version);
 
     	if ($content->data == '<data></data>')
     	{
 			if (!empty($this->dataXML))
 			{
-	    		$content->data = $page->dataXML;
+	    		$content->data = $this->dataXML;
 	    		$content->save ();
 			}
     	}
 
 	    return $content->content();
 	}
-
 
 	/**
 	 * Enter description here ...
