@@ -15,5 +15,11 @@ CMS.Form.Field.Textarea = $.inherit(
 			if (xml.firstChild)
 				$('#'+this.elPath).val(xml.firstChild.data)
 		}
+
+        , getValue : function ()
+        {
+//            alert ('1')
+            return CMS.Form.stripInvalidXmlChars (this.value);
+        }
 	});
 
