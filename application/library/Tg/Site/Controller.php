@@ -69,7 +69,7 @@ class Tg_Site_Controller extends Zend_Controller_Action
 		Zend_Controller_Action_HelperBroker::addPrefix('Tg_Controller_Helper');
 		$this->view->addHelperPath('Tg/View/Helper', 'Tg_View_Helper');
 		
-    	if ($this->_request->isXmlHttpRequest()) 
+    	if ($this->isAjax ())
     	{
 			$this->_helper->layout->disableLayout();
 			$this->view->isAjax = true;
@@ -82,5 +82,52 @@ class Tg_Site_Controller extends Zend_Controller_Action
     {
         $layout = Zend_Layout::getMvcInstance();
         $layout->setLayout($layoutFile);
+    }
+
+
+    // TODO - move to Action Helper
+
+	public function isAjax ()
+	{
+		return $this->_request->isXmlHttpRequest();
+	}
+
+    protected $_isMobileChecked = false;
+    protected $_isMobileR = false;
+    protected $_isMobileForceMobile = false;
+
+    public function isMobile ($forceRecheck=false)
+    {
+        if ($this->_isMobileForceMobile)
+            return true;
+
+        if ($this->_isMobileChecked && $forceRecheck == false)
+            return $this->_isMobileR;
+
+        $_agents = array(
+            'mobile'    => array('ipad'), // iPad contains mobile in AGENT but we don't consider it mobile
+            'webos'        => false
+            );
+
+        $uAgent = $this->_request->HTTP_USER_AGENT;
+        foreach ($_agents as $agent => $negation) {
+            if (stripos($uAgent, $agent) !== false) {
+                if (is_array($negation)) {
+                   foreach ($negation as $neg) {
+                       if (stripos($uAgent, $neg) !== false) {
+                           $this->_isMobileChecked = true;
+                           $this->_isMobileR = false;
+                           return false;
+                       }
+                   }
+                }
+                $this->_isMobileChecked = true;
+                $this->_isMobileR = true;
+                return true;
+            }
+        }
+        $this->_isMobileChecked = true;
+        $this->_isMobileR = false;
+        return false;
     }
 }
