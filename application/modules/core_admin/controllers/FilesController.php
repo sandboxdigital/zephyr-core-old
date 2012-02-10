@@ -48,12 +48,11 @@ class Core_Admin_FilesController extends Tg_Content_Controller
 	
     public function indexAction()
     {
-		
-		$this->view->headLink()->appendStylesheet('/core/css/cms.css');
-		
-		$this->view->headScript()->appendFile('/core/js/admin/file.js');
+		$this->view->headLink()->appendStylesheet(Tg_Site::getCorePath('/css/cms.css'));
+		$this->view->headScript()->appendFile(Tg_Site::getCorePath('js/admin/file.js'));
     	
     	$this->view->folderNodes = Zend_Json::encode (Tg_Documents::getRootFolder ());
+	    $this->view->adminPath = Tg_Site::getInstance()->getPage('/admin')->getUrl();
 //		dump($this->view->folderNodes); die;	
     }
 	

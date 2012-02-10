@@ -27,6 +27,10 @@ class Tg_Site_Controller extends Zend_Controller_Action
 	 * @var Tg_User_Db_User
 	 */
 	protected $_currentUser = null;
+
+	/**
+	 * @var Tg_Site_Db_Page
+	 */
 	protected $_page = null;
 	    
     public function init() 

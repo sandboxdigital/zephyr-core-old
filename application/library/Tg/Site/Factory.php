@@ -49,7 +49,18 @@ class Tg_Site_Factory {
 			$this->_config  = $this->_defaultConfig;
 		
 		$this->_config['multiLingualLanguage'] = $this->_config['multiLingualDefaultLanguage'];
-			
+
+
+		if ($this->_config['pathPrefix'] == '/')
+		{
+	        $pathPre = Zend_Controller_Front::getInstance()->getBaseUrl();
+//			echo $pathPre.'1111';die;
+			if (!empty($pathPre))
+			{
+				$this->_config['pathPrefix'] = $pathPre.'/';
+			}
+		}
+
 		// changed to lazy loading ... 
 		//$this->load ();
 	}
@@ -272,6 +283,19 @@ class Tg_Site_Factory {
 		$this->load ();
 		
 		return $this->_PageTemplates;
+	}
+
+	public static function getThemePath ()
+	{
+		$ins = self::getInstance();
+		$pre = $ins->_pathPrefix();
+		return $pre.'themes/'.$ins->getCurrentPage()->getTheme()->folder;
+	}
+
+	public static function getCorePath ($file='')
+	{
+		$pre = self::getInstance()->_pathPrefix();
+		return $pre.'core/'.$file;
 	}
 	
     /**

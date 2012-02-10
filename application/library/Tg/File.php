@@ -17,7 +17,8 @@ class Tg_File
 	protected $_defaultConfig = array (
 		'enableLocationChecks'						=>true,
 		'storageFolder' 							=> "",
-		'cacheFolder'		 						=> "/file"
+		'cacheFolder'		 						=> "/file",
+		'urlPre'                                    =>''
 	);
 
 	public function __construct() 
@@ -34,6 +35,11 @@ class Tg_File
 			$this->_config  = $config['file']+$this->_defaultConfig;
 		else
 			$this->_config  = $this->_defaultConfig;
+
+		if (empty($this->_config['urlPre']))
+		{
+			$this->_config['urlPre'] = Zend_Controller_Front::getInstance()->getBaseUrl();
+		}
 			
 		$this->_storageFolder = realpath($this->_config['storageFolder']);
 		$this->_tempFolder = realpath($this->_config['tempFolder']);

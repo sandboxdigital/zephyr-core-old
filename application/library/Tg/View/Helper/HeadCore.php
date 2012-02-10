@@ -78,67 +78,69 @@ class Tg_View_Helper_HeadCore extends Zend_View_Helper_Placeholder_Container_Sta
 	    // TODO change this so that only shows features if user has content editing rights.
 		if ($options['forceInclude'] || ($currentUser && $currentUser->isMemberOf('ADMIN'))) 
 		{
+			$pre = Tg_Site::getInstance()->_pathPrefix();
+
 			//$prepend = $options['forceInclude']?'?v='.rand(1, 999999):'';
 			$prepend = '?v=2';
 			
 			if ($options['includeJquery']) {
-				$html .= $this->script('/core/js/jquery.js'.$prepend);
+				$html .= $this->script($pre.'core/js/jquery.js'.$prepend);
 			}
 			
 			if ($options['includeJqueryUI']) {
-				$html .= $this->css('/core/css/jquery-ui-theme/ui.all.css'.$prepend);
-				$html .= $this->script('/core/js/jquery-ui.js'.$prepend);
+				$html .= $this->css($pre.'core/css/jquery-ui-theme/ui.all.css'.$prepend);
+				$html .= $this->script($pre.'core/js/jquery-ui.js'.$prepend);
 			}
 					
 			if ($options['includeExtjs']) {
-				$html .= $this->css('/core/extjs/css/ext-all-notheme.css'.$prepend);
-				$html .= $this->css('/core/extjs/css/xtheme-gray.css'.$prepend);
+				$html .= $this->css($pre.'core/extjs/css/ext-all-notheme.css'.$prepend);
+				$html .= $this->css($pre.'core/extjs/css/xtheme-gray.css'.$prepend);
 			
-				$html .= $this->script('/core/extjs/js/ext-base.js'.$prepend);
-				$html .= $this->script('/core/extjs/js/ext-all.js'.$prepend);
+				$html .= $this->script($pre.'core/extjs/js/ext-base.js'.$prepend);
+				$html .= $this->script($pre.'core/extjs/js/ext-all.js'.$prepend);
 			}
 					
-			$html .= $this->css('/core/css/cms.css'.$prepend);
-			$html .= $this->css('/core/css/ext-reset-undo.css'.$prepend);
-			$html .= $this->css('/core/js/valums/fileuploader.css'.$prepend);
+			$html .= $this->css($pre.'core/css/cms.css'.$prepend);
+			$html .= $this->css($pre.'core/css/ext-reset-undo.css'.$prepend);
+			$html .= $this->css($pre.'core/js/valums/fileuploader.css'.$prepend);
 				
-			$html .= $this->script('/core/js/jquery.inherit.js'.$prepend);
-			$html .= $this->script('/core/js/jquery.cookie.js'.$prepend);
-			$html .= $this->script('/core/js/jquery.contextmenu.r2.js'.$prepend);
-			$html .= $this->script('/core/js/tiny_mce/tiny_mce.js'.$prepend);
-			$html .= $this->script('/core/js/swfupload/swfupload.js'.$prepend);
+			$html .= $this->script($pre.'core/js/jquery.inherit.js'.$prepend);
+			$html .= $this->script($pre.'core/js/jquery.cookie.js'.$prepend);
+			$html .= $this->script($pre.'core/js/jquery.contextmenu.r2.js'.$prepend);
+			$html .= $this->script($pre.'core/js/tiny_mce/tiny_mce.js'.$prepend);
+			$html .= $this->script($pre.'core/js/swfupload/swfupload.js'.$prepend);
 			
-			$html .= $this->script('/core/js/tg/core.js'.$prepend);
-			$html .= $this->script('/core/js/tg/fileupload.js'.$prepend);
-			$html .= $this->script('/core/js/valums/fileuploader.js'.$prepend);
-			$html .= $this->script('/core/extjs/ext/PagingStore.js'.$prepend);
-			$html .= $this->script('/core/extjs/ext/Ext.ux.TinyMCE.js'.$prepend);
-			$html .= $this->script('/core/js/tinymce.js'.$prepend);
-			$html .= $this->script('/core/js/tg/core.php.js'.$prepend);
-			$html .= $this->script('/core/js/tg/cms.page.js'.$prepend);
-			$html .= $this->script('/core/js/tg/cms.form.js'.$prepend);						
-			$html .= $this->script('/core/js/tg/cms.form.field.js'.$prepend);
-			$html .= $this->script('/core/js/tg/cms.form.field.block.js'.$prepend);
-			$html .= $this->script('/core/js/tg/cms.form.field.group.js'.$prepend);
-			$html .= $this->script('/core/js/tg/cms.form.field.groupoption.js'.$prepend);
-			$html .= $this->script('/core/js/tg/cms.form.field.text.js'.$prepend);
-			$html .= $this->script('/core/js/tg/cms.form.field.textarea.js'.$prepend);
-			$html .= $this->script('/core/js/tg/cms.form.field.file.js'.$prepend);
-			$html .= $this->script('/core/js/tg/cms.form.field.html.js'.$prepend);
-			$html .= $this->script('/core/js/tg/cms.form.field.date.js'.$prepend);
-			$html .= $this->script('/core/js/tg/cms.form.field.select.js'.$prepend);
-			$html .= $this->script('/core/js/tg/cms.form.field.custom.js'.$prepend);
+			$html .= $this->script($pre.'core/js/tg/core.js'.$prepend);
+			$html .= $this->script($pre.'core/js/tg/fileupload.js'.$prepend);
+			$html .= $this->script($pre.'core/js/valums/fileuploader.js'.$prepend);
+			$html .= $this->script($pre.'core/extjs/ext/PagingStore.js'.$prepend);
+			$html .= $this->script($pre.'core/extjs/ext/Ext.ux.TinyMCE.js'.$prepend);
+			$html .= $this->script($pre.'core/js/tinymce.js'.$prepend);
+			$html .= $this->script($pre.'core/js/tg/core.php.js'.$prepend);
+			$html .= $this->script($pre.'core/js/tg/cms.page.js'.$prepend);
+			$html .= $this->script($pre.'core/js/tg/cms.form.js'.$prepend);
+			$html .= $this->script($pre.'core/js/tg/cms.form.field.js'.$prepend);
+			$html .= $this->script($pre.'core/js/tg/cms.form.field.block.js'.$prepend);
+			$html .= $this->script($pre.'core/js/tg/cms.form.field.group.js'.$prepend);
+			$html .= $this->script($pre.'core/js/tg/cms.form.field.groupoption.js'.$prepend);
+			$html .= $this->script($pre.'core/js/tg/cms.form.field.text.js'.$prepend);
+			$html .= $this->script($pre.'core/js/tg/cms.form.field.textarea.js'.$prepend);
+			$html .= $this->script($pre.'core/js/tg/cms.form.field.file.js'.$prepend);
+			$html .= $this->script($pre.'core/js/tg/cms.form.field.html.js'.$prepend);
+			$html .= $this->script($pre.'core/js/tg/cms.form.field.date.js'.$prepend);
+			$html .= $this->script($pre.'core/js/tg/cms.form.field.select.js'.$prepend);
+			$html .= $this->script($pre.'core/js/tg/cms.form.field.custom.js'.$prepend);
 			
-			$html .= $this->script('/core/js/tg/tg.js'.$prepend);
-			$html .= $this->script('/core/js/tg/tg.windows.js'.$prepend);
-			$html .= $this->script('/core/js/tg/tg.doublepanel.js'.$prepend);
-			$html .= $this->script('/core/js/tg/tg.doublepanel.js'.$prepend);
-			$html .= $this->script('/core/js/tg/tg.filefactory.js'.$prepend);
-			$html .= $this->script('/core/js/tg/tg.filemanager.js'.$prepend);
+			$html .= $this->script($pre.'core/js/tg/tg.js'.$prepend);
+			$html .= $this->script($pre.'core/js/tg/tg.windows.js'.$prepend);
+			$html .= $this->script($pre.'core/js/tg/tg.doublepanel.js'.$prepend);
+			$html .= $this->script($pre.'core/js/tg/tg.doublepanel.js'.$prepend);
+			$html .= $this->script($pre.'core/js/tg/tg.filefactory.js'.$prepend);
+			$html .= $this->script($pre.'core/js/tg/tg.filemanager.js'.$prepend);
 			
-			$html .= $this->script('/core/js/tg/tg.pagetree.js'.$prepend);
-			$html .= $this->script('/core/js/tg/tg.pagefactory.js'.$prepend);
-			$html .= $this->script('/core/js/tg/tg.contentpanel2.js'.$prepend);
+			$html .= $this->script($pre.'core/js/tg/tg.pagetree.js'.$prepend);
+			$html .= $this->script($pre.'core/js/tg/tg.pagefactory.js'.$prepend);
+			$html .= $this->script($pre.'core/js/tg/tg.contentpanel.js'.$prepend);
 		}
 		return $html;
     }   

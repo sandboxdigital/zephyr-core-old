@@ -1,16 +1,19 @@
 // singleton class for managing pages
 // extends Ext.util.Observable
 
+Tg.Config.PageFactory = {
+    urlAddPage: "/admin/site-page-save"
+    , urlEditPage: "/admin/site-page-save"
+    , urlDeletePage: "/admin/site-page-delete"
+    , urlMovePage: "/admin/site-page-move"
+}
+
 Tg.PageFactory = Ext.extend(Ext.util.Observable, {
     name: 'barfoo'
 	, templates: null
 	, themes: null
 	, pages: null
 	, pageTree: null
-    , urlAddPage: "/admin/site-page-save"
-    , urlEditPage: "/admin/site-page-save"
-    , urlDeletePage: "/admin/site-page-delete"
-    , urlMovePage: "/admin/site-page-move"
 
 	, constructor: function () {
 	    //alert ("hi")
@@ -169,7 +172,7 @@ Tg.PageFactory = Ext.extend(Ext.util.Observable, {
 	    form.form.setValues(pageClone);
 	    
 	    var win = new Tg.FormWindow(form);
-	    win.url = this.urlAddPage;
+	    win.url = Tg.Config.PageFactory.urlAddPage;
 	    win.show();
 	    win.focus();
 	    win.on('save', function (formPanel, values, results) {
@@ -184,7 +187,7 @@ Tg.PageFactory = Ext.extend(Ext.util.Observable, {
 	    form.form.setValues(page);
 
 	    var win = new Tg.FormWindow(form);
-	    win.url = this.urlEditPage;
+	    win.url = Tg.Config.PageFactory.urlEditPage;
 	    win.show();
 	    win.focus();
 	    win.on('save', function (formPanel, values, results) {
@@ -204,7 +207,7 @@ Tg.PageFactory = Ext.extend(Ext.util.Observable, {
          // TODO - update the page json model
          form.submit({
             clientValidation: true,
-            url: this.urlEditPage,
+            url: Tg.Config.PageFactory.urlEditPage,
             params: {
                 newStatus: 'delivered'
             },
@@ -254,7 +257,7 @@ Tg.PageFactory = Ext.extend(Ext.util.Observable, {
 			function (r) {
 			    if (r == 'yes') {
 			        var data = { "id": pageId };
-			        $.ajax({ url: _this.urlDeletePage, data: data, type: 'POST' });
+			        $.ajax({ url: Tg.Config.PageFactory.urlDeletePage, data: data, type: 'POST' });
 			        Tg.PageFactory.pageTree.getNodeById(pageId).parentNode.select();
 			        Tg.PageFactory.pageTree.getNodeById(pageId).remove();
 			    }

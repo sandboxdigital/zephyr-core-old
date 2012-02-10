@@ -35,51 +35,34 @@ Tg.TreePanel = Ext.extend (Ext.tree.TreePanel, {
 	}
 });
 
-
+Tg.Config.FileFactory  = {
+    urlAddFolder: "/admin/file-folder-add"
+    , urlEditFolder: "/admin/file-folder-edit"
+    , urlDeleteFolder: "/admin/file-folder-delete"
+    , urlMoveFolder: "/admin/file-folder-move"
+    , urlFolderList: '/admin/file-folder-list'
+    , urlFolderAddFile: '/admin/file-folder-add-file'
+    , urlFolderRemoveFile: '/admin/file-folder-remove-file'
+    , urlFileImport: '/admin/files/import'
+    , urlFileUploadValums: '/admin/file-upload-valums'
+    , urlFolderFileList: '/admin/file-list'
+};
 
 // Singleton Observable!
 
-
 Tg.FileFactory = function () {
-    var defaultConfig = {
-        urlAddFolder: "/admin/file-folder-add"
-        , urlEditFolder: "/admin/file-folder-edit"
-        , urlDeleteFolder: "/admin/file-folder-delete"
-        , urlMoveFolder: "/admin/file-folder-move"
-        , urlFolderList: '/admin/file-folder-list'
-        , urlFolderAddFile: '/admin/file-folder-add-file'
-        , urlFolderRemoveFile: '/admin/file-folder-remove-file'
-        , urlFileImport: '/admin/files/import'
-        , urlFileUploadValums: '/admin/file-upload-valums'
-        , urlFolderFileList: '/admin/file-list'
-    };
-
-    var config = Tg.Config.FileFactory || {};
-    var config = Ext.apply(defaultConfig, config);
 
     return Ext.apply(new Ext.util.Observable(), {
         unCatname: 'uncategorised'
 	    , rootFolder: null
 	    , files: null
 	    , fileTree: null
-        , config: config
-
-        //    , constructor: function (config) {
-        //        alert("!")
-        //        c(config);
-        //        // call parent init component
-        //        Tg.FileFactory.superclass.initComponent.apply(this, arguments);
-
-        //        // add custom events
-        //        this.addEvents('foldersLoaded');
-        //    }
 
 	, loadFolders: function () {
-	    c(this);
 
 	    var self = this;
 	    Ext.Ajax.request({
-	        url: this.config.urlFolderList + '?v=' + Math.random(),
+	        url: Tg.Config.FileFactory.urlFolderList + '?v=' + Math.random(),
 	        success: this.foldersLoaded.createDelegate(this),
 	        failure: function (obj, data) {
 	            c(data);
@@ -165,7 +148,7 @@ Tg.FileFactory = function () {
 	    form.form.setValues(folderClone);
 
 	    var win = new Tg.FormWindow(form);
-	    win.url = this.config.urlAddFolder;
+	    win.url = Tg.Config.FileFactory.urlAddFolder;
 	    win.show();
 	    win.focus();
 	    win.on('save', function (formPanel, values, results) {
@@ -179,7 +162,7 @@ Tg.FileFactory = function () {
 	    form.form.setValues(folder.attributes);
 
 	    var win = new Tg.FormWindow(form);
-	    win.url = this.config.urlEditFolder;
+	    win.url = Tg.Config.FileFactory.urlEditFolder;
 	    win.show();
 	    win.focus();
 	    win.on('save', function (formPanel, values, results) {
@@ -197,7 +180,7 @@ Tg.FileFactory = function () {
 			function (r) {
 			    if (r == 'yes') {
 			        var data = { "id": folderId };
-			        $.ajax({ url: _this.config.urlDeleteFolder, data: data, type: 'POST' });
+			        $.ajax({ url: _Tg.Config.FileFactory.urlDeleteFolder, data: data, type: 'POST' });
 			        Tg.FileFactory.folderTree.getNodeById(folderId).parentNode.select();
 			        Tg.FileFactory.folderTree.getNodeById(folderId).remove();
 			    }
@@ -206,14 +189,14 @@ Tg.FileFactory = function () {
 
 	, addFileToFolder: function (fileId, folderId) {
 	    Ext.Ajax.request({
-	        url: this.config.urlFolderAddFile
+	        url: Tg.Config.FileFactory.urlFolderAddFile
 			   , params: { folderId: folderId, fileId: fileId }
 	    });
 	}
 
 	, removeFileFromFolder: function (fileId, folderId) {
 	    Ext.Ajax.request({
-	        url: this.config.urlFolderRemoveFile
+	        url: Tg.Config.FileFactory.urlFolderRemoveFile
 		, params: { folderId: folderId, fileId: fileId }
 	    });
 	}

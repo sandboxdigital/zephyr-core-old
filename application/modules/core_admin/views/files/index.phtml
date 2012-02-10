@@ -2,4 +2,18 @@
 <h3>Admin</h3>
 <h1><?php echo $this->sitePageTitle() ?></h1>
 <div class="pageContent" id='content-div' style="width:100%"></div>
+<script type="text/javascript">
+Tg.Config.FileFactory = {
+    urlAddFolder: "<?php echo $this->adminPath?>/file-folder-add"
+    , urlEditFolder: "<?php echo $this->adminPath?>/file-folder-edit"
+    , urlDeleteFolder: "<?php echo $this->adminPath?>/file-folder-delete"
+    , urlMoveFolder: "<?php echo $this->adminPath?>/file-folder-move"
+    , urlFolderList: '<?php echo $this->adminPath?>/file-folder-list'
+    , urlFolderAddFile: '<?php echo $this->adminPath?>/file-folder-add-file'
+    , urlFolderRemoveFile: '<?php echo $this->adminPath?>/file-folder-remove-file'
+    , urlFileImport: '<?php echo $this->adminPath?>/files/import'
+    , urlFileUploadValums: '<?php echo $this->adminPath?>/file-upload-valums'
+    , urlFolderFileList: '<?php echo $this->adminPath?>/file-list'
+};
+</script>
 

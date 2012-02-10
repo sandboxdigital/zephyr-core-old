@@ -8,9 +8,7 @@ class Core_Admin_SiteController extends Tg_Content_Controller
     public function init() {
     	$this->_showPageBar = false;
     	
-    	parent::init ();    	
-				
-		$this->view->headLink()->appendStylesheet('/core/css/pm.css');
+    	parent::init ();
 
         $ajaxContext = $this->_helper->getHelper('ajaxContext');
         $ajaxContext->addActionContext('ajax-page-save', 'json')
@@ -20,17 +18,14 @@ class Core_Admin_SiteController extends Tg_Content_Controller
 	public function indexAction() 
     {
     	$this->pagesAction();
+
+	    $this->view->adminPath = Tg_Site::getInstance()->getPage('/admin')->getUrl();
     	$this->render('pages');
     }
 
     public function pagesAction()
     {
-		$this->view->headLink()->appendStylesheet('/core/css/admin/content.css');
-		
-		$this->view->headScript()->appendFile('/core/js/tg/tg.pagetree.js');
-		$this->view->headScript()->appendFile('/core/js/tg/tg.pagefactory.js');
-		//$this->view->headScript()->appendFile('/core/js/tg/tg.contentpanel.js');
-		$this->view->headScript()->appendFile('/core/js/admin/site_page.js');
+		$this->view->headScript()->appendFile(Tg_Site::getCorePath('js/admin/site_page.js'));
 		
 		$this->view->pageNodes = Tg_Site::getInstance()->getRootPage()->toJson('read') ;
 		$this->view->themeNodes = Zend_Json::encode (Tg_Site::getThemesAsArray());

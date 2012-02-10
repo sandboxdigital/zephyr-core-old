@@ -19,7 +19,7 @@ class Tg_User_Form_Login extends Tg_Form {
 	 public function __construct($options = null, $redirectUrl = '') {
 		parent::__construct($options);
 		 
-		$this->setAction('/login')->setMethod('post');
+		$this->setMethod('post');
 
 		$this->addElement('hidden', 'redirectUrl', array (
 			'value' 	 => $redirectUrl,

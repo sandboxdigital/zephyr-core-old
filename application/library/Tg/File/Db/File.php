@@ -42,17 +42,17 @@ class Tg_File_Db_File extends Tg_Db_Table_Row_Crud
 
 	public function getUrl($size = null) 
 	{
-		return '/file/'.$this->_fullnameWithSize($size);
+		return Tg_File::getOption('urlPre').'/file/'.$this->_fullnameWithSize($size);
 	}
 	
 	public function getDownloadUrl() 
 	{
-		return '/file/download/name/'.$this->fullname;
+		return Tg_File::getOption('urlPre').'/file/download/name/'.$this->fullname;
 	}
 
 	public function getImg($size = null) 
 	{
-		return '<img src="/file/'.$this->_fullnameWithSize($size).'" />';
+		return '<img src="'.$this->getUrl($size).'" />';
 	}
 	
 	public function getPath () 
@@ -174,7 +174,7 @@ class Tg_File_Db_File extends Tg_Db_Table_Row_Crud
 		}
 		else {
 			if($size == 'thumbnail') {
-				$url = '/core/images/fileicons/'.$this->getExtension().'.png';
+				$url = Tg_File::getOption('urlPre').'/core/images/fileicons/'.$this->getExtension().'.png';
 				header('Location: '.$url.'?reload');
 				die();
 			}
@@ -214,9 +214,9 @@ class Tg_File_Db_File extends Tg_Db_Table_Row_Crud
 			// no thumbnail image of file .. return an icon
 			$ext = $this->getExtension();
 			if ($ext == '')
-				return '/core/images/fileicons/default.png';
+				return Tg_File::getOption('urlPre').'/core/images/fileicons/default.png';
 			else 
-				return '/core/images/fileicons/'.$ext.'.png';
+				return Tg_File::getOption('urlPre').'/core/images/fileicons/'.$ext.'.png';
 		} else 
 			return $url;
 	}
@@ -242,7 +242,7 @@ class Tg_File_Db_File extends Tg_Db_Table_Row_Crud
 
 		if (file_exists($sourcePath))
 		{
-			return '/file/'.$sourceSizedName;
+			return Tg_File::getOption('urlPre').'/file/'.$sourceSizedName;
 		} else 
 			return '';
 	}
@@ -293,11 +293,6 @@ class Tg_File_Db_File extends Tg_Db_Table_Row_Crud
 		$Image->resize($width, $height, $destPath, $options);
 
 		if(is_file($destPath)) {
-			// if we're replacing the original, replace it
-			// and clear the cache
-//			if($variant == 'original') {
-//				$inst->save($this->fullname, $tempVariant);
-//			}
 			return true;
 		}
 		else {

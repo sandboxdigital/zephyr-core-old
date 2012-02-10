@@ -100,16 +100,20 @@ class Tg_Site_Route extends Zend_Controller_Router_Route_Abstract
 		$this->_values['controller'] = $Page->getTemplate()->controller;
 		$this->_values['module'] = $Page->getTemplate()->module;
 		$this->_values['action'] = 'index';
-    	
+
         
         if ($path != '') {        	
-			// remove prefix - if there is one        	
-			$prefix = Tg_Site::getConfigOption('pathPrefix');
-	        $path = substr($path,strlen($prefix));			
-	        $path = trim($path, self::URI_DELIMITER);
+			// remove prefix - if there is one
+	        // BUG - think path prefix is already removed before routing
+//			$prefix = Tg_Site::getConfigOption('pathPrefix');
+//	        $path = substr($path,strlen($prefix));
+//	        $path = trim($path, self::URI_DELIMITER);
             
 	        // conver to array
 	        $pathArray = explode(self::URI_DELIMITER, $path);
+
+	        // remove empty index
+	        array_shift($pathArray);
 	        
 			if (Tg_Site::getConfigOption('multiLingual'))
 			{
@@ -151,7 +155,7 @@ class Tg_Site_Route extends Zend_Controller_Router_Route_Abstract
 					}
 			    	$this->_values['controller'] = $Page->getTemplate()->controller;
 					$this->_values['module'] = $Page->getTemplate()->module;
-					
+
 					
 					// determine action
 					if ($Page->action != null) {

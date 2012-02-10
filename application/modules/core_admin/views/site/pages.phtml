@@ -4,4 +4,24 @@ Tg.PageFactory.setPages (<?php echo $this->pageNodes?>);
 Tg.PageFactory.setTemplates (<?php echo $this->templateNodes?>);
 Tg.PageFactory.setThemes (<?php echo $this->themeNodes?>);
 var form = null;
+
+Tg.Config.PageFactory = {
+    urlAddPage: "<?php echo $this->adminPath?>/site-page-save"
+    , urlEditPage: "<?php echo $this->adminPath?>/site-page-save"
+    , urlDeletePage: "<?php echo $this->adminPath?>/site-page-delete"
+    , urlMovePage: "<?php echo $this->adminPath?>/site-page-move"
+}
+
+Tg.Config.FileFactory = {
+        urlAddFolder: "<?php echo $this->adminPath?>/file-folder-add"
+        , urlEditFolder: "<?php echo $this->adminPath?>/file-folder-edit"
+        , urlDeleteFolder: "<?php echo $this->adminPath?>/file-folder-delete"
+        , urlMoveFolder: "<?php echo $this->adminPath?>/file-folder-move"
+        , urlFolderList: '<?php echo $this->adminPath?>/file-folder-list'
+        , urlFolderAddFile: '<?php echo $this->adminPath?>/file-folder-add-file'
+        , urlFolderRemoveFile: '<?php echo $this->adminPath?>/file-folder-remove-file'
+        , urlFileImport: '<?php echo $this->adminPath?>/files/import'
+        , urlFileUploadValums: '<?php echo $this->adminPath?>/file-upload-valums'
+        , urlFolderFileList: '<?php echo $this->adminPath?>/file-list'
+    };
 </script>

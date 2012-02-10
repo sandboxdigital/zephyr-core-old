@@ -232,7 +232,7 @@ Tg.FileBrowser = Ext.extend(Ext.util.Observable, {
 		var self = this;
 		var win = new Tg.File.Windows.Import ();
 		win.show ();
-		win.loadUrl (Tg.FileFactory.config.urlFileImport,{folderId:this.folderTree.currentNode.id});
+		win.loadUrl (Tg.Config.FileFactory.urlFileImport,{folderId:this.folderTree.currentNode.id});
 		win.on ("submitted", this.refresh, this);
 	}
 	
@@ -290,7 +290,7 @@ Tg.FileBrowser = Ext.extend(Ext.util.Observable, {
 		var self = this;
 		this.uploader = new qq.FileUploader({
 			element: document.getElementById('file-uploader'),
-			action: Tg.FileFactory.config.urlFileUploadValums,
+			action: Tg.Config.FileFactory.urlFileUploadValums,
 //			action: '/core/js/valums/test.php',
 //			action: '/upload.php',
 			maxConnections : 1,
@@ -428,7 +428,7 @@ Tg.File.FileList = Ext.extend(Ext.grid.GridPanel, {
 	 	}
 	 	
 	    var strData = new Ext.ux.data.PagingJsonStore({
-	        url: Tg.FileFactory.config.urlFolderFileList
+	        url: Tg.Config.FileFactory.urlFolderFileList
 	        ,fields: [
 	            {name:'id',type:'integer'}, 
 	            'name', 

@@ -12,7 +12,6 @@ Tg.PageTree = Ext.extend(Ext.tree.TreePanel, {
     currentNode: null,
     currentNodeId: null,
     rootNode: null
-    , urlMovePage: "/admin/site-page-move"
 
     , constructor: function (config) {
         if ($.cookie('tgPageTree_expanded'))
@@ -141,7 +140,7 @@ Tg.PageTree = Ext.extend(Ext.tree.TreePanel, {
     , handleNodeMove: function (tree, node, oldParent, newParent, position) {
         var previousSiblingId = node.previousSibling != null ? node.previousSibling.id : ''; // if no previous sibling move to the first child
 
-        var url = Tg.PageFactory.urlMovePage;
+        var url = Tg.Config.PageFactory.urlMovePage;
 
         var params = { 'pageId': node.id, 'parentId': newParent.id, 'previousSiblingId': previousSiblingId };
 
@@ -237,8 +236,6 @@ Tg.PageTree = Ext.extend(Ext.tree.TreePanel, {
 
     , handleToolbarViewPage: function () {
         //TODO - change to loop through name attr of parents and this and dynamically created URL
-        c(this.currentNode.attributes.url);
-
         window.open(this.currentNode.attributes.url, "tgPreview");
     }
 }); 

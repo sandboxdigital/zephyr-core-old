@@ -17,6 +17,7 @@ class LoginController extends Tg_Site_Controller
     	$message = $this->_getParam('message');
     	
 		$form = new Tg_User_Form_Login(null, $redirectUrl);
+	    $form->setAction($this->_page->getUrl());
 		
 		if($this->_request->isPost()) {
 			if($form->isValid($this->_request->getPost())) {
