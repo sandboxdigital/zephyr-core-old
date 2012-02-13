@@ -147,6 +147,13 @@ class Tg_Mail extends Zend_Mail
 		$html = '';
 		$view = new Zend_View();
 		$view->addScriptPath($this->_config['templatePath']);
+
+		$page = Tg_Site::getInstance()->getCurrentPage();
+		if ($page)
+		{
+			$theme = $page->getTheme();
+			$view->addScriptPath(PUBLIC_PATH.'/themes/'.$theme->folder.'/views/emails');
+		}
 		
 		if (isset($view->content))
 			$view->content = $this->content;
