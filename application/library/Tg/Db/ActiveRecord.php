@@ -88,7 +88,15 @@ class Tg_Db_ActiveRecord extends Tg_Db_Table_Row_Crud
 
 	public function find ($id)
 	{
-		return $this->_table->fetchRow('id='.$id);
+		if (!is_numeric($id))
+			return null;
+
+		if ($id != null) {
+			$select = $this->select(true)
+				->where('id=?',array($id));
+			return $this->_table->fetchRow($select );
+		} else
+			return null;
 	}
 
 	public function select ($withFromPart=false)
