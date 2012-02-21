@@ -1,23 +1,16 @@
 
 <h2>Home</h2>
-<h3><a href="<?php echo $this->url(array('controller'=>'config','action'=>'edit','section'=>$this->activeConfigName))?>">Config</a></h3>
-<?php if (!$this->hasActiveConfig) {?>
-	<span  style="color:red">Cannot find config for this server</span>
-	<a href="<?php echo $this->url(array('controller'=>'config','action'=>'edit','section'=>$this->activeConfigName))?>">Create config for this server</a><br />
-<?php } else {?>
-	<span  style="color:green">Found config for this server</span><br />
-<?php }  ?>
 
-<h3><a href="<?php echo $this->url(array('controller'=>'db','action'=>'index'))?>">Database</a></h3>
-<?php if (!$this->hasDbConnection) {?>
-	<span  style="color:red">Cannot connect to database</span>
-	<a href="<?php echo $this->url(array('controller'=>'config','action'=>'edit','section'=>$this->activeConfigName))?>">Update config for this server</a><br />
-<?php } else  { ?>
-	<span  style="color:green">Db connecting</span><br />
-<?php }  ?>
+<table>
+<?php foreach($this->checks as $checkSectionTitle => $checkSection) {?>
+<tr><td colspan="3"><h3><?php echo $checkSectionTitle?></h3></td></tr>
+<?php foreach($checkSection as $checkKey => $check) {?>
+<tr>
+	<td style="color:<?php echo $check['check']?'green':'red'?>"><?php echo $check['label']?></td>
+	<td style="color:<?php echo $check['check']?'green':'red'?>"><?php echo $check['check']?'Yes':'No'?></td>
+	<td><?php if (!$check['check']){?><a href="<?php echo $this->url($check['fixUrl'])?>">Fix</a><?php } ?></td>
+</tr>
 
-<?php if (!$this->hasDbTables) {?>
-	<span  style="color:red">Cannot find db tables</span> <a href="<?php echo $this->url(array('controller'=>'db','action'=>'index'))?>">Import database</a><br />
-<?php } else  { ?>
-	<span  style="color:green">Found Db tables</span><br />
-<?php }  ?>
+<?php } ?>
+<?php } ?>
+</table>

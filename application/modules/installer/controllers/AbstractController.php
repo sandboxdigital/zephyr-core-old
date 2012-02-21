@@ -38,6 +38,11 @@ class AbstractController extends Zend_Controller_Action
 		return $this->_activeConfig;
 	}
 
+    public function getDatabase()
+    {
+	    return Zend_Db::factory($this->getActiveConfig()->resources->db);
+    }
+
     public function testDbConnection()
     {
 	    $return = new stdClass();
@@ -47,7 +52,7 @@ class AbstractController extends Zend_Controller_Action
 	    if ($this->getActiveConfig()) {
 		    try
 		    {
-				$db = Zend_Db::factory($this->getActiveConfig()->resources->db);
+				$db = $this->getDatabase();
 				$pdo = $db->getConnection();
 
 		        $return->connecting = true;
@@ -74,6 +79,7 @@ class AbstractController extends Zend_Controller_Action
 		parent::init();
 
 		$this->view->activeConfigName = $this->getActiveConfigName();
+		$this->view->activeConfigExists = $this->getActiveConfig() != null;
 	}
 }
 
