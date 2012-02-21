@@ -204,10 +204,13 @@ class Tg_Site_Route extends Zend_Controller_Router_Route_Abstract
 //			echo $this->_values['action'];
 //			die;
 
+//			        dump ($this->_values);
+//			        dump ($pathArray);
+//			        die;
 			if ($this->_values['action'] != 'index')
 			{
-				if (!Tg_Config::get('site.route404ToHome'))
-					return false;	
+//				if (Tg_Config::get('site.route404ToHome'))
+//					return false;
 //				else
 //				{
 //			        dump ($this->_values);
