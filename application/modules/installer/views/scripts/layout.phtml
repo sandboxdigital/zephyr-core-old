@@ -1,0 +1,35 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<?php echo $this->headTitle() ?>
+    <?php echo $this->headScript() ?>
+    <?php echo $this->headStyle() ?>
+	<style type="text/css">
+		body,p,td
+		{
+			font-family: Arial;
+			font-size: .9em;
+		}
+		th
+		{
+			text-align: left;
+		}
+	</style>
+</head>
+<body>
+	<div id="container">
+		<header><h1>Installing Zephyr CMS</h1></header>
+		<nav>
+			<a href="<?php echo $this->url(array('controller'=>'index','action'=>'index'))?>">Home</a> |
+			<a href="<?php echo $this->url(array('controller'=>'config','action'=>'index'))?>">Config</a> |
+			<a href="<?php echo $this->url(array('controller'=>'db','action'=>'index'))?>">DB</a>
+		</nav>
+		<section id="content">
+		<?php echo $this->layout()->content;?>
+		</section>
+	</div>
+</body>
+</html>
