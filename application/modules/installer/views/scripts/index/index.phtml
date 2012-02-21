@@ -1,0 +1,23 @@
+
+<h2>Home</h2>
+<h3><a href="<?php echo $this->url(array('controller'=>'config','action'=>'edit','section'=>$this->activeConfigName))?>">Config</a></h3>
+<?php if (!$this->hasActiveConfig) {?>
+	<span  style="color:red">Cannot find config for this server</span>
+	<a href="<?php echo $this->url(array('controller'=>'config','action'=>'edit','section'=>$this->activeConfigName))?>">Create config for this server</a><br />
+<?php } else {?>
+	<span  style="color:green">Found config for this server</span><br />
+<?php }  ?>
+
+<h3><a href="<?php echo $this->url(array('controller'=>'db','action'=>'index'))?>">Database</a></h3>
+<?php if (!$this->hasDbConnection) {?>
+	<span  style="color:red">Cannot connect to database</span>
+	<a href="<?php echo $this->url(array('controller'=>'config','action'=>'edit','section'=>$this->activeConfigName))?>">Update config for this server</a><br />
+<?php } else  { ?>
+	<span  style="color:green">Db connecting</span><br />
+<?php }  ?>
+
+<?php if (!$this->hasDbTables) {?>
+	<span  style="color:red">Cannot find db tables</span> <a href="<?php echo $this->url(array('controller'=>'db','action'=>'index'))?>">Import database</a><br />
+<?php } else  { ?>
+	<span  style="color:green">Found Db tables</span><br />
+<?php }  ?>

@@ -1,0 +1,16 @@
+<?php
+
+
+?>
+<h2>Config</h2>
+<h3>This server</h3>
+<?php if (!$this->activeSectionExists) {?>
+<a href="<?php echo $this->url(array('action'=>'edit','section'=>$this->activeSection))?>" style="color:red">Create config for this server</a>
+<?php } else  { ?>
+<a href="<?php echo $this->url(array('action'=>'edit','section'=>$this->activeSection))?>" style="color:red">Update config for this server</a>
+<?php }  ?>
+
+<h3>All configs</h3>
+<?php foreach ($this->sections as $section) {?>
+<?php echo $section?> <a href="<?php echo $this->url(array('action'=>'edit','section'=>$section))?>">Edit</a><br />
+<?php } ?>

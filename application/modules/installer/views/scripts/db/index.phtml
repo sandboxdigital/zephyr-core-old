@@ -1,0 +1,31 @@
+<h2>DB</h2>
+<?php if (!$this->activeConfigExists) {?>
+	<h3  style="color:red">Cannot find config for this server</h3>
+	<a href="<?php echo $this->url(array('controller'=>'config','action'=>'edit','section'=>$this->activeConfigName))?>">Create config for this server</a>
+<?php } else if (!$this->dbConnecting) {?>
+	<h3  style="color:red">Cannot connect to database</h3>
+	<a href="<?php echo $this->url(array('controller'=>'config','action'=>'edit','section'=>$this->activeConfigName))?>">Update config for this server</a>
+<?php } else  { ?>
+	<h3>Scripts</h3>
+	<table class="list" width="500" cellspacing="0">
+	<thead>
+	<tr>
+		<th width="250">Name</th>
+		<th width="200">Date</th>
+		<th width="50">&nbsp;</th>
+		<th width="50">&nbsp;</th>
+	</tr>
+	</thead>
+	<tbody>
+	<?php foreach($this->scripts as $script) {
+	?>
+	<tr>
+		<td><?php echo $script->name?></td>
+		<td><?php echo date('j M Y',$script->date)?></td>
+		<td><a href="<?php echo $this->url(array('action'=>'view','script'=>$script->name))?>">View</a></td>
+		<td><a href="<?php echo $this->url(array('action'=>'execute','script'=>$script->name))?>">Run</a></td>
+	</tr>
+	<?php } ?>
+	</tbody>
+	</table>
+<?php }  ?>
