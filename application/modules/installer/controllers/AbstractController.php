@@ -7,14 +7,7 @@ class AbstractController extends Zend_Controller_Action
 
 	public function getConfig ()
 	{
-		if (!$this->_config)
-		{
-			$this->_config = new Zend_Config_Ini(APPLICATION_PATH . '/config/application.ini',
-				null,
-				array('skipExtends'=> true,
-				'allowModifications' => true));
-		}
-		return $this->_config;
+		return Zeph_Core::getInstance()->getConfigModifiable();
 	}
 
 	public function getActiveConfigName ()
@@ -24,18 +17,7 @@ class AbstractController extends Zend_Controller_Action
 
 	public function getActiveConfig ()
 	{
-		if (!$this->_activeConfig)
-		{
-		    try
-		    {
-				$this->_activeConfig = new Zend_Config_Ini(APPLICATION_PATH . '/config/application.ini',
-					$this->getActiveConfigName());
-		    } catch (Exception $ex)
-		    {
-		        $this->_activeConfig = null;
-		    }
-		}
-		return $this->_activeConfig;
+		return Zeph_Core::getInstance()->getConfig();
 	}
 
     public function getDatabase()

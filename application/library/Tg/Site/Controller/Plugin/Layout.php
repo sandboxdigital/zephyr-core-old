@@ -29,6 +29,6 @@ class Tg_Site_Controller_Plugin_Layout extends Zend_Controller_Plugin_Abstract
             $page = Tg_Site::getInstance()->getRootPage();
         }
         $theme = $page->getTheme();
-        $layout->setLayoutPath(PUBLIC_PATH.'/themes/'.$theme->folder.'/views/layouts');
+        $layout->setLayoutPath(Zeph_Config::getPath('%PATH_PUBLIC%/themes/'.$theme->folder.'/views/layouts'));
     }
 }

@@ -28,9 +28,8 @@ class Tg_Application_Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     {
         $this->bootstrap('frontcontroller');
         $front = $this->getResource('frontcontroller');
-        $front->addModuleDirectory(APPLICATION_PATH ."/modules");
-        $front->addModuleDirectory(CORE_PATH ."/modules");
-    //        $front->addModuleDirectory(dirname(__FILE__) . '/modules');
+        $front->addModuleDirectory(Zeph_Config::getPath('%PATH_APPLICATION%/modules'));
+        $front->addModuleDirectory(Zeph_Config::getPath('%PATH_CORE_APPLICATION%/modules'));
     }
 
 	protected function _initDisableMagicQuotes() 
@@ -49,30 +48,6 @@ class Tg_Application_Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 	         unset($in); 
     	}
     }
-    
-	/**
-	 * Initialize module loader
-	 * 
-	 * @return $moduleLoader Zend_Application_Module_Autoloader
-	 */	
-//	protected function _initModuleAutoload()
-//    {
-////
-////
-////            $router = $frontController->getRouter(); // returns a rewrite router by default
-////            Zend_Controller_Front::getInstance()->addModuleDirectory(APPLICATION_PATH ."/modules");
-////            Zend_Controller_Front::getInstance()->addModuleDirectory(CORE_PATH ."/modules");
-//
-//
-//    	// Initialize module loader
-//        // TODO - change to loop through module sub directors
-//        $moduleLoader = new Zend_Application_Module_Autoloader(array(
-//            'namespace' => '',
-//            'basePath'  => APPLICATION_PATH.'/modules'));
-//
-//        return $moduleLoader;
-//    }
-//
     
 	/**
 	 * Initialize the environment 
@@ -106,7 +81,8 @@ class Tg_Application_Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 	 */ 
 	protected function _initCache()
 	{
-		$cacheDir = STORAGE_PATH .'/cache';
+		$cacheDir = Zeph_Config::getPath('%PATH_STORAGE%/cache');
+
 		$dir = realpath($cacheDir);
 
 		$frontendOptions = array(
@@ -122,9 +98,8 @@ class Tg_Application_Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 			$frontendOptions,
 			$backendOptions);
 
-			
 		// Plugin Helper Cache
-		$classFileIncCache = APPLICATION_PATH . '/../data/pluginLoaderCache.php';
+		$classFileIncCache = Zeph_Config::getPath('%PATH_APPLICATION%/data/pluginLoaderCache.php');
 		if (file_exists($classFileIncCache)) {
 		    include_once $classFileIncCache;
 		}
@@ -208,10 +183,8 @@ class Tg_Application_Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 
     protected function _initSession()
     {
-		// Hmmm this seems to cause issues with rememberMe
-//        $session = new Zend_Session_Namespace('tg', true);
-//        Zend_Registry::set('session', $session);
 
+	    $this->_options['session']['save_path'] = Zeph_Config::getPath($this->_options['session']['save_path']);
         if (!is_dir($this->_options['session']['save_path']))
         {
             echo 'Session directory doesn\'t exist <br/>';
@@ -282,7 +255,7 @@ class Tg_Application_Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     { 
     	$view = new Tg_View();
         $view->doctype('XHTML1_TRANSITIONAL'); 
-        $view->addHelperPath(APPLICATION_PATH . '/helpers');
+//        $view->addHelperPath(APPLICATION_PATH . '/helpers');
         $view->headMeta()->appendHttpEquiv('Content-Type', 'text/html;charset=utf-8'); 
         $view->headTitle()->setSeparator(' - ');
 

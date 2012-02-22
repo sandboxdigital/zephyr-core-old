@@ -33,32 +33,32 @@ class IndexController extends AbstractController
 		    'Folders' => array(
 			    array(
 				    'label'=>'Storage folder exists',
-				    'check'=>$this->checkFolderExists(STORAGE_PATH),
+				    'check'=>$this->checkFolderExists(Zeph_Config::getPath('%PATH_STORAGE%')),
 				    'fixUrl'=>array('controller'=>'index','action'=>'create-folders')
 			    ),
 			    array(
 				    'label'=>'Cache folder exists',
-				    'check'=>$this->checkFolderExists(STORAGE_PATH.'/cache'),
+				    'check'=>$this->checkFolderExists(Zeph_Config::getPath('%PATH_STORAGE%/cache')),
 				    'fixUrl'=>array('controller'=>'index','action'=>'create-folders')
 		        ),
 			    array(
 				    'label'=>'Session folder exists',
-				    'check'=>$this->checkFolderExists(STORAGE_PATH.'/sessions'),
+				    'check'=>$this->checkFolderExists(Zeph_Config::getPath('%PATH_STORAGE%/sessions')),
 				    'fixUrl'=>array('controller'=>'index','action'=>'create-folders')
 		        ),
 			    array(
 				    'label'=>'Uploads folder exists',
-				    'check'=>$this->checkFolderExists(STORAGE_PATH.'/uploads'),
+				    'check'=>$this->checkFolderExists(Zeph_Config::getPath('%PATH_STORAGE%/uploads')),
 				    'fixUrl'=>array('controller'=>'index','action'=>'create-folders')
 		        ),
 			    array(
 				    'label'=>'Tmp folder exists',
-				    'check'=>$this->checkFolderExists(STORAGE_PATH.'/tmp'),
+				    'check'=>$this->checkFolderExists(Zeph_Config::getPath('%PATH_STORAGE%/tmp')),
 				    'fixUrl'=>array('controller'=>'index','action'=>'create-folders')
 		        ),
 			    array(
 				    'label'=>'Incoming folder exists',
-				    'check'=>$this->checkFolderExists(STORAGE_PATH.'/incoming'),
+				    'check'=>$this->checkFolderExists(Zeph_Config::getPath('%PATH_STORAGE%/incoming')),
 				    'fixUrl'=>array('controller'=>'index','action'=>'create-folders')
 		        ),
            )
@@ -71,13 +71,12 @@ class IndexController extends AbstractController
 
 	function createFoldersAction ()
 	{
-		echo STORAGE_PATH;
-		mkdir(STORAGE_PATH);
-		mkdir(STORAGE_PATH.'/cache');
-		mkdir(STORAGE_PATH.'/sessions');
-		mkdir(STORAGE_PATH.'/uploads');
-		mkdir(STORAGE_PATH.'/tmp');
-		mkdir(STORAGE_PATH.'/incoming');
+		if (!file_exists(Zeph_Config::getPath('%PATH_STORAGE%'))) mkdir(Zeph_Config::getPath('%PATH_STORAGE%'));
+		if (!file_exists(Zeph_Config::getPath('%PATH_STORAGE%/cache'))) mkdir(Zeph_Config::getPath('%PATH_STORAGE%/cache'));
+		if (!file_exists(Zeph_Config::getPath('%PATH_STORAGE%/sessions'))) mkdir(Zeph_Config::getPath('%PATH_STORAGE%/sessions'));
+		if (!file_exists(Zeph_Config::getPath('%PATH_STORAGE%/uploads'))) mkdir(SZeph_Config::getPath('%PATH_STORAGE%/uploads'));
+		if (!file_exists(Zeph_Config::getPath('%PATH_STORAGE%/tmp'))) mkdir(Zeph_Config::getPath('%PATH_STORAGE%/tmp'));
+		if (!file_exists(Zeph_Config::getPath('%PATH_STORAGE%/incoming'))) mkdir(Zeph_Config::getPath('%PATH_STORAGE%/incoming'));
 		$this->_redirect(array('action'=>'index'));
 	}
 
