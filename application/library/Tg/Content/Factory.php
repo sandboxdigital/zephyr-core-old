@@ -42,9 +42,12 @@ class Tg_Content_Factory {
 	
 	public function __construct() {
 		$config= Zend_Registry::getInstance()->get('siteconfig');
-		$this->_config  = $config['content'];
-		$this->_dataPath = realpath($this->_config['dataPath']);
-		$this->_formPath = realpath($this->_config['formPath']);
+        if (isset($config['content']))
+        {
+            $this->_config  = $config['content'];
+            $this->_dataPath = realpath($this->_config['dataPath']);
+            $this->_formPath = realpath($this->_config['formPath']);
+        }
 	}
 	
 	/**
