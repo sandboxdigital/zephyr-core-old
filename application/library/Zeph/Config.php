@@ -37,7 +37,7 @@ class Zeph_Config extends Zend_Config_Ini
 	/**
 	 * Get singleton instance
 	 *
-	 * @return  Zeph_Core $instance
+	 * @return  Zeph_Config $instance
 	 */
 	public static function getInstance($configPath = '', $section = null)
 	{
@@ -68,7 +68,7 @@ class Zeph_Config extends Zend_Config_Ini
 	 */
 	public function getConfigModifiable ()
 	{
-		return new Zend_Config_Ini($this->Path,
+		return new Zend_Config_Ini($this->_configPath,
 			null,
 			array('skipExtends'=> true,
 			'allowModifications' => true));
@@ -79,7 +79,7 @@ class Zeph_Config extends Zend_Config_Ini
 	 */
 	public function getConfigPath ()
 	{
-		return $this->Path;
+		return $this->_configPath;
 	}
 
 	/**
