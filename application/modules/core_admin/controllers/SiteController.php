@@ -30,6 +30,7 @@ class Core_Admin_SiteController extends Tg_Content_Controller
 		$this->view->pageNodes = Tg_Site::getInstance()->getRootPage()->toJson('read') ;
 		$this->view->themeNodes = Zend_Json::encode (Tg_Site::getThemesAsArray());
 		$this->view->templateNodes = Zend_Json::encode (Tg_Site::getTemplatesAsArray());
+	    $this->view->adminPath = Tg_Site::getInstance()->getPage('/admin')->getUrl();
     }
 
     public function pagesExportAction()
