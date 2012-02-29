@@ -45,6 +45,18 @@ class Tg_Content_Element_Group extends Tg_Content_Element_Abstract implements Se
 		return 'Tg_Content_Element_Group does not return a string use group[0]';
 	}
 
+	public function toJson ()
+	{
+		$jsonElements = array ();
+		foreach ($this->_options as $option)
+		{
+			$j = $option->toJson ();
+			array_push($jsonElements,$j);
+		}
+
+		return '{"type":"'.$this->_type.'","id":"'.$this->_id.'","label":"'.$this->_label.'","options":['.implode(',',$jsonElements).']}';
+	}
+
     public function rewind()
     {
         $this->_pointer = 0;

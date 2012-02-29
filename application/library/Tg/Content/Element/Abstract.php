@@ -58,6 +58,11 @@ class Tg_Content_Element_Abstract {
 			return true;
 		else 
 			return false;
-	} 
+	}
+
+	public function toJson ()
+	{
+		return '{"type":"'.$this->_type.'","id":"'.$this->_id.'","label":"'.$this->_label.'","value":"'.$this->_value.'"}';
+	}
 }
 ?>

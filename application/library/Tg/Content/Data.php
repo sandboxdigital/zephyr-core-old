@@ -164,4 +164,16 @@ class Tg_Content_Data
 		} else 
 			echo $this->view->contentPartial ($element);		
 	}
+
+	public function toJson ()
+	{
+		$jsonElements = array ();
+		foreach ($this->_elements as $key=>$value)
+		{
+			$j = $this->_elements[$key]->toJson ();
+			array_push($jsonElements,$key.':'.$j);
+		}
+
+		return '{'.implode(',',$jsonElements).'}';
+	}
 }
