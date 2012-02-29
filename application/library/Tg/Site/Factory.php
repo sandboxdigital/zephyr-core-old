@@ -289,7 +289,11 @@ class Tg_Site_Factory {
 	{
 		$ins = self::getInstance();
 		$pre = $ins->_pathPrefix();
-		return $pre.'themes/'.$ins->getCurrentPage()->getTheme()->folder;
+        $page = $ins->getCurrentPage();
+        if ($page)
+		    return $pre.'themes/'.$page->getTheme()->folder;
+        else
+		    return $pre.'themes/default';
 	}
 
 	public static function getCorePath ($file='')
