@@ -51,7 +51,7 @@ class ConfigController extends AbstractController
 
 				// Write the config file
 				$writer = new Zend_Config_Writer_Ini(array('config'   => $this->_config,
-					'filename' => Zeph_Core::getInstance()->getConfigPath()));
+					'filename' => Zeph_Config::getInstance()->getConfigPath()));
 
 				$writer->write();
 		        $this->view->messages[] = 'Config written';

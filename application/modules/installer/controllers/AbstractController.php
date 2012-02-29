@@ -7,7 +7,7 @@ class AbstractController extends Zend_Controller_Action
 
 	public function getConfig ()
 	{
-		return Zeph_Core::getInstance()->getConfigModifiable();
+		return Zeph_Config::getInstance()->getConfigModifiable();
 	}
 
 	public function getActiveConfigName ()

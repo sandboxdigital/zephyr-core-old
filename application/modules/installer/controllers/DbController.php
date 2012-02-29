@@ -8,7 +8,7 @@ class DbController extends AbstractController
 	{
 		parent::init();
 
-		$this->_sqlPath = APPLICATION_PATH.'/sql';
+		$this->_sqlPath = Zeph_Config::getPath('%PATH_APPLICATION%/sql');
 	}
 
     public function indexAction()
@@ -68,7 +68,7 @@ class DbController extends AbstractController
 		$sqlErrorCode = 0;
 		$sqlCurrentStmt = '';
 
-		$db = Zend_Db::factory($this->_activeConfig->resources->db);
+		$db = Zend_Db::factory(Zeph_Config::getInstance()->resources->db);
 		$pdo = $db->getConnection();
 
 
