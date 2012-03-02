@@ -54,7 +54,7 @@ class Tg_Content_Element_Group extends Tg_Content_Element_Abstract implements Se
 			array_push($jsonElements,$j);
 		}
 
-		return '{"type":"'.$this->_type.'","id":"'.$this->_id.'","label":"'.$this->_label.'","options":['.implode(',',$jsonElements).']}';
+		return '{"type":"'.$this->_type.'","id":"'.$this->_id.'","uid":"'.$this->_uid.'","label":"'.$this->_label.'","options":['.implode(',',$jsonElements).']}';
 	}
 
     public function rewind()

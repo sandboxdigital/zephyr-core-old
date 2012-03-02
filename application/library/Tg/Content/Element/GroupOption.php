@@ -67,7 +67,7 @@ class Tg_Content_Element_GroupOption extends Tg_Content_Element_Abstract
 
 		$jA = implode(',',$jsonElements);
 
-		return '{"type":"'.$this->_type.'","id":"'.$this->_id.'","label":"'.$this->_label.'","elements":{'.implode(',',$jsonElements).'}}';
+		return '{"type":"'.$this->_type.'","id":"'.$this->_id.'","uid":"'.$this->_uid.'","label":"'.$this->_label.'","elements":{'.implode(',',$jsonElements).'}}';
 	}
 	
 	public function addElement ($type, $id, $xml)

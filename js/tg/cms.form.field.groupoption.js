@@ -161,6 +161,7 @@ CMS.Form.Field.Groupoption = $.inherit(
 			if (this.childrenRendered) {
 			    var el = xmlDoc.createElement(this.type);
 			    el.setAttribute("id", this.id);
+		        el.setAttribute("uid", this.uid);
 	
 			    if (this.value) {
 			        var newCDATA = xmlDoc.createCDATASection(this.value);

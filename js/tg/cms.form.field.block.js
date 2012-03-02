@@ -154,6 +154,7 @@ CMS.Form.Field.Block = $.inherit(
 			if (this.childrenRendered) {
 			    var el = xmlDoc.createElement(this.type);
 			    el.setAttribute("id", this.id);
+		        el.setAttribute("uid", this.uid);
 			    el.setAttribute("view", this.view);
 	
 			    if (this.value) {

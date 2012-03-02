@@ -7,17 +7,24 @@ CMS.Form.Field = $.inherit(
         path: "",
         label: "",
         parent: null,
+        uid:'',
         value: null,
         fields: null,
         required: false,
 
         __constructor: function (xml, parent) {
             this.type = xml.nodeName;
-            
-            
+
             this.id = new String($(xml).attr("id"));
             this.label = $(xml).attr("label") ? $(xml).attr("label") : this.id.ucWord();
             this.required = $(xml).attr("required") ? $(xml).attr("required") == "true" : false;
+            this.uid = $(xml).attr("uid");
+
+            if (this.uid == undefined || this.uid == '' || this.uid == null)
+            {
+                // TODO - add check to see if this uid is infact unique
+                this.uid = guidGenerator();
+            }
 
             this.parent = parent;
             if (parent.path) {
@@ -85,6 +92,7 @@ CMS.Form.Field = $.inherit(
 		{
 		    var el = xmlDoc.createElement(this.type);
 		    el.setAttribute("id", this.id);
+		    el.setAttribute("uid", this.uid);
 
 		    if (this.value) {
 		        var newCDATA = xmlDoc.createCDATASection(this.getValue());

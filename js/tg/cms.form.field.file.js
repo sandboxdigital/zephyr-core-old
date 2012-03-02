@@ -68,7 +68,6 @@ CMS.Form.Field.File = $.inherit(
 	    
         ,addFile : function (file) 
         {
-        	c(file)
         	if (Tg.FileManager.fileBrowserWindow)
         		Tg.FileManager.fileBrowserWindow.hide ();
 
@@ -126,6 +125,7 @@ CMS.Form.Field.File = $.inherit(
 	    ,toXml: function (xmlDoc) {	  
 	        var el = xmlDoc.createElement(this.type);
 	        el.setAttribute("id", this.id);
+		    el.setAttribute("uid", this.uid);
 	        
 	        if (this.file != null) {
 		        el.setAttribute("url", this.file.url);

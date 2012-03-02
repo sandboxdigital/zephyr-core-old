@@ -23,6 +23,7 @@
 class Tg_Content_Element_Abstract {
 	protected $_type;
 	protected $_id;
+	protected $_uid;
 	protected $_label;
 	protected $_xmlNode;
 	protected $_value = "blank";
@@ -33,6 +34,7 @@ class Tg_Content_Element_Abstract {
 		
 		$this->_type = (string)$XMLNode->getName();
 		$this->_id = (string)$XMLNode->attributes()->id;
+		$this->_uid = (string)$XMLNode->attributes()->uid;
 		$this->_label = isset($XMLNode->attributes()->label)?(string)$XMLNode->attributes()->label:ucfirst((string)$XMLNode->attributes()->id);
 	
 	}
@@ -62,7 +64,7 @@ class Tg_Content_Element_Abstract {
 
 	public function toJson ()
 	{
-		return '{"type":"'.$this->_type.'","id":"'.$this->_id.'","label":"'.$this->_label.'","value":"'.$this->_value.'"}';
+		return '{"type":"'.$this->_type.'","id":"'.$this->_id.'","uid":"'.$this->_uid.'","label":"'.$this->_label.'","value":"'.$this->_value.'"}';
 	}
 }
 ?>
