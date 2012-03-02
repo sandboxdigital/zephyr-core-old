@@ -53,6 +53,11 @@ class Tg_Content_Placeholder
 	{
 		return false;
 	}
+
+	public function toJson ()
+	{
+		return '{type:"placeholder",id:"placeholder"}';
+	}
 }
 
 
