@@ -48,7 +48,7 @@ class Tg_Content_Element_GroupOption extends Tg_Content_Element_Abstract
 		elseif (isset($this->_elements[$name]))
 			return $this->_elements[$name];
 		else
-			return null;
+			return parent::__get($name);
 	}
 	
 	function __toString()

@@ -45,6 +45,8 @@ class Tg_Content_Element_Abstract {
 			return $this->_label;
 		elseif ($name == 'id')
 			return $this->_id;
+		elseif ($name == 'uid')
+			return $this->_uid;
 		elseif ($name == 'type')
 			return $this->_type;
 	}
