@@ -35,6 +35,7 @@ CMS.Form.Field.Group = $.inherit(
 	    },
 
 	    populate: function (xml) {
+            this.__base(xml);
 	        var _this = this;
 	        $(xml).children().each(function (key) {
 	            var field = _this.addOption($(this).attr("id"), true, this);

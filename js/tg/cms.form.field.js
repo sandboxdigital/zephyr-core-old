@@ -19,7 +19,6 @@ CMS.Form.Field = $.inherit(
             this.label = $(xml).attr("label") ? $(xml).attr("label") : this.id.ucWord();
             this.required = $(xml).attr("required") ? $(xml).attr("required") == "true" : false;
             this.uid = $(xml).attr("uid");
-
             if (this.uid == undefined || this.uid == '' || this.uid == null)
             {
                 // TODO - add check to see if this uid is infact unique
@@ -54,8 +53,14 @@ CMS.Form.Field = $.inherit(
             return "\t".repeat(indent) + "Field " + this.type + ", id:" + this.id + ", path:" + this.elPath + ", value:" + this.value + "\n";
         },
 
-        populate: function (xml) {
-
+        populate: function (xml)
+        {
+            this.uid = $(xml).attr("uid");
+            if (this.uid == undefined || this.uid == '' || this.uid == null)
+            {
+                // TODO - add check to see if this uid is infact unique
+                this.uid = guidGenerator();
+            }
         }
 		
 		,setValue : function (value) 

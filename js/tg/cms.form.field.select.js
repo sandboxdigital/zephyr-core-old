@@ -41,6 +41,7 @@ CMS.Form.Field.Select = $.inherit(
 		
 		populate : function (xml) 
 		{
+            this.__base(xml);
 			if (xml.firstChild)
 				$('#'+this.elPath).val(xml.firstChild.data)
 		},

@@ -41,6 +41,7 @@ CMS.Form.Field.File = $.inherit(
 	    }    
 
 	    ,populate: function (xml) {
+            this.__base(xml);
 	        if (xml.firstChild) {
 	        	var file = {
         			url :$(xml).attr('url'),

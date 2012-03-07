@@ -78,6 +78,7 @@ CMS.Form.Field.Block = $.inherit(
 		
 		populate : function (xml)
 		{
+            this.__base(xml);
 			if (this.expandedOnCreate) {				
 				this.populateChildren (xml);
 			} else {
