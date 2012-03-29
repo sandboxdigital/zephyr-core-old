@@ -162,7 +162,7 @@
 	            onSubmit: $.proxy(this.onSubmit, this),
 	            onProgress: $.proxy(this.onProgress, this),
 	            onComplete: $.proxy(this.onComplete, this),
-	            onCancel: $.proxy(this.onCancel, this),
+	            onCancel: $.proxy(this.onCancel, this)
     		});
     	},
     	

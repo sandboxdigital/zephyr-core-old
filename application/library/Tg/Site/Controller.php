@@ -56,13 +56,13 @@ class Tg_Site_Controller extends Zend_Controller_Action
 
         if ($this->_page)
         {
-        	$this->view->addScriptPath(Zeph_Config::getPath('%PATH_PUBLIC%/themes/'.$this->_page->getTheme()->folder.'/views/'));
-            $this->view->addScriptPath(Zeph_Config::getPath('%PATH_PUBLIC%/themes/'.$this->_page->getTheme()->folder.'/views/layouts'));
+        	$this->view->addScriptPath(Zeph_Core::getPath('%PATH_PUBLIC%/themes/'.$this->_page->getTheme()->folder.'/views/'));
+            $this->view->addScriptPath(Zeph_Core::getPath('%PATH_PUBLIC%/themes/'.$this->_page->getTheme()->folder.'/views/layouts'));
         } else
         {
             $page = $Pm->getRootPage();
-            $this->view->addScriptPath(Zeph_Config::getPath('%PATH_PUBLIC%/themes/'.$page->getTheme()->folder.'/views/'));
-            $this->view->addScriptPath(Zeph_Config::getPath('%PATH_PUBLIC%/themes/'.$page->getTheme()->folder.'/views/layouts'));
+            $this->view->addScriptPath(Zeph_Core::getPath('%PATH_PUBLIC%/themes/'.$page->getTheme()->folder.'/views/'));
+            $this->view->addScriptPath(Zeph_Core::getPath('%PATH_PUBLIC%/themes/'.$page->getTheme()->folder.'/views/layouts'));
         }
 
 

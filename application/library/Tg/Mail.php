@@ -152,7 +152,7 @@ class Tg_Mail extends Zend_Mail
 		if ($page)
 		{
 			$theme = $page->getTheme();
-			$view->addScriptPath(Zeph_Config::getPath('%PATH_PUBLIC%/themes/'.$theme->folder.'/views/emails'));
+			$view->addScriptPath(Zeph_Core::getPath('%PATH_PUBLIC%/themes/'.$theme->folder.'/views/emails'));
 		}
 		
 		if (isset($view->content))

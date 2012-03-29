@@ -57,6 +57,7 @@ class Tg_View_Helper_FormTgFileUpload extends Zend_View_Helper_FormFile
 		$xhtml .= '</table>';
 		$xhtml .= '<div><input id="'.$this->cleanName($name).'_btnUpload" type="button" class="'.$class.'_btnUpload btnUpload" value="'.$label.'" /></div>
 		<script language="javascript" type="text/javascript">
+		    $(document).ready(function(){
 			var swfupload_'.$this->cleanName($name).' = {
 				hidden:"'.$this->cleanName($name).'",
 				preview:"'.$this->cleanName($name).'_table",
@@ -78,7 +79,10 @@ class Tg_View_Helper_FormTgFileUpload extends Zend_View_Helper_FormFile
 				$xhtml .= 'tgFu.addFile ('.Zend_Json::encode($file->toObject()).');';
 			}
 		}
-		$xhtml .= '</script>';
+		$xhtml .= '
+
+		});
+		</script>';
 
 
         return $xhtml;

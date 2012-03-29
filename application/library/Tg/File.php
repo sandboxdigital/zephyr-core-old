@@ -27,9 +27,9 @@ class Tg_File
 
 		$config = Zend_Registry::getInstance()->get('siteconfig');
 		
-		$this->_defaultConfig['storageFolder'] = Zeph_Config::getPath('%PATH_STORAGE%/uploads');
-		$this->_defaultConfig['tempFolder'] = Zeph_Config::getPath('%PATH_STORAGE%/tmp');
-		$this->_defaultConfig['cacheFolder'] = Zeph_Config::getPath('%PATH_PUBLIC%/file');
+		$this->_defaultConfig['storageFolder'] = Zeph_Core::getPath('%PATH_STORAGE%/uploads');
+		$this->_defaultConfig['tempFolder'] = Zeph_Core::getPath('%PATH_STORAGE%/tmp');
+		$this->_defaultConfig['cacheFolder'] = Zeph_Core::getPath('%PATH_PUBLIC%/file');
 		
 		if (isset($config['file']))
 			$this->_config  = $config['file']+$this->_defaultConfig;
@@ -41,9 +41,9 @@ class Tg_File
 			$this->_config['urlPre'] = Zend_Controller_Front::getInstance()->getBaseUrl();
 		}
 
-		$this->_storageFolder = Zeph_Config::getPath($this->_config['storageFolder']);
-		$this->_tempFolder = Zeph_Config::getPath($this->_config['tempFolder']);
-		$this->_cacheFolder = Zeph_Config::getPath($this->_config['cacheFolder']);
+		$this->_storageFolder = Zeph_Core::getPath($this->_config['storageFolder']);
+		$this->_tempFolder = Zeph_Core::getPath($this->_config['tempFolder']);
+		$this->_cacheFolder = Zeph_Core::getPath($this->_config['cacheFolder']);
 
 		if ((isset($this->_config['enableLocationChecks'])) && $this->_config['enableLocationChecks']==true) {
 			// create storage dir if it doesn't exist

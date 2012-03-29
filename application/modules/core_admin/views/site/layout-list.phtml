@@ -11,7 +11,7 @@
 foreach ($this->layouts as $layout) {?>
 <tr>
 	<td><a href="/admin/site/layout-edit?id=<?php echo $layout->id?>" class="name inPageForm"><?php echo $layout->name?></a></td>
-	<td><?php echo $layout->layout_file?></td>
+	<td><?php echo $layout->folder?></td>
 	<td><a href="/admin/site/layout-delete?id=<?php echo $layout->id?>" class="control delete inPageForm" title="Delete">Delete</a>
 	<a href="/admin/site/layout-edit?id=<?php echo $layout->id?>" class="control edit inPageForm" title="Edit">Edit</a></td>
 </tr>

@@ -8,7 +8,7 @@ class DbController extends AbstractController
 	{
 		parent::init();
 
-		$this->_sqlPath = Zeph_Config::getPath('%PATH_APPLICATION%/sql');
+		$this->_sqlPath = Zeph_Core::getPath('%PATH_APPLICATION%/sql');
 	}
 
     public function indexAction()

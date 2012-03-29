@@ -95,7 +95,7 @@ class Core_Admin_ContentController extends Tg_Content_Controller
 			
 		$template = $page->getTemplate();
 
-        $path = Zeph_Config::getPath('%PATH_APPLICATION%/modules/'.$template->module.'/content/');
+        $path = Zeph_Core::getPath('%PATH_APPLICATION%/modules/'.$template->module.'/content/');
 
 		if (!empty($template->form))
     		return $path.$template->form;

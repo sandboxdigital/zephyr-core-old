@@ -28,8 +28,8 @@ class Tg_Application_Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     {
         $this->bootstrap('frontcontroller');
         $front = $this->getResource('frontcontroller');
-        $front->addModuleDirectory(Zeph_Config::getPath('%PATH_APPLICATION%/modules'));
-        $front->addModuleDirectory(Zeph_Config::getPath('%PATH_CORE_APPLICATION%/modules'));
+        $front->addModuleDirectory(Zeph_Core::getPath('%PATH_APPLICATION%/modules'));
+        $front->addModuleDirectory(Zeph_Core::getPath('%PATH_CORE_APPLICATION%/modules'));
     }
 
 	protected function _initDisableMagicQuotes() 
@@ -81,7 +81,7 @@ class Tg_Application_Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 	 */ 
 	protected function _initCache()
 	{
-		$cacheDir = Zeph_Config::getPath('%PATH_STORAGE%/cache');
+		$cacheDir = Zeph_Core::getPath('%PATH_STORAGE%/cache');
 
 		$dir = realpath($cacheDir);
 
@@ -99,7 +99,7 @@ class Tg_Application_Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 			$backendOptions);
 
 		// Plugin Helper Cache
-		$classFileIncCache = Zeph_Config::getPath('%PATH_APPLICATION%/data/pluginLoaderCache.php');
+		$classFileIncCache = Zeph_Core::getPath('%PATH_APPLICATION%/data/pluginLoaderCache.php');
 		if (file_exists($classFileIncCache)) {
 		    include_once $classFileIncCache;
 		}
@@ -184,7 +184,7 @@ class Tg_Application_Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     protected function _initSession()
     {
 
-	    $this->_options['session']['save_path'] = Zeph_Config::getPath($this->_options['session']['save_path']);
+	    $this->_options['session']['save_path'] = Zeph_Core::getPath($this->_options['session']['save_path']);
         if (!is_dir($this->_options['session']['save_path']))
         {
             echo 'Session directory doesn\'t exist <br/>';

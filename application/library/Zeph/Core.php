@@ -11,8 +11,9 @@ class Zeph_Core
 {
 	protected static $_instance = null;
 	var $_config;
+    var $_paths;
 
-	public function __construct($configPath = '', $section = null)
+	public function __construct()
 	{
 		require_once 'Tg/Core.php';
 
@@ -21,8 +22,6 @@ class Zeph_Core
 		$autoLoader->registerNamespace('Zeph');
 		$autoLoader->registerNamespace('Tg');
 		$autoLoader->registerNamespace('Tgx');
-
-		$config = $this->getConfig($configPath,$section);
 	}
 
 	/**
@@ -30,29 +29,123 @@ class Zeph_Core
 	 *
 	 * @return  Zeph_Core $instance
 	 */
-	public static function getInstance($configPath = '', $section = null)
+	public static function getInstance()
 	{
 		if(self::$_instance === null) {
-			self::$_instance = new self($configPath, $section);
+			self::$_instance = new self();
 		}
 		return self::$_instance;
 	}
+
+
+
+    /**
+     * @return string
+     */
+    public static function getPath ($path)
+    {
+        $inst = self::getInstance();
+        $inst->initAppPaths();
+        return $inst->_getPath($path);
+    }
+
+    public static function config ($path)
+    {
+        $config = self::getInstance()->getConfig()->toArray();
+
+        $configPath = explode('.', $path);
+
+        foreach ($configPath as $path) {
+            if (isset($config[$path]))
+            {
+                $config = $config[$path];
+            } else
+                return null;
+        }
+        return $config;
+    }
+
+    /**
+     * @param $path
+     * @return mixed
+     */
+    public function _getPath ($path)
+    {
+        foreach ($this->_paths as $key=>$value)
+            $path = str_replace('%'.$key.'%',$value, $path);
+
+        return $path;
+    }
+
 
 	/**
 	 * @return Zeph_Config
 	 */
 	public function getConfig ()
 	{
-		return Zeph_Config::getInstance();
+        if (!$this->_config)
+        {
+            $this->_config = new Zeph_Config ( $this->findConfigPath(), $this->getConfigName ());
+        }
+
+        return $this->_config;
 	}
 
-	/**
-	 * @return string
-	 */
-	public function getConfigName ()
-	{
-		return Zeph_Config::getInstance()->getConfigName();
-	}
+    public function initAppPaths ($forceReload = false)
+    {
+        if ($this->_paths && $forceReload == false)
+                return;
+
+        // setup our app paths;
+        $this->_paths=array();
+        $this->_paths['PATH_ROOT'] = $this->_getPath(PATH_ROOT);
+        $this->_paths['PATH_CORE'] = $this->_getPath(PATH_CORE);
+        $this->_paths['PATH_LIBRARY'] = $this->_getPath(PATH_LIBRARY);
+
+        $config = $this->getConfig();
+
+        if (isset($config->zephyr)){
+            if (isset($config->zephyr->pathApplication)) $this->_paths['PATH_APPLICATION'] = $this->_getPath($config->zephyr->pathApplication);
+            if (isset($config->zephyr->pathCoreApplication)) $this->_paths['PATH_CORE_APPLICATION'] = $this->_getPath($config->zephyr->pathCoreApplication);
+            if (isset($config->zephyr->pathStorage)) $this->_paths['PATH_STORAGE'] = $this->_getPath($config->zephyr->pathStorage);
+            if (isset($config->zephyr->pathPublic)) $this->_paths['PATH_PUBLIC'] = $this->_getPath($config->zephyr->pathPublic);
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public static function getConfigName ()
+    {
+        return 'host_'.$_SERVER['SERVER_NAME'];
+    }
+
+    /**
+     * @return string
+     * @throws Exception
+     */
+
+    function findConfigPath ()
+    {
+        $iniFile = 'application.ini';
+        $pathsToTry=array();
+
+        // relative to script filename
+        $scriptPath = dirname($_SERVER['SCRIPT_FILENAME']);
+        $pathsToTry[] = $scriptPath.'/application/config/'.$iniFile;
+        $pathsToTry[] = $scriptPath.'/../application/config/'.$iniFile;
+
+        // relative to current file (Zeph_Core.php)
+        $thisPath = dirname(__FILE__);
+        $pathsToTry[] = $thisPath.'/../../application/config/'.$iniFile;
+
+        foreach($pathsToTry as $path)
+        {
+            if (file_exists($path))
+                return $path;
+        }
+        throw new Exception('Unable to find config file');
+    }
 
 	/**
 	 * @return Zend_Db_Adapter_Abstract
@@ -96,11 +189,14 @@ class Zeph_Core
 	public function run ()
 	{
 		$start = microtime();
+
+        $config = $this->getConfig();
+
 		try {
 			// Create application, bootstrap, and run
 			$application = new Zend_Application(
 				    $this->getConfigName(),
-				    $this->getConfig()
+				    $config
 				);
 
 			$application

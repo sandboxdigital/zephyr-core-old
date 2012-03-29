@@ -285,15 +285,20 @@ class Tg_Site_Factory {
 		return $this->_PageTemplates;
 	}
 
-	public static function getThemePath ()
+	public static function getThemePath ($file = '')
 	{
 		$ins = self::getInstance();
 		$pre = $ins->_pathPrefix();
         $page = $ins->getCurrentPage();
         if ($page)
-		    return $pre.'themes/'.$page->getTheme()->folder;
+		    $folder = $pre.'themes/'.$page->getTheme()->folder;
         else
-		    return $pre.'themes/default';
+		    $folder = $pre.'themes/default';
+
+        if ($file)
+            return $folder.'/'.$file;
+        else
+            return $folder;
 	}
 
 	public static function getCorePath ($file='')

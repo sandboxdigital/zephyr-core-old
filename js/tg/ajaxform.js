@@ -24,6 +24,14 @@ $.fn.ajaxForm = function (options)
         return h;
     };
 
+    function highlightErrors (errArray){
+        that.find ('INPUT,SELECT').removeClass("error");
+        $.each(errArray,function(elementId,errors) {
+            $('#'+elementId).addClass('error');
+            $('#'+elementId+'-element').addClass('error');
+        });
+    };
+
     function doValidate (){
         var url = end_url;
         var data = $(that).serialize();
@@ -34,6 +42,8 @@ $.fn.ajaxForm = function (options)
                 errorBlock.find('.errors').remove();
                 errorBlock.append(getHTML(response));
                 options.onError ();
+
+                highlightErrors(response);
             }
         },'json');
     };
