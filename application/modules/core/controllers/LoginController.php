@@ -5,9 +5,8 @@ class LoginController extends Tg_Site_Controller
 	public function init() 
 	{
         parent::init();
-		
-		if ($this->_request->isXmlHttpRequest())
-			$this->_helper->layout->setLayout('ajax');
+
+        $this->setLayout('login');
     }
 
 	// display and process login form
