@@ -280,19 +280,12 @@ class Tg_Site_Route extends Zend_Controller_Router_Route_Abstract
 		$Page = Tg_Site::getInstance()->getCurrentPage ();
 	    
 		if (isset($this->_params['lang'])) {
-    	    $url = $Page->getUrl ($this->_params['lang']);
+    	    $url = $Page->getPath ($this->_params['lang']);
 	        unset ($this->_params['lang']);
 		} else
-	        $url = $Page->getUrl ();
+	        $url = $Page->getPath ();
 
        	$url = rtrim($url, self::URI_DELIMITER);
-//
-//       	dump ($url);
-//        dump ($this->_values);
-//        dump ($this->_params);
-//        dump ($Page->action);
-//        die;
-       		
         // add the action
        
     	if (isset($this->_params['action'])) {
@@ -312,7 +305,7 @@ class Tg_Site_Route extends Zend_Controller_Router_Route_Abstract
         } else {
 	    	$url .= '/index';
         }
-        
+
         foreach ($this->_params as $key => $value) {
             if (is_array($value)) {
                 foreach ($value as $arrayValue) {
@@ -326,10 +319,8 @@ class Tg_Site_Route extends Zend_Controller_Router_Route_Abstract
                 $url .= '/' . $value;
             }
         }
-        
-        
-        
-        
+
+
         return ltrim($url, self::URI_DELIMITER);
     }
 
