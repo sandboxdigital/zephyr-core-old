@@ -55,14 +55,14 @@ class Tg_File_Db_File extends Tg_Db_Table_Row_Crud
 		return '<img src="'.$this->getUrl($size).'" />';
 	}
 	
-	public function getPath () 
+	public function getPath ($size = null)
 	{
-		return Tg_File::getStorageFolder().'/'.$this->fullname;
+		return Tg_File::getStorageFolder().'/'.$this->_fullnameWithSize($size);
 	}
 	
-	public function getCachePath () 
+	public function getCachePath ($size = null)
 	{
-		return Tg_File::getCacheFolder().'/'.$this->fullname;
+		return Tg_File::getCacheFolder().'/'.$this->_fullnameWithSize($size);
 	}
 	
 	public function size($raw = false) 
