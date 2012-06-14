@@ -262,7 +262,6 @@ class Tg_Application_Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         // get our current (logged in) user
         try {
         	$user = Tg_Auth::getAuthenticatedUser();
-        
         	
 	        if ($user) {
 	            $view->currentUser = $user;

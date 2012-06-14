@@ -6,15 +6,18 @@ class IndexController extends AbstractController
 {
     public function indexAction()
     {
-		$activeConfig = $this->getActiveConfig();
-	    $activeConfigName = $this->getActiveConfigName();
+		$config = $this->getConfig();
+
+        $activeConfigFound =  $config->getSectionName()==Zeph_Config::getConfigName();
+
+	    $activeConfigName = Zeph_Config::getConfigName();
 	    $dbConnection = $this->testDbConnection();
 
 	    $checks = array(
 		    'Config' => array(
 			    array(
 				    'label'=>'Config exists for this server',
-				    'check'=>$activeConfig !== null,
+				    'check'=>$activeConfigFound,
 				    'fixUrl'=>array('controller'=>'config','action'=>'edit','section'=>$activeConfigName)
 			    ),
 		    ),
@@ -88,8 +91,8 @@ class IndexController extends AbstractController
 
 	function checkLoadingPages ()
 	{
-		Zend_Registry::getInstance()->set('siteconfig', $this->getActiveConfig()->toArray());
-		Zend_Registry::getInstance()->set('config', $this->getActiveConfig()->toArray());
+		Zend_Registry::getInstance()->set('siteconfig', $this->getConfig()->toArray());
+		Zend_Registry::getInstance()->set('config', $this->getConfig()->toArray());
 
 	    Zend_Db_Table::setDefaultAdapter($this->getDatabase());
 

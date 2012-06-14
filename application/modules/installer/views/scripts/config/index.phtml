@@ -7,7 +7,7 @@
 <?php if (!$this->activeSectionExists) {?>
 <a href="<?php echo $this->url(array('action'=>'edit','section'=>$this->activeSection))?>" style="color:red">Create config for this server</a>
 <?php } else  { ?>
-<a href="<?php echo $this->url(array('action'=>'edit','section'=>$this->activeSection))?>" style="color:red">Update config for this server</a>
+<a href="<?php echo $this->url(array('action'=>'edit','section'=>$this->activeSection))?>" style="color:green">Update config for this server</a>
 <?php }  ?>
 
 <h3>All configs</h3>

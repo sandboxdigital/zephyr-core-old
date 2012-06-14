@@ -13,6 +13,11 @@ class DbController extends AbstractController
 
     public function indexAction()
     {
+
+        $config = $this->getConfig();
+
+        $this->view->activeConfigExists =  $config->getSectionName()==Zeph_Config::getConfigName();
+
 		$dbConection = $this->testDbConnection();
         $this->view->dbConnecting = $dbConection->connecting;
 		$this->view->dbConnectingMessage = $dbConection->message;
@@ -68,7 +73,7 @@ class DbController extends AbstractController
 		$sqlErrorCode = 0;
 		$sqlCurrentStmt = '';
 
-		$db = Zend_Db::factory(Zeph_Config::getInstance()->resources->db);
+		$db = Zend_Db::factory($this->getConfig()->resources->db);
 		$pdo = $db->getConnection();
 
 
