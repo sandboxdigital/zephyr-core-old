@@ -57,7 +57,6 @@ class Tg_User_Form_User extends Tg_Form
 
 		$this->addElement('text', 'changePassword', array (
 			'label' 		=> 'Password ',
-			'required' 		=> true,
 			'filters' 	 => array('StringTrim'),
 			'validators' => array(
 				array('StringLength', false, array(3, 50))
@@ -67,7 +66,6 @@ class Tg_User_Form_User extends Tg_Form
 
 		$this->addElement('text', 'changePasswordConfirm', array (
 			'label' 		=> 'Password confirm',
-			'required' 		=> true,
 			'filters' 	 => array('StringTrim'),
 			'validators' => array(
 				array('StringLength', false, array(3, 50))

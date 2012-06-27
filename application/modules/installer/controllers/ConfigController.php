@@ -8,19 +8,20 @@ class ConfigController extends AbstractController
 	{
 		parent::init();
 
-		$this->_config = $this->getConfig();
+        $this->_config = Zeph_Config::getConfig();
+		$this->_configModifiable = Zeph_Config::getConfigModifiable();
 	}
 
     public function indexAction()
     {
 	    $sections = array();
 
-	    foreach ($this->_config as $key=>$section)
+	    foreach ($this->_configModifiable as $key=>$section)
 		    $sections[] = $key;
 
 	    $this->view->sections = $sections;
-	    $this->view->activeSection = $this->getActiveConfigName();
-	    $this->view->activeSectionExists = $this->getActiveConfig()!=null;
+	    $this->view->activeSection = Zeph_Config::getConfigName();
+	    $this->view->activeSectionExists = $this->getConfig()->getSectionName()==Zeph_Config::getConfigName();
     }
 
     public function editAction()
@@ -35,23 +36,23 @@ class ConfigController extends AbstractController
 	        {
 			    $values = $form->getValues();
 
-				if (!isset($this->_config->$prodHostName))
+				if (!isset($this->_configModifiable->$prodHostName))
 				{
-					$this->_config->$prodHostName = array ();
-					$this->_config->$prodHostName->resources = array ();
-					$this->_config->$prodHostName->resources->db = array ();
-					$this->_config->$prodHostName->resources->db->params = array ();
+					$this->_configModifiable->$prodHostName = array ();
+					$this->_configModifiable->$prodHostName->resources = array ();
+					$this->_configModifiable->$prodHostName->resources->db = array ();
+					$this->_configModifiable->$prodHostName->resources->db->params = array ();
 				}
 
-			    $this->_config->setExtend($prodHostName, 'production');
+			    $this->_configModifiable->setExtend($prodHostName, 'production');
 
-				$this->_config->$prodHostName->resources->db->params->dbname = $values['dbname'];
-				$this->_config->$prodHostName->resources->db->params->username = $values['username'];
-				$this->_config->$prodHostName->resources->db->params->password = $values['password'];
+				$this->_configModifiable->$prodHostName->resources->db->params->dbname = $values['dbname'];
+				$this->_configModifiable->$prodHostName->resources->db->params->username = $values['username'];
+				$this->_configModifiable->$prodHostName->resources->db->params->password = $values['password'];
 
 				// Write the config file
-				$writer = new Zend_Config_Writer_Ini(array('config'   => $this->_config,
-					'filename' => Zeph_Config::getInstance()->getConfigPath()));
+				$writer = new Zend_Config_Writer_Ini(array('config'   => $this->_configModifiable,
+					'filename' => Zeph_Config::findConfigPath()));
 
 				$writer->write();
 		        $this->view->messages[] = 'Config written';
@@ -60,11 +61,11 @@ class ConfigController extends AbstractController
 	    {
 		    $form->section->setValue($prodHostName);
 
-			if (isset($this->_config->$prodHostName))
+			if (isset($this->_configModifiable->$prodHostName))
 			{
-			    $form->dbname->setValue($this->_config->$prodHostName->resources->db->params->dbname);
-				$form->username->setValue($this->_config->$prodHostName->resources->db->params->username);
-				$form->password->setValue($this->_config->$prodHostName->resources->db->params->password);
+			    $form->dbname->setValue($this->_configModifiable->$prodHostName->resources->db->params->dbname);
+				$form->username->setValue($this->_configModifiable->$prodHostName->resources->db->params->username);
+				$form->password->setValue($this->_configModifiable->$prodHostName->resources->db->params->password);
 			}
 	    }
     }

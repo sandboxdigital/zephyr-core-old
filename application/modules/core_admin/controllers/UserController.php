@@ -27,7 +27,7 @@ class Core_Admin_UserController extends Tg_Site_Controller
     	$user = Tg_User::getUserById($this->_getParam ('id'));
 			
     	$form = new Tg_User_Form_User ();
-    	$form->setAction('/admin/user/user-edit');
+    	$form->setAction($this->_page->getUrl().'/user-edit');
     	
     	if ($this->_request->isPost()) {
 	        if ($form->isValid($_POST)) {
@@ -81,6 +81,13 @@ class Core_Admin_UserController extends Tg_Site_Controller
 		$this->view->user = $user;
 		$this->view->userRoles = $user->getRoles();
 		$this->view->roles = Tg_User::getRoles();
+
+        $form = new Tg_User_Form_User ();
+        $form->setDefaults($user->toArray());
+        $form->setAction($this->_page->getUrl().'/user-edit');
+        $this->view->form = $form;
+        $this->view->title = 'Edit user';
+        $this->render('user-form');
     }
 
 	public function rolesAction() 
@@ -91,7 +98,7 @@ class Core_Admin_UserController extends Tg_Site_Controller
     public function roleEditAction ()
     {    	
     	$form = new Tg_User_Form_Role ();
-    	$form->setAction('/admin/user/role-edit');
+    	$form->setAction($this->_page->getUrl().'/role-edit');
     	
     	$role = Tg_User::getRole($this->_getParam ('id'));
     	if (!$role) {

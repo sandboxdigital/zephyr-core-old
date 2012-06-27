@@ -221,6 +221,11 @@ class Tg_Site_Db_Page extends Tg_Db_Table_Row implements Zend_Acl_Resource_Inter
 		return Tg_Site::getTheme($this->themeId);
 	}
 
+    public function getPath ()
+    {
+        return $this->_path;
+    }
+
 	public function getUrl ($lang = null)
 	{
 		$prefix = Tg_Site::pathPrefix ($lang);

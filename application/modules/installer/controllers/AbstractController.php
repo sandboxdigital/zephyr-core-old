@@ -7,22 +7,12 @@ class AbstractController extends Zend_Controller_Action
 
 	public function getConfig ()
 	{
-		return Zeph_Config::getInstance()->getConfigModifiable();
-	}
-
-	public function getActiveConfigName ()
-	{
-		return 'host_'.$_SERVER['SERVER_NAME'];
-	}
-
-	public function getActiveConfig ()
-	{
-		return Zeph_Core::getInstance()->getConfig();
+		return Zeph_Config::getConfig();
 	}
 
     public function getDatabase()
     {
-	    return Zend_Db::factory($this->getActiveConfig()->resources->db);
+	    return Zend_Db::factory($this->getConfig()->resources->db);
     }
 
     public function testDbConnection()
@@ -31,7 +21,7 @@ class AbstractController extends Zend_Controller_Action
 	    $return->connecting = false;
 	    $return->tables = false;
 
-	    if ($this->getActiveConfig()) {
+	    if ($this->getConfig()) {
 		    try
 		    {
 				$db = $this->getDatabase();
@@ -59,9 +49,6 @@ class AbstractController extends Zend_Controller_Action
 	public function init()
 	{
 		parent::init();
-
-		$this->view->activeConfigName = $this->getActiveConfigName();
-		$this->view->activeConfigExists = $this->getActiveConfig() != null;
 	}
 }
 

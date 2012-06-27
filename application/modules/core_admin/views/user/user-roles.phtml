@@ -13,7 +13,7 @@ foreach ($this->userRoles as $role) {
 	?>
 <tr>
 	<td><?php echo( $role->name)?></td>
-	<td><a href="/admin/user/user-roles?user=<?php echo $this->user->id?>&role=<?php echo $role->id?>&do=DELETE" class="control delete inPageForm" title="Delete">Delete</a></td>
+	<td><a href="<?php echo $this->url(array('action'=>'user-roles','user'=>$this->user->id,'role'=>$role->id,'do'=>'DELETE'))?>" class="control delete" title="Delete">Delete</a></td>
 </tr>
 <?php }?>
 </tbody>
@@ -32,7 +32,7 @@ foreach ($this->userRoles as $role) {
 	if (!in_array($role->id,$userRoleIds)){?>
 <tr>
 	<td><?php echo ( $role->name)?></td>
-	<td><a href="/admin/user/user-roles?user=<?php echo $this->user->id?>&role=<?php echo $role->id?>&do=ADD" class="control add inPageForm" title="Add">Add</a></td>
+	<td><a href="<?php echo $this->url(array('action'=>'user-roles','user'=>$this->user->id,'role'=>$role->id,'do'=>'ADD'))?>" class="control add" title="Add">Add</a></td>
 </tr>
 <?php }
 }?>
