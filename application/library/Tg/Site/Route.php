@@ -101,6 +101,7 @@ class Tg_Site_Route extends Zend_Controller_Router_Route_Abstract
 		$this->_values['module'] = $Page->getTemplate()->module;
 		$this->_values['action'] = 'index';
 
+        Tg_Log::log(__CLASS__.'->'.__FUNCTION__.' '.$path);
         
         if ($path != '') {        	
 			// remove prefix - if there is one
