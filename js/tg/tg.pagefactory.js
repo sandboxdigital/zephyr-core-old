@@ -39,18 +39,25 @@ Tg.PageFactory = Ext.extend(Ext.util.Observable, {
 	    return false;
 	}
 
-	, _findPage: function (node, pageId) {
-	    if (node['id'] == pageId)
-	        return node;
+    , findPath: function (pageId) {
+        var path = this._findPath (this.pages, pageId)
+        return path;
+    }
 
-	    for (var i = 0; i < node['pages'].length; i++) {
-	        var returnNode = this._findPage(node['pages'][i], pageId);
-	        if (returnNode != null)
-	            return returnNode;
-	    }
+    , _findPath : function (node, pageId) {
+        if (node['id'] == pageId)
+            return "/";
 
-	    return null;
-	}
+        for (var i = 0; i < node['pages'].length; i++) {
+            var returnNode = this._findPath(node['pages'][i], pageId);
+            if (returnNode != null)
+            {
+                return "/"+node['pages'][i].name+returnNode;
+            }
+        }
+
+        return null;
+    }
 
 	, findPage: function (pageId) {
 	    return this._findPage(this.pages, pageId)

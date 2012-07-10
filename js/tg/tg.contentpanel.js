@@ -47,13 +47,13 @@ Tg.ContentPanel = Ext.extend(Ext.Panel, {
 	        scope: this,
 	        handler: this.onSave
 	    });
-//	    tbar.push({
-//	        text: 'Preview',
-//	        icon: '/core/images/icons/page_white_magnify.png',
-//	        cls: 'x-btn-icon-text',
-//	        scope: this,
-//	        handler: this.onPreview
-//	    });
+	    tbar.push({
+	        text: 'Preview',
+	        icon: '/core/images/icons/page_white_magnify.png',
+	        cls: 'x-btn-icon-text',
+	        scope: this,
+	        handler: this.onPreview
+	    });
 	    
 	    
 	    if (!this.hideVersions) {
@@ -191,8 +191,12 @@ Tg.ContentPanel = Ext.extend(Ext.Panel, {
         //c("onAfterRender");
     }
 
-	, onPreview: function (cb) {
-	    window.open(pageTree.currentNode.attributes.url + "?version=-1", "tgPreview");
+	, onPreview: function () {
+        this.mask();
+        this.form.save()
+
+        var path = Tg.PageFactory.findPath (pageTree.currentNode.attributes.id);
+        window.open(path + "?version=-1", "tgPreview");
 	}
 
     , onItemCheck: function (cb) {

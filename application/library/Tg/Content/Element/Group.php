@@ -45,6 +45,11 @@ class Tg_Content_Element_Group extends Tg_Content_Element_Abstract implements Se
 		return 'Tg_Content_Element_Group does not return a string use group[0]';
 	}
 
+    function toArray ()
+    {
+        return $this->_options;
+    }
+
 	public function toJson ()
 	{
 		$jsonElements = array ();
