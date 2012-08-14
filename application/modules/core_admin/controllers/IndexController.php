@@ -99,12 +99,34 @@ class Core_Admin_IndexController extends Tg_Site_Controller
     // TODO - check user has privs to move page
     public function sitePageMoveAction ()
     {
-    	$Pm = Tg_Site::getInstance();    	
-    	$Parent = $Pm->getPageById($this->_getParam("parentId"));
-    	$Parent->movePage ($this->_getParam("pageId"), $this->_getParam("previousSiblingId",0));
-		
-		echo '{"success":true,"msg":"Move successful"}';
-		die;
+
+        $response = new stdClass();
+        $response->success = true;
+        $response->msg = 'Success';
+
+        try {
+            $Pm = Tg_Site::getInstance();
+            $Parent = $Pm->getPageById($this->_getParam("parentId"));
+            $Page = $Pm->getPageById($this->_getParam("pageId"));
+
+            foreach ($Parent->getPages() as $subPage )
+            {
+                if ($subPage->name == $Page->name)
+                {
+                    throw new Zend_Exception ("Page move failed - path already used");
+                }
+            }
+
+            $Parent->movePage ($this->_getParam("pageId"), $this->_getParam("previousSiblingId",0));
+
+        } catch (Zend_Exception $exp)
+        {
+            $response->success = false;
+            $response->msg = $exp->getMessage ();
+        }
+
+        echo Zend_Json::encode ($response);
+        die;
     }
 
     // TODO - check user has privs to delete page

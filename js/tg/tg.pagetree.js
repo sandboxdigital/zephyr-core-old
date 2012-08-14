@@ -153,15 +153,22 @@ Tg.PageTree = Ext.extend(Ext.tree.TreePanel, {
             url: url,
             params: params,
             success: function (response, request) {
+                var json = Ext.util.JSON.decode(response.responseText);
 
-                // if the first char of our response is not 1, then we fail the operation,
-                // otherwise we re-enable the tree
+                if (json.success == false)
+                {
+                    tree.suspendEvents();
+                    oldParent.appendChild(node);
+                    if (oldNextSibling) {
+                        oldParent.insertBefore(node, oldNextSibling);
+                    }
 
-                //                if (response.responseText.charAt(0) != 1) {
-                //                    request.failure();
-                //                } else {
+                    tree.resumeEvents();
+
+                    Ext.Msg.alert('Failure', json.msg);
+                }
+
                 tree.enable();
-                //                }
             },
             failure: function () {
 
