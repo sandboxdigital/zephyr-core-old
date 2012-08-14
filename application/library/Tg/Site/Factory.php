@@ -238,7 +238,7 @@ class Tg_Site_Factory {
      * @return Tg_Site_Db_Page $page
      */
 	function &getPage ($path, $strict=false) {
-		$currentPage = &$this->getRootPage();
+		$currentPage = $this->getRootPage();
 		
 		$path = trim ($path, '/');
 		
@@ -256,7 +256,7 @@ class Tg_Site_Factory {
      * @return Tg_Site_Db_Page
      */
 	function getPageById ($id) {
-		$currentPage = &$this->getRootPage();
+		$currentPage = $this->getRootPage();
 		
 		if ($id == $currentPage->id)
 			return $currentPage;

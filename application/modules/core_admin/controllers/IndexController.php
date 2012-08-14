@@ -45,20 +45,38 @@ class Core_Admin_IndexController extends Tg_Site_Controller
     		$parentId = $this->_getParam ('parentId',0);
     		
     		if ($pageId<=0 && $parentId<=0)
-				throw new Exception ("Page updated failed - no page id or parentId");
+				throw new Zend_Exception ("Page updated failed - no page id or parentId");
     		elseif ($pageId>0) {
 		    	$Page = Tg_Site::getInstance ()->getPageById($pageId);
 				if (!$Page)
-					throw new Exception ("Page updated failed - page not found");
-					
+					throw new Zend_Exception ("Page updated failed - page not found");
+
+                foreach ($Page->getParent()->getPages() as $subPage)
+                {
+                    if ($subPage->name == $_POST['name'] && $subPage->id != $_POST['id'])
+                    {
+                        throw new Zend_Exception ("Page updated failed - path already used");
+                    }
+                }
+
+
 				$Page->update ($_POST);
 				
 				$response->msg = "Page updated";
 			} elseif ($parentId>0) {
 				$Parent = Tg_Site::getInstance ()->getPageById($this->_getParam ('parentId'));
 				if (!$Parent)
-					throw new Exception ("Page updated failed - parent page not found");
-				
+					throw new Zend_Exception ("Page updated failed - parent page not found");
+
+
+                foreach ($Parent->getPages() as $subPage)
+                {
+                    if ($subPage->name == $_POST['name'])
+                    {
+                        throw new Zend_Exception ("Page updated failed - path already used");
+                    }
+                }
+
 				$Page = Tg_Site::getInstance ()->appendPage ($_POST, $Parent);
 				
 				$response->msg = "Page added";
@@ -81,12 +99,34 @@ class Core_Admin_IndexController extends Tg_Site_Controller
     // TODO - check user has privs to move page
     public function sitePageMoveAction ()
     {
-    	$Pm = Tg_Site::getInstance();    	
-    	$Parent = $Pm->getPageById($this->_getParam("parentId"));
-    	$Parent->movePage ($this->_getParam("pageId"), $this->_getParam("previousSiblingId",0));
-		
-		echo '{"success":true,"msg":"Move successful"}';
-		die;
+
+        $response = new stdClass();
+        $response->success = true;
+        $response->msg = 'Success';
+
+        try {
+            $Pm = Tg_Site::getInstance();
+            $Parent = $Pm->getPageById($this->_getParam("parentId"));
+            $Page = $Pm->getPageById($this->_getParam("pageId"));
+
+            foreach ($Parent->getPages() as $subPage )
+            {
+                if ($subPage->name == $Page->name)
+                {
+                    throw new Zend_Exception ("Page move failed - path already used");
+                }
+            }
+
+            $Parent->movePage ($this->_getParam("pageId"), $this->_getParam("previousSiblingId",0));
+
+        } catch (Zend_Exception $exp)
+        {
+            $response->success = false;
+            $response->msg = $exp->getMessage ();
+        }
+
+        echo Zend_Json::encode ($response);
+        die;
     }
 
     // TODO - check user has privs to delete page

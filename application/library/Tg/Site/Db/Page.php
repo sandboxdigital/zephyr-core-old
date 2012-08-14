@@ -315,7 +315,9 @@ class Tg_Site_Db_Page extends Tg_Db_Table_Row implements Zend_Acl_Resource_Inter
 			$page->save();
 		}
 
-		$page->initPage ($this, Tg_Site::getInstance());
+        $inst = Tg_Site::getInstance();
+
+		$page->initPage ($this, $inst);
 
 		return $page;
 	}
