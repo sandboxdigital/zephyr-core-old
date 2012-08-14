@@ -72,10 +72,17 @@ class Tg_Content_Element_GroupOption extends Tg_Content_Element_Abstract
 	
 	public function addElement ($type, $id, $xml)
 	{
-		$elementClassName = "Tg_Content_Element_".ucfirst($type);
-		$element = new $elementClassName ($xml);
-		
-		$this->_elements[$id] = $element;
+        $namespace = (string)$xml->attributes()->namespace;
+
+        if (empty($namespace) || strlen($namespace)==0 || $namespace =='undefined')
+            $namespace = 'Tg_Content_Element_';
+        else
+            $namespace = $namespace.'_';
+
+        $elementClassName = $namespace.ucfirst($type);
+        $element = new $elementClassName ($xml);
+
+        $this->_elements[$id] = $element;
 	}
 	
 	public function getElement ($id)

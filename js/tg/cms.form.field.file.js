@@ -127,6 +127,7 @@ CMS.Form.Field.File = $.inherit(
 	        var el = xmlDoc.createElement(this.type);
 	        el.setAttribute("id", this.id);
 		    el.setAttribute("uid", this.uid);
+            el.setAttribute("namespace", this.namespace);
 	        
 	        if (this.file != null) {
 		        el.setAttribute("url", this.file.url);

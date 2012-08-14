@@ -21,8 +21,9 @@ class Tg_Mail_Form extends Tg_Mail
 		foreach ($form->getElements() as $element)
 		{
 			$type = $element->getType();
-			if ($type != 'Zend_Form_Element_Submit')
-				$this->body .= $element->getLabel().':<br />'.$element->getValue().'<br /><br />';			
+            $label = $element->getLabel();
+			if ($type != 'Zend_Form_Element_Submit' && !empty($label))
+				$this->body .= $label.':<br />'.$element->getValue().'<br /><br />';
 		}		
 				
 		parent::send();

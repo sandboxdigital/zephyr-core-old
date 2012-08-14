@@ -10,6 +10,9 @@ class Tg_Form_Ajax extends Tg_Form
 
 	public function __construct($options = array())
 	{
+        if (empty($options['id']))
+            $options['id'] = 'ajaxForm'.rand(0,10000);
+
 		parent::__construct($options);
 	}
 
@@ -36,6 +39,13 @@ class Tg_Form_Ajax extends Tg_Form
 			return $valid ? Tg_Form_Ajax::RETURN_NONAJAX_SUCCESS:Tg_Form_Ajax::RETURN_NONAJAX_FAIL;
 		}
 	}
+
+    public function render($v = null)
+    {
+        $return = parent::render($v);
+
+        return $return;
+    }
 
     /**
      * Process submitted AJAX data

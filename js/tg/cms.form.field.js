@@ -19,6 +19,7 @@ CMS.Form.Field = $.inherit(
             this.label = $(xml).attr("label") ? $(xml).attr("label") : this.id.ucWord();
             this.required = $(xml).attr("required") ? $(xml).attr("required") == "true" : false;
             this.uid = $(xml).attr("uid");
+            this.namespace = $(xml).attr("namespace");
             if (this.uid == undefined || this.uid == '' || this.uid == null)
             {
                 // TODO - add check to see if this uid is infact unique
@@ -71,7 +72,10 @@ CMS.Form.Field = $.inherit(
 			
 		, getValue : function ()
 		{
-			return CMS.Form.stripInvalidXmlChars (this.value);
+            if (this.value)
+			    return CMS.Form.stripInvalidXmlChars (this.value);
+            else
+                return '';
 		}
 
         ,isValid: function () {
@@ -98,6 +102,7 @@ CMS.Form.Field = $.inherit(
 		    var el = xmlDoc.createElement(this.type);
 		    el.setAttribute("id", this.id);
 		    el.setAttribute("uid", this.uid);
+            el.setAttribute("namespace", this.namespace);
 
 		    if (this.value) {
 		        var newCDATA = xmlDoc.createCDATASection(this.getValue());
