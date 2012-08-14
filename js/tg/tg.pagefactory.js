@@ -230,6 +230,8 @@ Tg.PageFactory = Ext.extend(Ext.util.Observable, {
 		        }
             },
             failure: function (form, action) {
+                c(form);
+                c(action);
                 switch (action.failureType) {
                     case Ext.form.Action.CLIENT_INVALID:
                         Ext.Msg.alert('Failure', 'Form fields may not be submitted with invalid values');

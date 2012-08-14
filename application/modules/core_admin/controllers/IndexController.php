@@ -45,20 +45,38 @@ class Core_Admin_IndexController extends Tg_Site_Controller
     		$parentId = $this->_getParam ('parentId',0);
     		
     		if ($pageId<=0 && $parentId<=0)
-				throw new Exception ("Page updated failed - no page id or parentId");
+				throw new Zend_Exception ("Page updated failed - no page id or parentId");
     		elseif ($pageId>0) {
 		    	$Page = Tg_Site::getInstance ()->getPageById($pageId);
 				if (!$Page)
-					throw new Exception ("Page updated failed - page not found");
-					
+					throw new Zend_Exception ("Page updated failed - page not found");
+
+                foreach ($Page->getParent()->getPages() as $subPage)
+                {
+                    if ($subPage->name == $_POST['name'] && $subPage->id != $_POST['id'])
+                    {
+                        throw new Zend_Exception ("Page updated failed - path already used");
+                    }
+                }
+
+
 				$Page->update ($_POST);
 				
 				$response->msg = "Page updated";
 			} elseif ($parentId>0) {
 				$Parent = Tg_Site::getInstance ()->getPageById($this->_getParam ('parentId'));
 				if (!$Parent)
-					throw new Exception ("Page updated failed - parent page not found");
-				
+					throw new Zend_Exception ("Page updated failed - parent page not found");
+
+
+                foreach ($Parent->getPages() as $subPage)
+                {
+                    if ($subPage->name == $_POST['name'])
+                    {
+                        throw new Zend_Exception ("Page updated failed - path already used");
+                    }
+                }
+
 				$Page = Tg_Site::getInstance ()->appendPage ($_POST, $Parent);
 				
 				$response->msg = "Page added";
