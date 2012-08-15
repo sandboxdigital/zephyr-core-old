@@ -109,11 +109,13 @@ class Core_Admin_IndexController extends Tg_Site_Controller
             $Parent = $Pm->getPageById($this->_getParam("parentId"));
             $Page = $Pm->getPageById($this->_getParam("pageId"));
 
-            foreach ($Parent->getPages() as $subPage )
-            {
-                if ($subPage->name == $Page->name)
+            if ($Page->getParent()->id != $Parent->id) {
+                foreach ($Parent->getPages() as $subPage )
                 {
-                    throw new Zend_Exception ("Page move failed - path already used");
+                    if ($subPage->name == $Page->name)
+                    {
+                        throw new Zend_Exception ("Page move failed - path already used");
+                    }
                 }
             }
 
