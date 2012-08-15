@@ -22,6 +22,7 @@ class Zeph_Core
 		$autoLoader->registerNamespace('Zeph');
 		$autoLoader->registerNamespace('Tg');
 		$autoLoader->registerNamespace('Tgx');
+        $autoLoader->registerNamespace('App');
 	}
 
 	/**
