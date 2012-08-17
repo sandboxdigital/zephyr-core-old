@@ -4,7 +4,7 @@ class Tg_Db_Table_Crud extends Tg_Db_Table
 {
 //    protected $_rowClass = 'Tg_Db_Table_Row_Crud';
 	
-	public function insert ($data) 
+	public function insert (array $data)
 	{
 		// load meta data
     	$cols = $this->_getCols();
@@ -18,7 +18,7 @@ class Tg_Db_Table_Crud extends Tg_Db_Table
 		return parent::insert($data);
 	}
 	
-	public function update ($data, $where) 
+	public function update (array $data, $where)
 	{
 		// load meta data
     	$cols = $this->_getCols();

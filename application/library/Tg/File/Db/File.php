@@ -72,7 +72,12 @@ class Tg_File_Db_File extends Tg_Db_Table_Row_Crud
 	
 	public function getImageSize ()
 	{
-		return getimagesize($this->getPath());
+		$size = @getimagesize($this->getPath());
+        if ($size)
+            return $size;
+        else
+            return 0;
+
 	}
 
 	public function getExtension ($name = '') {
