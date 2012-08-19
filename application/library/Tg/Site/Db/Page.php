@@ -117,6 +117,47 @@ class Tg_Site_Db_Page extends Tg_Db_Table_Row implements Zend_Acl_Resource_Inter
 		return $ancestors;
 	}
 
+    function getPreviousSibling()
+    {
+        $pages = array ();
+        foreach ($this->getParent()->getPages() as $page) {
+            $pages[] = $page;
+        }
+
+
+        $current = 0;
+        for ($i=0;$i<count($pages);$i++)
+        {
+            if ($pages[$i]->id == $this->id)
+            {
+                $current = $i;
+                break;
+            }
+        }
+
+        return $current>0?$pages[$current-1]:$pages[count($pages)-1];
+        $this->view->next = $current<count($pages)-1?$pages[$current+1]:$pages[0];
+    }
+
+    function getNextSibiling ()
+    {
+        $pages = array ();
+        foreach ($this->getParent()->getPages() as $page) {
+            $pages[] = $page;
+        }
+        $current = 0;
+        for ($i=0;$i<count($pages);$i++)
+        {
+            if ($pages[$i]->id == $this->id)
+            {
+                $current = $i;
+                break;
+            }
+        }
+
+        return $current<count($pages)-1?$pages[$current+1]:$pages[0];
+    }
+
 
 	/**
 	 * Returns a pages ancestor determined by index
