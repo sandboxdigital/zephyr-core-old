@@ -502,6 +502,11 @@ class Tg_Site_Db_Page extends Tg_Db_Table_Row implements Zend_Acl_Resource_Inter
 		    	};
 		    }
 
+
+            $roles = $this->getRoles();
+
+            $pageNode['roles'] = $roles;
+
 	    	return $pageNode;
 		} else
 			return null;

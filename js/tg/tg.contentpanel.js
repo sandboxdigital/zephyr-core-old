@@ -18,71 +18,15 @@ Tg.ContentPanel = Ext.extend(Ext.Panel, {
 	,loadData : null
 
 	, constructor: function (config) {
-	    //this.updateVersions (versions);
-
-		this.grid = new Tg.VersionGrid({
-			title: 'Versions',
-			xtype: "versiongrid",
-		    autoScroll: true
-			});
-		this.grid.contentPanel = this;
-	
-	    this.versionsMenu = new Ext.menu.Menu({
-	        id: 'mainMenu',
-	        items: []
-	    });
-	    
-
-	    this.versionsButton = new Ext.Button({
-	        cls: 'x-btn-text', // text class
-	        text: 'Version: 1',
-	        menu: this.versionsMenu
-	    });
-
-	    var tbar = [];
-	    tbar.push({
-	        text: 'Save',
-	        icon: '/core/images/icons/disk.png',
-	        cls: 'x-btn-icon-text',
-	        scope: this,
-	        handler: this.onSave
-	    });
-	    tbar.push({
-	        text: 'Preview',
-	        icon: '/core/images/icons/page_white_magnify.png',
-	        cls: 'x-btn-icon-text',
-	        scope: this,
-	        handler: this.onPreview
-	    });
-	    
-	    
-	    if (!this.hideVersions) {
-			tbar.push("->");
-
-//	        tbar.push({
-//	            text: 'Publish',
-//	            icon: '/core/images/icons/world.png',
-//	            cls: 'x-btn-icon-text',
-//	            scope: this,
-//	            handler: this.onPublish
-//	        });
-
-	        tbar.push(this.versionsButton);
-	    }
 	    
 	    this.tabPanel = new Ext.TabPanel ({
 			region: 'center',
 			xtype: 'tabpanel',
 			stateful:true,
 			items: [
-			    {
-				title: 'Content',
-				tbar: tbar,
-				html: '<div id="contentPanelBody">Loading</div>',
-				xtype: "panel",
-			    autoScroll: true
-				}
-				,this.grid
+                this.getTabContent()
+				,this.getTabVersions()
+                ,this.getTabPermissions()
 			]
 			});
 
@@ -90,7 +34,6 @@ Tg.ContentPanel = Ext.extend(Ext.Panel, {
 	    
 	    config = Ext.apply(
             {
-//            title:'Content',
 			cls:'CmsContentPanel',
 			region: 'center',
 			xtype: 'tabpanel',
@@ -112,6 +55,117 @@ Tg.ContentPanel = Ext.extend(Ext.Panel, {
 	    }
         ]);
 	}
+
+    , getTabContent : function ()
+    {
+        //this.updateVersions (versions);
+
+        this.versionsMenu = new Ext.menu.Menu({
+            id: 'mainMenu',
+            items: []
+        });
+
+        this.versionsButton = new Ext.Button({
+            cls: 'x-btn-text', // text class
+            text: 'Version: 1',
+            menu: this.versionsMenu
+        });
+
+        var tbar = [];
+        tbar.push({
+            text: 'Save',
+            icon: '/core/images/icons/disk.png',
+            cls: 'x-btn-icon-text',
+            scope: this,
+            handler: this.onSave
+        });
+        tbar.push({
+            text: 'Preview',
+            icon: '/core/images/icons/page_white_magnify.png',
+            cls: 'x-btn-icon-text',
+            scope: this,
+            handler: this.onPreview
+        });
+
+        if (!this.hideVersions) {
+            tbar.push("->");
+
+//	        tbar.push({
+//	            text: 'Publish',
+//	            icon: '/core/images/icons/world.png',
+//	            cls: 'x-btn-icon-text',
+//	            scope: this,
+//	            handler: this.onPublish
+//	        });
+
+            tbar.push(this.versionsButton);
+        }
+
+        return {
+            title: 'Content',
+            tbar: tbar,
+            html: '<div id="contentPanelBody">Loading</div>',
+            xtype: "panel",
+            autoScroll: true
+        }
+
+    }
+
+    , getTabVersions : function ()
+    {
+        this.grid = new Tg.VersionGrid({
+            title: 'Versions',
+            xtype: "versiongrid",
+            autoScroll: true
+        });
+        this.grid.contentPanel = this;
+
+        return this.grid;
+    }
+
+    , getTabPermissions : function ()
+    {
+
+
+//        var tbar = [];
+//        tbar.push({
+//            text: 'Save',
+//            icon: '/core/images/icons/disk.png',
+//            cls: 'x-btn-icon-text',
+//            scope: this,
+//            handler: this.onSave
+//        });
+//        tbar.push({
+//            text: 'Preview',
+//            icon: '/core/images/icons/page_white_magnify.png',
+//            cls: 'x-btn-icon-text',
+//            scope: this,
+//            handler: this.onPreview
+//        });
+//
+//        if (!this.hideVersions) {
+//            tbar.push("->");
+//
+////	        tbar.push({
+////	            text: 'Publish',
+////	            icon: '/core/images/icons/world.png',
+////	            cls: 'x-btn-icon-text',
+////	            scope: this,
+////	            handler: this.onPublish
+////	        });
+//
+//            tbar.push(this.versionsButton);
+//        }
+
+//        {
+//            title: 'Permissions',
+//                tbar: tbar,
+//            html: '<div id="contentPanelBody">Loading</div>',
+//            xtype: "panel",
+//            autoScroll: true
+//        }
+        return Tg.PermissionForm ();
+    }
 
     , showSource: function () {
         this.form.isValid();
@@ -449,3 +503,54 @@ Tg.VersionGrid = Ext.extend(Ext.grid.GridPanel, {
 });
 
 Ext.reg('versiongrid', Tg.VersionGrid);
+
+
+Tg.PermissionForm = Ext.extend(Ext.form.FormPanel, {
+    region: 'center',
+    title: "Sample Form",
+    layout: 'fit',
+    doSomething: function(a) {
+        this.getForm().findField('node').setValue(a);
+    },
+    doSomethingElse: function() {
+        this.getForm().findField('node').setValue('');
+    },
+    initComponent: function() {
+        Ext.apply(this, {
+            items: {
+                xtype: 'fieldset',
+                labelPad: 10,
+                defaultType: 'textfield',
+                labelAlign: 'right',
+                items: [
+                    {
+                        xtype: 'field',
+                        id: 'node',
+                        name: 'node',
+                        fieldLabel: 'Selected Node',
+                        labelSeparator: '',
+                        width: 250
+                    }
+                ]
+            }
+
+        });
+        Tg.PermissionForm.superclass.initComponent.call(this);
+
+        //  Add a listener for nodeSelected event
+        this.on('nodeSelected',
+            function(a, b) {
+                // call my method when nodeSelected event is fired
+                this.doSomething(a)
+            });
+
+        //  Add a listener for rootSelected event
+        this.on('rootSelected',
+            function() {
+                // call my method when rootSelected event is fired
+                this.doSomethingElse()
+            });
+    }
+});
+
+Ext.reg('permissionForm', Tg.PermissionForm);

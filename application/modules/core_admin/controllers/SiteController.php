@@ -27,7 +27,7 @@ class Core_Admin_SiteController extends Tg_Content_Controller
     {
 		$this->view->headScript()->appendFile(Tg_Site::getCorePath('js/admin/site_page.js'));
 		
-		$this->view->pageNodes = Tg_Site::getInstance()->getRootPage()->toJson('read') ;
+		$this->view->pageNodes = Tg_Site::getInstance()->getRootPage()->toJson('write') ;
 		$this->view->themeNodes = Zend_Json::encode (Tg_Site::getThemesAsArray());
 		$this->view->templateNodes = Zend_Json::encode (Tg_Site::getTemplatesAsArray());
 	    $this->view->adminPath = Tg_Site::getInstance()->getPage('/admin')->getUrl();
@@ -106,7 +106,7 @@ class Core_Admin_SiteController extends Tg_Content_Controller
 		$this->view->headScript()->appendFile('/core/js/tg/tg.pagetree.js');
 		$this->view->headScript()->appendFile('/core/js/tg/tg.pagefactory.js');
 		
-		$this->view->pageNodes = Tg_Site::getInstance()->getRootPage()->toJson('read') ;
+		$this->view->pageNodes = Tg_Site::getInstance()->getRootPage()->toJson('write') ;
 		$this->view->layoutNodes = Zend_Json::encode (Tg_Site::getThemesAsArray());
 		$this->view->templateNodes = Zend_Json::encode (Tg_Site::getTemplatesAsArray());
     }
@@ -266,7 +266,16 @@ class Core_Admin_SiteController extends Tg_Content_Controller
     }
     
     
-    public function pageListAction () {
+    public function pageListAction ()
+    {
+
+    }
+
+    public function pageDebugAction ()
+    {
+        $page = Tg_Site::getInstance()->getPage('/admin');
+        dump($page->toStdObject('read'));
+        die;
     }
     
     public function pageMoveToAction () 

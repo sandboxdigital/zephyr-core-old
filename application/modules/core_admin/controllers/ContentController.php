@@ -27,7 +27,7 @@ class Core_Admin_ContentController extends Tg_Content_Controller
     {
 		$this->view->headScript()->appendFile(Tg_Site::getCorePath('js/admin/content_index.js'));
 		
-		$this->view->pageNodes = Tg_Site::getInstance()->getRootPage()->toJson('read') ;
+		$this->view->pageNodes = Tg_Site::getInstance()->getRootPage()->toJson('write') ;
 		$this->view->layoutNodes = Zend_Json::encode (Tg_Site::getThemesAsArray());
 		$this->view->templateNodes = Zend_Json::encode (Tg_Site::getTemplatesAsArray());
 	    $this->view->adminPath = Tg_Site::getInstance()->getPage('/admin')->getUrl();
