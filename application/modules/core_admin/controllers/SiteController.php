@@ -140,74 +140,104 @@ class Core_Admin_SiteController extends Tg_Content_Controller
 		$this->view->form = $Form;
     }
 
-    public function pageRolesAction ()
-    {    	
-    	$Page = Tg_Site::getInstance ()->getPageById($this->_getParam ('id'));
-		if (!$Page)
-			throw new Exception ("Page not found");
-			
-		$this->view->roles = Tg_User::getRoles();
-		$this->view->pageRoles = $Page->getRoles();
-		$this->view->page = $Page;
+    public function pagePermissionsAction ()
+    {
+        $pageId = $this->_getParam ('pageId');
+
+        $roles = Tg_User::getRoles ();
+        $user = Tg_Auth::getAuthenticatedUser();
+
+        // can only change if user has role - if they don't have role they can't edit
+        // TODO check they have write perms to page
+        foreach ($roles as $role)
+        {
+            if ($user->hasRole($role->aclId))
+            {
+                Tg_Site_Acl::deleteRoleFromPage($pageId, $role->id);
+                $privs = array();
+                if ($this->_getParam ('role_'.$role->id.'_read'))
+                    $privs[]='read';
+                if ($this->_getParam ('role_'.$role->id.'_write'))
+                    $privs[]='write';
+
+                if (count($privs)>0)
+                    Tg_Site_Acl::addRoleToPage($pageId, $role->id, implode(',',$privs));
+            }
+        }
+
+        echo '{success:true}';
+        die;
     }
 
-    public function pageRoleAddAction ()
-    {
-    	Tg_Site_Acl::addRoleToPage($this->_getParam ('page'), $this->_getParam ('role'));
-			
-		$Page = Tg_Site::getInstance ()->getPageById($this->_getParam ('page'));
-			
-		$this->view->roles = Tg_User::getRoles();
-		$this->view->pageRoles = $Page->getRoles();
-		$this->view->page = $Page;
-		
-		$this->render ('page-roles');
-    }
+//
+//    public function pageRolesAction ()
+//    {
+//    	$Page = Tg_Site::getInstance ()->getPageById($this->_getParam ('id'));
+//		if (!$Page)
+//			throw new Exception ("Page not found");
+//
+//		$this->view->roles = Tg_User::getRoles();
+//		$this->view->pageRoles = $Page->getRoles();
+//		$this->view->page = $Page;
+//    }
 
-    public function pageRoleDeleteAction ()
-    {
-    	Tg_Site_Acl::deleteRoleFromPage($this->_getParam ('page'), $this->_getParam ('role'));
-			
-		$Page = Tg_Site::getInstance ()->getPageById($this->_getParam ('page'));
-			
-		$this->view->roles = Tg_User::getRoles();
-		$this->view->pageRoles = $Page->getRoles();
-		$this->view->page = $Page;
-		
-		$this->render ('page-roles');
-    }
-
-    public function pageEditPropertiesAction ()
-    {
-		if (!($Page = Tg_Site::getInstance ()->getPageById($this->_getParam ('id'))))
-			throw new Exception ("Page not found");
-			
-    	$Form = new Tg_Site_Form_Page ($Page);
-    	$Form->setAction('/admin/site/page-edit-properties');
-    	if ($this->_request->isPost()) {
-	        if ($Form->isValid($_POST)) {
-				$Page->update ($Form->getValues ());
-				$this->view->message = "Updated";
-			}
-    	} else
-    		$Form->setDefaults($Page->toArray());
-    		
-		$this->view->Page = $Page;
-		$this->view->form = $Form;
-    }
-
-    public function pagePropertiesDeleteAction ()
-    {
-		if (!($Page = Tg_Site::getInstance ()->getPageById($this->_getParam ('id'))))
-			throw new Exception ("Page not found");
-		
-		$Page->propertiesXML = '';
-    	$Page->save ();
-    	
-    	echo 'cleared';
-    	die;
-    	
-    }
+//    public function pageRoleAddAction ()
+//    {
+//    	Tg_Site_Acl::addRoleToPage($this->_getParam ('page'), $this->_getParam ('role'));
+//
+//		$Page = Tg_Site::getInstance ()->getPageById($this->_getParam ('page'));
+//
+//		$this->view->roles = Tg_User::getRoles();
+//		$this->view->pageRoles = $Page->getRoles();
+//		$this->view->page = $Page;
+//
+//		$this->render ('page-roles');
+//    }
+//
+//    public function pageRoleDeleteAction ()
+//    {
+//    	Tg_Site_Acl::deleteRoleFromPage($this->_getParam ('page'), $this->_getParam ('role'));
+//
+//		$Page = Tg_Site::getInstance ()->getPageById($this->_getParam ('page'));
+//
+//		$this->view->roles = Tg_User::getRoles();
+//		$this->view->pageRoles = $Page->getRoles();
+//		$this->view->page = $Page;
+//
+//		$this->render ('page-roles');
+//    }
+//
+//    public function pageEditPropertiesAction ()
+//    {
+//		if (!($Page = Tg_Site::getInstance ()->getPageById($this->_getParam ('id'))))
+//			throw new Exception ("Page not found");
+//
+//    	$Form = new Tg_Site_Form_Page ($Page);
+//    	$Form->setAction('/admin/site/page-edit-properties');
+//    	if ($this->_request->isPost()) {
+//	        if ($Form->isValid($_POST)) {
+//				$Page->update ($Form->getValues ());
+//				$this->view->message = "Updated";
+//			}
+//    	} else
+//    		$Form->setDefaults($Page->toArray());
+//
+//		$this->view->Page = $Page;
+//		$this->view->form = $Form;
+//    }
+//
+//    public function pagePropertiesDeleteAction ()
+//    {
+//		if (!($Page = Tg_Site::getInstance ()->getPageById($this->_getParam ('id'))))
+//			throw new Exception ("Page not found");
+//
+//		$Page->propertiesXML = '';
+//    	$Page->save ();
+//
+//    	echo 'cleared';
+//    	die;
+//
+//    }
 
     public function pageDeleteAction ()
     {

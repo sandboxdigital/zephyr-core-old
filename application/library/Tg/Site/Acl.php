@@ -124,11 +124,15 @@ class Tg_Site_Acl
 		}
 	}
 
-	public static function addRoleToPage ($pageId, $roleId)
+	public static function addRoleToPage ($pageId, $roleId, $privilege='read')
 	{
 		$inst = self::getInstance();
 		
-		$data = array ('pageId'=>$pageId, 'roleId'=>$roleId);
+		$data = array (
+            'pageId'=>$pageId,
+            'roleId'=>$roleId,
+            'privilege'=>$privilege
+        );
 		
 		$pages = new Tg_Site_Db_PageRoles ();
 		if (!$pages->exists($data))		

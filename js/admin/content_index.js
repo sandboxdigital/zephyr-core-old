@@ -13,13 +13,6 @@ Ext.onReady(function() {
 
 function loadContent (pageNode)
 {
-    var template = Tg.PageFactory.findTemplate (pageNode.attributes.templateId);
-
-    var data = {
-		"contentTemplateId":template.contentTemplateId,
-		"contentId":"SitePage"+pageNode.attributes.id
-		};
-        
-    contentPanel.load (data);
+    contentPanel.load (pageNode);
 }
 

@@ -158,18 +158,7 @@ function createForm() {
                     name: 'action',
                     fieldLabel: 'Override action',
                     anchor: '95%'
-                }
-                /*, {
-                    xtype: 'textfield',
-                    name: 'metaDescription',
-                    fieldLabel: 'Description',
-                    anchor: '95%'
-                }, {
-                    xtype: 'textfield',
-                    name: 'metaKeywords',
-                    fieldLabel: 'Keywords',
-                    anchor: '95%'
-                }*/]
+                }]
             }]
     });
 }

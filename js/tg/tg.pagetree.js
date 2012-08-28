@@ -1,4 +1,6 @@
 
+
+
 Tg.Page = Ext.extend(Ext.tree.TreeNode, {
 	constructor: function (data) {
 		data.text = data.title;
