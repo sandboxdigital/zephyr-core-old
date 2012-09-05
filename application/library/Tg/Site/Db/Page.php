@@ -121,7 +121,10 @@ class Tg_Site_Db_Page extends Tg_Db_Table_Row implements Zend_Acl_Resource_Inter
     {
         $pages = array ();
         foreach ($this->getParent()->getPages() as $page) {
-            $pages[] = $page;
+            if ($page->visible)
+            {
+                $pages[] = $page;
+            }
         }
 
 
@@ -143,8 +146,12 @@ class Tg_Site_Db_Page extends Tg_Db_Table_Row implements Zend_Acl_Resource_Inter
     {
         $pages = array ();
         foreach ($this->getParent()->getPages() as $page) {
-            $pages[] = $page;
+            if ($page->visible)
+            {
+                $pages[] = $page;
+            }
         }
+
         $current = 0;
         for ($i=0;$i<count($pages);$i++)
         {
