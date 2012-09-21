@@ -125,7 +125,7 @@
             xhtml += '<td class="fileUploadThumbnail"><img id="' + this._id + '_image" src="' + url + '" width="32" height="32"  /></td>';
             xhtml += '<td id="' + this._id + '_name" class="fileUploadName">' + jsonObject.name + '</td>';
             xhtml += '<td class="fileUploadDelete">';
-            xhtml += '<a href="#" class="formFileUploadDelete">Remove this file</a>';
+            xhtml += '<a href="#" class="formFileUploadDelete">Remove</a>';
             if (this._options.mode == 'single') 
             	xhtml += '<input type="hidden" id="' + this._id + '" name="' + this._name + '" value="' + jsonObject.id + '" />';
             else 

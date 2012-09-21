@@ -62,7 +62,7 @@ class Tg_View_Helper_FormFileUpload extends Zend_View_Helper_FormFile
 </div>
 <script language="javascript" type="text/javascript">
 
-$(document).ready(function() {
+jQuery(document).ready(function() {
 	var swfupload_'.$this->cleanName($name).' = {
 		name:"'.$this->cleanName($name).'",
 		progress:"#'.$this->cleanName($name).'_progress",
@@ -77,7 +77,7 @@ $(document).ready(function() {
 		$xhtml .= '
 	}
 
-	$.swfupload.addField(swfupload_'.$this->cleanName($name).');
+	jQuery.swfupload.addField(swfupload_'.$this->cleanName($name).');
 });
 </script>';
 
