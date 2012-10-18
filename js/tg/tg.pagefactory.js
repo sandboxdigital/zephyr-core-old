@@ -79,7 +79,9 @@ Tg.PageFactory = Ext.extend(Ext.util.Observable, {
 	, _getForm: function () {
 	    var templates = new Array();
 	    Ext.each(this.templates, function (el) {
-	        templates.push(new Array(el.id, el.name));
+            c(el)
+            if (el.visible=='yes')
+	            templates.push(new Array(el.id, el.name));
 	    });
 
 	    var themes = new Array();
@@ -230,8 +232,6 @@ Tg.PageFactory = Ext.extend(Ext.util.Observable, {
 		        }
             },
             failure: function (form, action) {
-                c(form);
-                c(action);
                 switch (action.failureType) {
                     case Ext.form.Action.CLIENT_INVALID:
                         Ext.Msg.alert('Failure', 'Form fields may not be submitted with invalid values');

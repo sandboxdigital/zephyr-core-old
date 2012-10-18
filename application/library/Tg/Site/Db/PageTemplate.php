@@ -13,6 +13,7 @@ class Tg_Site_Db_PageTemplate extends Tg_Db_Table_Row
     	return array (
 	    	'name'=>$this->name,
 	    	'id'=>$this->id,
+	    	'visible'=>$this->visible,
 	    	'defaultSubPageTemplate'=>$this->defaultSubPageTemplate
 	    	);
 	}
