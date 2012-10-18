@@ -335,14 +335,15 @@ class Tg_Site_Factory {
      * @param  int $templateId 
      * @return Tg_Site_Db_PageTemplate &template
      */
-	function &getTemplate ($templateId) 
+	function getTemplate ($templateId)
 	{
 		$this->load ();
-		
-		//print_r($templateId);
+
 		if (!isset($this->_PageTemplates[$templateId]))
 		{
-			return $this->_PageTemplates[array_shift(array_keys($this->_PageTemplates))];
+            $keys = array_keys($this->_PageTemplates);
+            $templateId = array_shift($keys);
+			return $this->_PageTemplates[$templateId];
 		}
 		return $this->_PageTemplates[$templateId];
 	}
