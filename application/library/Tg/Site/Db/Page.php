@@ -117,10 +117,15 @@ class Tg_Site_Db_Page extends Tg_Db_Table_Row implements Zend_Acl_Resource_Inter
 		return $ancestors;
 	}
 
-    function getPreviousSibling()
+    function getPreviousSibling($loop = true)
     {
+        $parent = $this->getParent();
+
+        if (!$parent)
+            return null;
+
         $pages = array ();
-        foreach ($this->getParent()->getPages() as $page) {
+        foreach ($parent->getPages() as $page) {
             if ($page->visible)
             {
                 $pages[] = $page;
@@ -138,14 +143,22 @@ class Tg_Site_Db_Page extends Tg_Db_Table_Row implements Zend_Acl_Resource_Inter
             }
         }
 
-        return $current>0?$pages[$current-1]:$pages[count($pages)-1];
-        $this->view->next = $current<count($pages)-1?$pages[$current+1]:$pages[0];
+
+        if ($loop)
+            return $current>0?$pages[$current-1]:$pages[count($pages)-1];
+        else
+            return $current>0?$pages[$current-1]:null;
     }
 
-    function getNextSibiling ()
+    function getNextSibiling ($loop = true)
     {
+        $parent = $this->getParent();
+
+        if (!$parent)
+            return null;
+
         $pages = array ();
-        foreach ($this->getParent()->getPages() as $page) {
+        foreach ($parent->getPages() as $page) {
             if ($page->visible)
             {
                 $pages[] = $page;
@@ -162,7 +175,10 @@ class Tg_Site_Db_Page extends Tg_Db_Table_Row implements Zend_Acl_Resource_Inter
             }
         }
 
-        return $current<count($pages)-1?$pages[$current+1]:$pages[0];
+        if ($loop)
+            return $current<count($pages)-1?$pages[$current+1]:$pages[0];
+        else
+            return $current<count($pages)-1?$pages[$current+1]:null;
     }
 
 
