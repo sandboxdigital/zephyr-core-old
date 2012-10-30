@@ -40,9 +40,9 @@ class Tg_Form_Ajax extends Tg_Form
 		}
 	}
 
-    public function render($v = null)
+    public function render(Zend_View_Interface $view = NULL)
     {
-        $return = parent::render($v);
+        $return = parent::render($view);
 
         return $return;
     }
