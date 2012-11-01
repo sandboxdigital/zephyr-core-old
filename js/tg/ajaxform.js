@@ -7,7 +7,10 @@
         var id = $(that).attr('id');
         var end_url = $(this).attr('action');
 
+        options.onBeforeSubmit = options.onBeforeSubmit || function (){};
+        options.onAfterSubmit = options.onAfterSubmit || function (){};
         options.onError = options.onError || function (){};
+        options.onValid = options.onValid || function (){};
 
         var errorBlock = $('#'+id+'Error');
         if (errorBlock.length==0)
@@ -37,7 +40,9 @@
         function doValidate (){
             var url = end_url;
             var data = $(that).serialize();
+            options.onBeforeSubmit ();
             $.post(url,data,function(response){
+                options.onAfterSubmit ();
                 if (response==true)
                     options.onValid();
                 else {
