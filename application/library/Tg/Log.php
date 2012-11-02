@@ -22,13 +22,72 @@
 
 class Tg_Log
 {
+    protected static $_instance = null;
+
+    public function __construct()
+    {
+        $this->enabled = Zeph_Config::config('logging.enabled');
+
+        if(!$this->enabled)
+            return;
+
+        $this->logger = new Zend_Log();
+        $writers = array ();
+        $configWriters = Zeph_Config::config('logging.writer');
+        $configWriters = $configWriters ? $configWriters : array();
+
+        foreach ($configWriters as $writerName)
+        {
+            if ($writerName == 'firebug')
+            {
+                $writer = new Zend_Log_Writer_Firebug();
+                $writer->setPriorityStyle(8, 'TRACE');
+                $writer->setPriorityStyle(9, 'TABLE');
+                $writers[] = $writer;
+            }
+            else if ($writerName == 'db')
+            {
+                $db = Zend_Registry::get('db');
+                $table = 'log';
+                $cols = array (
+                    'info'=>'message'
+                );
+                $writer = new Zend_Log_Writer_Db($db, $table);
+                $writers[] = $writer;
+            }
+        }
+
+        foreach($writers as $writer)
+            $this->logger->addWriter($writer);
+
+        $this->logger->addPriority('TRACE', 8);
+        $this->logger->addPriority('TABLE', 9);
+    }
+
+    /**
+     * Get singleton instance
+     *
+     * @return  Tg_Log $instance
+     */
+    public static function getInstance() {
+        if(self::$_instance === null) {
+            self::$_instance = new self();
+        }
+        return self::$_instance;
+    }
 
 	public static function log($message, $level = Zend_Log::DEBUG) 
 	{
-    	$logger = Zend_Registry::get('logger');
-    	if ($logger)
-    		$logger->log ($message, $level);
+        self::getInstance()->_log($message, $level);
 	}
+
+    public function _log($message, $level = Zend_Log::DEBUG)
+    {
+        if(!$this->enabled)
+            return;
+
+        $this->logger->log ($message, $level);
+    }
 	
 	
 	public static function logToDb($message, $level = Zend_Log::DEBUG) 
@@ -36,7 +95,6 @@ class Tg_Log
 		try {
 	    	$data = array(
 	    		'info'=>$message
-	    		
 	    	);
 	    	
 	    	$db = Zend_Registry::get('db');    	
@@ -50,11 +108,7 @@ class Tg_Log
 	{
 		if (empty($subject))
 			$subject=$_SERVER['SERVER_NAME'].' LOG TO EMAIL';
-		
-//		echo '<pre>';
-//		echo $message;
-//		echo '</pre>';
-//		die;			
+
 		$header = "From: admin@britishtours.com";			
 		@mail('thomas@sandboxdigital.com.au', $subject, $message, $header);
 	}

@@ -202,48 +202,7 @@ class Tg_Application_Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 	 * @return $logger
 	 */	
 	protected function _initLogger ()
-	{		
-		$logger = new Zend_Log();
-		$writers = array ();
-		
-		if((isset($this->_options['logging'])) && $this->_options['logging']) {
-			if (is_array($this->_options['logging'])){				
-				foreach ($this->_options['logging']['writer'] as $writerName)
-				{
-					if ($writerName == 'firebug') 
-					{
-						$writer = new Zend_Log_Writer_Firebug();	
-						$writer->setPriorityStyle(8, 'TRACE');
-						$writer->setPriorityStyle(9, 'TABLE');
-						$writers[] = $writer;
-					} 
-					else if ($writerName == 'db')
-					{
-						$this->bootstrap('db'); // make sure we've loaded the db resource
-						$db = $this->getResource('db');
-						$table = 'log';
-						$cols = array (
-							'info'=>'message'
-						);
-						$writer = new Zend_Log_Writer_Db($db, $table);	
-						$writers[] = $writer;
-					} 
-				}
-			}
-		}
-		
-		if (count($writers)<=0)
-			$writers[] = new Zend_Log_Writer_Null;
-		
-		foreach($writers as $writer)
-			$logger->addWriter($writer);
-
-		$logger->addPriority('TRACE', 8);
-		$logger->addPriority('TABLE', 9);
-		
-		Zend_Registry::set('logger', $logger);
-		
-		return $logger;
+	{
 	}
 	
 	/**
