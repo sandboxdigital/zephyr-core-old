@@ -254,12 +254,12 @@ class Tg_File
 		
 		// list of valid extensions, ex. array("jpeg", "xml", "bmp")
 		$allowedExtensions = array();
-		// max file size in bytes
-		//$sizeLimit = 150 * 1024 * 1024;
-
+		// max file size in bytes - choose smallest!
+        $postSize = self::toBytes(ini_get('post_max_size'));
+        $uploadSize = self::toBytes(ini_get('upload_max_filesize'));
+        $sizeLimit = $postSize > $uploadSize?$uploadSize:$postSize;
         $tmpFolder = $inst->_tempFolder.'/';
-
-		$uploader = new qqFileUploader($allowedExtensions);
+		$uploader = new qqFileUploader($allowedExtensions, $sizeLimit,'qqfile');
 		$result = $uploader->handleUpload($tmpFolder);
 		
 		if (isset($result['error'])) {
@@ -271,8 +271,17 @@ class Tg_File
 			return $file;
 		}
 	}
-	
-	
+
+    private static function toBytes($str){
+        $val = trim($str);
+        $last = strtolower($str[strlen($str)-1]);
+        switch($last) {
+            case 'g': $val *= 1024;
+            case 'm': $val *= 1024;
+            case 'k': $val *= 1024;
+        }
+        return $val;
+    }
 	
 	/**
 	 * Returns a Tg_File_Db_File representing of a file on the filesystem, moves the file to the storage folder
