@@ -102,7 +102,7 @@ class Tg_View_Helper_HeadCore extends Zend_View_Helper_Placeholder_Container_Sta
 					
 			$html .= $this->css($pre.'core/css/cms.css'.$prepend);
 			$html .= $this->css($pre.'core/css/ext-reset-undo.css'.$prepend);
-			$html .= $this->css($pre.'core/js/valums/fileuploader.css'.$prepend);
+			$html .= $this->css($pre.'core/js/valums/fineuploader.css'.$prepend);
 				
 			$html .= $this->script($pre.'core/js/jquery.inherit.js'.$prepend);
 			$html .= $this->script($pre.'core/js/jquery.cookie.js'.$prepend);
@@ -112,7 +112,7 @@ class Tg_View_Helper_HeadCore extends Zend_View_Helper_Placeholder_Container_Sta
 			
 			$html .= $this->script($pre.'core/js/tg/core.js'.$prepend);
 			$html .= $this->script($pre.'core/js/tg/fileupload.js'.$prepend);
-			$html .= $this->script($pre.'core/js/valums/fileuploader.js'.$prepend);
+			$html .= $this->script($pre.'core/js/valums/fineuploader.js'.$prepend);
 			$html .= $this->script($pre.'core/extjs/ext/PagingStore.js'.$prepend);
 			$html .= $this->script($pre.'core/extjs/ext/Ext.ux.TinyMCE.js'.$prepend);
 			$html .= $this->script($pre.'core/js/tinymce.js'.$prepend);

@@ -288,13 +288,17 @@ Tg.FileBrowser = Ext.extend(Ext.util.Observable, {
 	,createUploader : function ()
 	{
 		var self = this;
-		this.uploader = new qq.FileUploader({
+		this.uploader = new qq.FineUploader({
 			element: document.getElementById('file-uploader'),
-			action: Tg.Config.FileFactory.urlFileUploadValums,
+            request: {
+                endpoint: Tg.Config.FileFactory.urlFileUploadValums
+            },
 //			action: '/core/js/valums/test.php',
 //			action: '/upload.php',
 			maxConnections : 1,
-			onComplete: this.uploadFile.createDelegate(this),
+            callbacks : {
+			    onComplete: this.uploadFile.createDelegate(this)
+            },
 			debug: true
 		});
 		this.uploader.setParams({folderId:this.folderTree.currentNode.id});

@@ -289,7 +289,7 @@ class Core_Admin_IndexController extends Tg_Site_Controller
     public function debugAction() 
     {
     	Tg_Log::logToDb("debug: \n".$this->_getParam('info'));
-    	
+
     	echo '{success:"true"}';
     	die;
     }  

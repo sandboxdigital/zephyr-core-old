@@ -256,19 +256,20 @@ class Tg_File
 		$allowedExtensions = array();
 		// max file size in bytes
 		//$sizeLimit = 150 * 1024 * 1024;
-		
+
+        $tmpFolder = $inst->_tempFolder.'/';
+
 		$uploader = new qqFileUploader($allowedExtensions);
-		$result = $uploader->handleUpload($inst->_tempFolder.'/');
+		$result = $uploader->handleUpload($tmpFolder);
 		
 		if (isset($result['error'])) {
-//			$result['error'] = $inst->_tempFolder.'/'; 
 			return $result;
 		} else 
 		{
-			$file = self::createFromFile($result['path']);
+            $tmpPath = $tmpFolder.$uploader->getUploadName();
+			$file = self::createFromFile($tmpPath);
 			return $file;
 		}
-		
 	}
 	
 	
