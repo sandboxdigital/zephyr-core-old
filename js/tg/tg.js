@@ -1,8 +1,11 @@
-if (window.Tg == undefined)
-    var Tg = {};
+if (window.Tg == undefined){
+    Tg = {};
+    window.Tg = Tg;
+}
 
-if (Tg.Config == undefined)
+if (Tg.Config == undefined){
     Tg.Config = {};
+}
 
 /**
 * Tg.App

@@ -64,13 +64,15 @@ Tg.PageFactory = Ext.extend(Ext.util.Observable, {
 	}
 
 	, _findPage: function (node, pageId) {
-	    if (node['id'] == pageId)
-	        return node;
+	    if (node['id'] == pageId) {
+            return node;
+        }
 
 	    for (var i = 0; i < node['pages'].length; i++) {
 	        var returnNode = this._findPage(node['pages'][i], pageId);
-	        if (returnNode != null)
-	            return returnNode;
+	        if (returnNode != null) {
+                return returnNode;
+            }
 	    }
 
 	    return null;
@@ -244,6 +246,35 @@ Tg.PageFactory = Ext.extend(Ext.util.Observable, {
                 }
             }
         });
+    }
+
+    , pagesToTreeNodes : function (json, expandedNodes, expanded)
+    {
+        json = json || this.pages;
+
+        var config = {
+            id: json['id'] + "",
+            text: json['title'],
+            allowChildren: true,
+            expanded: expanded?true:(expandedNodes.indexOf(json['id'] + "") > -1 ? true : false),
+            pages: []
+        };
+        Ext.applyIf(config, json);
+
+        var root = new Ext.tree.TreeNode(config);
+
+        if (json['Pages'])
+            json['pages'] = json['Pages'];
+
+        if (!json['themeId'])
+            json['themeId'] = 1;
+
+        for (var i = 0; i < json['pages'].length; i++) {
+            var sub = this.pagesToTreeNodes(json['pages'][i], expandedNodes, expanded);
+            root.appendChild(sub);
+        }
+
+        return root;
     }
 
     , _sanitisePath: function (name) {

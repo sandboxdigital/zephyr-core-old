@@ -66,14 +66,15 @@ class Tg_Documents
 	 *
 	 * @return  Tg_Documents_Folder $folder
 	 */
-	public static function &getFolderById ($id)
+	public static function getFolderById ($id)
 	{
+        $inst = self::getInstance();
 		$root =  self::getRootFolder();
 		
 		if ($root->id==$id)
 			return $root;
 		
-		return self::_getFolderById ($id, $root);
+		return $inst->_getFolderById ($id, $root);
 	}
 
 	/**
@@ -122,7 +123,7 @@ class Tg_Documents
 	 *
 	 * @return  Tg_Documents_Folder $folder
 	 */
-	protected function &_getFolderById ($id, $node)
+	protected function _getFolderById ($id, $node)
 	{
 		$childNodes = $node->getChildNodes ();
 		if (array_key_exists($id, $childNodes)) {

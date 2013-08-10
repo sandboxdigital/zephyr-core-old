@@ -1,0 +1,12 @@
+<div class="pageContent" id='content-div' style="width:100%"></div>
+<script type="text/javascript">
+Tg.PageFactory.setPages (<?php echo $this->pageNodes?>);
+Tg.NavFactory.setNavs (<?php echo $this->navNodes?>);
+
+Tg.Config.NavFactory = {
+    urlAddNav: "<?php echo $this->adminPath?>/nav/save"
+    , urlEditNav: "<?php echo $this->adminPath?>/nav/save"
+    , urlDeleteNav: "<?php echo $this->adminPath?>/nav/delete"
+    , urlMoveNav: "<?php echo $this->adminPath?>/nav/move"
+}
+</script>

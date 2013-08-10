@@ -140,6 +140,11 @@ class Tg_View_Helper_HeadCore extends Zend_View_Helper_Placeholder_Container_Sta
 			
 			$html .= $this->script($pre.'core/js/tg/tg.pagetree.js'.$prepend);
 			$html .= $this->script($pre.'core/js/tg/tg.pagefactory.js'.$prepend);
+
+            $html .= $this->script($pre.'core/js/tg/tg.navtree.js'.$prepend);
+            $html .= $this->script($pre.'core/js/tg/tg.navfactory.js'.$prepend);
+            $html .= $this->script($pre.'core/js/tg/tg.navform.js'.$prepend);
+
 			$html .= $this->script($pre.'core/js/tg/tg.contentpanel.js'.$prepend);
 		}
 		return $html;

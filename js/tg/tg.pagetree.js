@@ -21,7 +21,7 @@ Tg.PageTree = Ext.extend(Ext.tree.TreePanel, {
         else
             this.expandedNodes = new Array();
 
-        this.rootNode = this.createTreeNode(Tg.PageFactory.pages);
+        this.rootNode = Tg.PageFactory.pagesToTreeNodes(null, this.expandedNodes);
         this.rootNode.draggable = false;
 
         // constructor pre-processing
@@ -107,32 +107,6 @@ Tg.PageTree = Ext.extend(Ext.tree.TreePanel, {
 
         Tg.PageTree.superclass.initComponent.apply(this, arguments);
     }
-
-	, createTreeNode: function (json) {
-	    var config = {
-	        id: json['id'] + "",
-	        text: json['title'],
-	        allowChildren: true,
-	        expanded: this.expandedNodes.indexOf(json['id'] + "") > -1 ? true : false,
-	        pages: []
-	    };
-	    Ext.applyIf(config, json);
-
-	    var root = new Ext.tree.TreeNode(config);
-
-	    if (json['Pages'])
-	        json['pages'] = json['Pages'];
-
-	    if (!json['themeId'])
-	        json['themeId'] = 1;
-
-	    for (var i = 0; i < json['pages'].length; i++) {
-	        var sub = this.createTreeNode(json['pages'][i]);
-	        root.appendChild(sub);
-	    }
-
-	    return root;
-	}
 
     , handleNodeStartDrag: function (tree, node, event) {
         oldPosition = node.parentNode.indexOf(node);
