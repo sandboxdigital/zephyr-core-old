@@ -100,6 +100,27 @@ class Core_Admin_NavController extends Tg_Content_Controller
         echo '{"success":true,"msg":"Delete successful"}';
         die;
     }
-}
 
-?>
+    public function addAllAction ()
+    {
+
+        $page = Tg_Site::getInstance()->getRootPage();
+        $menus = Tg_Nav::getNavs();
+        $menu = $menus[0]->getRootNavitem();
+
+        $this->addPageToMenu($page,$menu);
+    }
+
+    protected function addPageToMenu (Tg_Site_Db_Page $page , Tg_Nav_Db_Navitem $menu)
+    {
+        $newItem = $menu->appendNavitem(array(
+            'title'=>$page->title,
+            'page'=>$page->id,
+            'type'=>1
+        ));
+
+
+        echo '{"success":true,"msg":"Add all successful"}';
+        die;
+    }
+}
