@@ -49,6 +49,8 @@ class Core_Admin_NavController extends Tg_Content_Controller
                 if (!$Parent)
                     throw new Zend_Exception ("Page updated failed - parent page not found");
 
+//                var_dump($Parent->id.':'.$Parent->nav_id);die;
+
                 $Page = Tg_Nav::getInstance ()->appendNavitem ($_POST, $Parent);
 
                 $response->msg = "Page added";
@@ -91,9 +93,6 @@ class Core_Admin_NavController extends Tg_Content_Controller
         $Page = Tg_Nav::getInstance ()->getNavitemById($this->_getParam ('id'));
         if (!$Page)
             throw new Exception ("Page not found");
-
-        if ($Page->locked)
-            throw new Exception ("Page is locked");
 
         $Page->delete();
 

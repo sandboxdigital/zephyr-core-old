@@ -52,7 +52,10 @@ class Tg_Nav_Db_Nav extends Tg_Db_Table_Row
     function getNavitemById ($id)
     {
         $this->loadItems();
-        return $this->_items[$id];
+        if (isset($this->_items[$id]))
+            return $this->_items[$id];
+        else
+            return null;
     }
 
     /**

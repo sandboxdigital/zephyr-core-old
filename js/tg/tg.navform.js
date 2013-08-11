@@ -104,9 +104,10 @@
         setValues : function (node)
         {
             if (node) {
+                c(node.attributes);
                 this.node = node;
-                this.form.setValues(node.attributes.json);
-                this.hideShowType(node.attributes.json.type);
+                this.form.setValues(node.attributes);
+                this.hideShowType(node.attributes.type);
             }
         },
 

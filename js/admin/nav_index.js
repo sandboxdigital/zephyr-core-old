@@ -37,10 +37,8 @@
     });
 
     function loadContent(p) {
-        c(p);
         form.setValues(p);
     }
-
 
     Ext.ns('Ext.ux','Ext.ux.form');
 
@@ -95,16 +93,21 @@
         } ,
 
         onRender : function (ct, position) {
+            c("onRender");
             Ext.ux.form.TreeCombo.superclass.onRender.call(this, ct, position);
+            this.hiddenId = (this.hiddenId || Ext.id());
+            c(this.hiddenId);
             this.hiddenField = this.el.insertSibling({tag:'input', type:'hidden', name: this.hiddenName,
-                id: (this.hiddenId || Ext.id())}, 'before', true);
+                id: this.hiddenId}, 'before', true);
         },
 
         // was called combobox was collapse
         collapse: function() {
             this.isExpanded=false;
             this.getTree().hide();
-            if (this.resizer)this.resizer.resizeTo(this.treeWidth, this.treeHeight);
+            if (this.resizer) {
+                this.resizer.resizeTo(this.treeWidth, this.treeHeight);
+            }
             this.getValueFromTree();
         },
 
@@ -116,34 +119,49 @@
 
             this.setValueToTree();
         },
-        getName: function(){
+        getName: function() {
             var hf = this.hiddenField;
-            return hf && hf.name ? hf.name : this.hiddenName || Ext.form.ComboBox.superclass.getName.call(this);
+            var s = hf && hf.name ? hf.name : this.hiddenName || Ext.form.ComboBox.superclass.getName.call(this);
+            c(s);
+            return s;
         },
         setValue: function (v) {
-            this.rawValue=v;
-            this.setValueToTree();
-        },
-        geValue: function() {
-            if (!this.rawValue) {
-                return '';
-            } else {
-                return this.rawValue;
+            c("setValue "+v);
+            if (v) {
+                this.value = v;
+                this.rawValue = v;
+                this.setValueToTree();
+                var el = Ext.get(this.hiddenId);
+                el.dom.value = v;
             }
         },
+        geValue: function() {
+            c("getValue ");
+            var el = Ext.get(this.hiddenId);
+            return el.dom.value;
+//            if (!this.rawValue) {
+//                return '';
+//            } else {
+//                return this.rawValue;
+//            }
+        },
         setRawValue: function (v) {
+            c("setRawValue "+v);
             if (v) {
-                this.rawValue=v;
+                this.value = v;
+                this.rawValue = v;
                 this.setValueToTree();
                 this.hiddenField.value=v;
             }
         },
         getRawValue: function() {
-            if (!this.rawValue) {
-                return '';
-            } else {
-                return this.rawValue;
-            }
+            c("getRawValue "+this.rawValue);
+//            c("getRawValue "+this.rawValue);
+            var el = Ext.get(this.hiddenId);
+            var val = el.dom.value;
+            c(this.hiddenId);
+            c(val);
+            return val;
         },
         setValueToTree: function () {
             // check for tree ist exist
