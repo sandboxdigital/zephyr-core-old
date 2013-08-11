@@ -13,7 +13,7 @@ class Tg_Nav_Db_Nav extends Tg_Db_Table_Row
 
     public function loadItems ()
     {
-        if (!$this->_items)
+        if (!$this->_rootItem)
         {
             $this->_items = array();
 
@@ -35,10 +35,40 @@ class Tg_Nav_Db_Nav extends Tg_Db_Table_Row
             $this->_rootItem->initNavitem (null, $this);
             $rows->next();
             $this->_rootItem->populatNavitems ($rows, $this);
+
+            reset($rows);
+
+            foreach ($rows as $row) {
+                $this->_items[$row->id] = $row;
+            }
         }
     }
 
-	public function toJSON ()
+    /**
+     * Returns a subpage
+     *
+     * @return Tg_Nav_Db_Navitem $page
+     */
+    function getNavitemById ($id)
+    {
+        $this->loadItems();
+        return $this->_items[$id];
+    }
+
+    /**
+     * Returns a subpage
+     *
+     * @return Tg_Nav_Db_Navitem $page
+     */
+    function getRootNavitem ()
+    {
+        $this->loadItems();
+        return $this->_rootItem;
+    }
+
+
+
+    public function toJSON ()
 	{
 		return Zend_Json::encode ($this->toObject());
 	}

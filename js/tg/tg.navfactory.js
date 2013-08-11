@@ -56,39 +56,17 @@
                 title:Tg.PageFactory.pages.title,
                 page:Tg.PageFactory.pages.id
             };
-            parent.appendChild ({
+            var node = parent.appendChild ({
                 text:data.title,
                 attributes:data,
                 json:data,
                 children:[],
                 expanded:false
             });
+            node.select();
         }
 
-//        , editNav: function (pageId) {
-//           var page = this.findNav(pageId);
-//           var form = this._getForm();
-//           form.form.setValues(page);
-//
-//           var win = new Tg.FormWindow(form);
-//           win.url = Tg.Config.NavFactory.urlEditNav;
-//           win.show();
-//           win.focus();
-//           win.on('save', function (formPanel, values, results) {
-//                // TODO: move to a page.update() method
-//               var node = Tg.NavFactory.navTree.getNodeById(pageId);
-//               node.setText(values.title);
-//
-//               for (var property in values) {
-//                   Tg.NavFactory.navTree.getNodeById(pageId).attributes[property] = values[property];
-//
-//                   page[property] = values[property];
-//               }
-//           });
-//        }
-
-        , editNavSave: function (form) {
-             // TODO - update the page json model
+        , editNavSave: function (form, node) {
              form.submit({
                 clientValidation: true,
                 url: Tg.Config.NavFactory.urlEditNav,
@@ -96,15 +74,10 @@
                     newStatus: 'delivered'
                 },
                 success: function (form, action) {
-                    // TODO: move to a page.update() method
                     var values = form.getValues();
-                    var page = Tg.NavFactory.findNav(values.id);
-                  var node = Tg.NavFactory.navTree.getNodeById(values.id);
-                  node.setText(values.title);
-                  for (var property in values) {
-                      Tg.NavFactory.navTree.getNodeById(values.id).attributes[property] = values[property];
-                      page[property] = values[property];
-                  }
+                    var node = Tg.NavFactory.navTree.getNodeById(values.id);
+                    node.setText(values.title);
+                    node.attributes.json = values;
                 },
                 failure: function (form, action) {
                     switch (action.failureType) {
@@ -121,31 +94,21 @@
             });
         }
 
-        , _sanitisePath: function (name) {
-            name = name.Replace(":", "_");
-            name = name.Replace("&", "_");
-            name = name.Replace("/", "_");
-            name = name.Replace("\\", "_");
-            name = name.Replace(" ", "_");
-
-            return name;
-        }
-
-        , deleteNav: function (pageId) {
-           var page = this.findNav(pageId);
+        , deleteNav: function (id) {
            var _this = this;
 
-           Ext.Msg.confirm(
+            Ext.Msg.confirm(
                 'Delete?',
-                'Are you sure you want to delete this page?',
+                'Are you sure you want to delete this menu item?',
                 function (r) {
-                 if (r == 'yes') {
-                     var data = { "id": pageId };
-                     $.ajax({ url: Tg.Config.NavFactory.urlDeleteNav, data: data, type: 'POST' });
-                     Tg.NavFactory.navTree.getNodeById(pageId).parentNode.select();
-                     Tg.NavFactory.navTree.getNodeById(pageId).remove();
-                 }
-                });
+                    if (r === 'yes') {
+                        var data = { "id": id };
+                        $.ajax({ url: Tg.Config.NavFactory.urlDeleteNav, data: data, type: 'POST' });
+                        Tg.NavFactory.navTree.getNodeById(id).parentNode.select();
+                        Tg.NavFactory.navTree.getNodeById(id).remove();
+                    }
+                }
+            );
         }
     });
 

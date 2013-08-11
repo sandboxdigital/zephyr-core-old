@@ -45,17 +45,18 @@ class Tg_Nav_Factory {
 	}
 	
 	public function loadNavs () {
-		$pages = new Tg_Nav_Db_Navs ();
-		$rows = $pages->fetchAll(null);
-		if (!$rows) {
-			$data = array (
-			    'name'=>'Main'
-			);
-			$pages->insert($data);
+        if (!$this->_navs) {
+            $pages = new Tg_Nav_Db_Navs ();
             $rows = $pages->fetchAll(null);
-		}
-		
-		$this->_navs = $rows;
+            if (!$rows) {
+                $data = array (
+                    'name'=>'Main'
+                );
+                $pages->insert($data);
+                $rows = $pages->fetchAll(null);
+            }
+            $this->_navs = $rows;
+        }
 	}
 
 	/**
@@ -71,6 +72,26 @@ class Tg_Nav_Factory {
 		return $inst->_navs;
 	}
 
+    /**
+     * Return the sites Current Page
+     *
+     * @return Tg_Nav_Db_Nav
+     */
+    public static function getNav ($navName)
+    {
+        $inst = self::getInstance();
+        $inst->load ();
+
+        foreach($inst->_navs as $nav){
+            if ($navName == $nav->name)
+            {
+                return $nav;
+            }
+        }
+
+        return null;
+    }
+
 	
     /**
      * Returns a page based on a path
@@ -79,7 +100,8 @@ class Tg_Nav_Factory {
      * @param  bool $strict=false 
      * @return Tg_Nav_Db_Navitem $page
      */
-	function getNavitem ($path, $strict=false) {
+	function getNavitem ($path, $strict=false)
+    {
 		$currentNavitem = $this->getRootNavitem();
 		
 		$path = trim ($path, '/');
@@ -90,9 +112,21 @@ class Tg_Nav_Factory {
 		return $currentNavitem->getNavitem ($path, $strict);
 	}
 
-    function getNavitemById ($id) {
-        $pages = new Tg_Nav_Db_Navitems();
-        return $pages->fetchRow('id='.$id);
+    /**
+     * @param $id
+     * @return Tg_Nav_Db_Navitem
+     */
+    function getNavitemById ($id)
+    {
+        $this->load ();
+
+        foreach($this->_navs as $nav) {
+            $item = $nav->getNavitemById($id);
+            if ($item) {
+                return $item;
+            }
+        }
+        return null;
     }
 
 	function appendNavitem (array $values, Tg_Nav_Db_Navitem $ParentNavitem) {

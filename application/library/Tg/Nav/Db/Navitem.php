@@ -143,15 +143,14 @@ class Tg_Nav_Db_Navitem extends Tg_Db_Table_Row
 	 *
 	 * @return Tg_Nav_Db_Navitem $page
 	 */
-	function &getNavitem ($pathArray, $strict=false) {
+	function getNavitem ($pathArray, $strict=false) {
 		if (count($pathArray)>0) {
 			$pageID = $pathArray[0];
 			if (array_key_exists($pageID, $this->_items)) {
 				array_shift($pathArray);
 				return $this->_items[$pageID]->getNavitem ($pathArray);
 			} elseif ($strict) {
-				$null = false;
-				return $null;
+				return null;
 			}
 		}
 		return $this;
@@ -206,8 +205,8 @@ class Tg_Nav_Db_Navitem extends Tg_Db_Table_Row
 		$left = $pages->getAdapter()->quoteIdentifier('left');
 		$right = $pages->getAdapter()->quoteIdentifier('right');
 
-		$pages->update(array('right'=>new Zend_Db_Expr("$right+2")),"$right>=".$this->right);
-		$pages->update(array('left'=>new Zend_Db_Expr("$left+2")),"$left>=".$this->right);
+		$pages->update(array('right'=>new Zend_Db_Expr("$right+2")),"$right>=".$this->right.' AND nav_id='.$this->nav_id);
+		$pages->update(array('left'=>new Zend_Db_Expr("$left+2")),"$left>=".$this->right.' AND nav_id='.$this->nav_id);
 
 		$page->save ();
 
@@ -245,8 +244,8 @@ class Tg_Nav_Db_Navitem extends Tg_Db_Table_Row
 		$pages->delete ($where);
 
 		// update tree
-		$pages->update (array ("left"=>new Zend_Db_Expr("$left-$dif")), "$left>{$this->left}");
-		$pages->update (array ("right"=>new Zend_Db_Expr("$right-$dif")), "$right>{$this->right}");
+		$pages->update (array ("left"=>new Zend_Db_Expr("$left-$dif")), "$left>{$this->left} AND nav_item=".$this->nav_id);
+		$pages->update (array ("right"=>new Zend_Db_Expr("$right-$dif")), "$right>{$this->right} AND nav_item=".$this->nav_id);
 	}
 
 	function moveNavitem ($pageId, $previousSiblingId = 0)
@@ -261,7 +260,7 @@ class Tg_Nav_Db_Navitem extends Tg_Db_Table_Row
 		$pageOldLeft = 0;
 		$pageOldRight = 0;
 		$pageNewLeft = 0;
-		$pageNewRight = 0;
+//		$pageNewRight = 0;
 
 		$page = $Pm->getNavitemById($pageId);
 
@@ -270,16 +269,18 @@ class Tg_Nav_Db_Navitem extends Tg_Db_Table_Row
 		if ($previousSiblingId != 0)
 		{
 		    $previousSibling = $Pm->getNavitemById($previousSiblingId);
+            $parent = $previousSibling->getParent();
+
 		    if ($previousSibling->getParent()->id != $this->id)
-		        throw new Exception("Sibling is not a child of parent");
+		        throw new Exception("Sibling is not a child of parent ".$parent->id.';'.$this->id);
 		    else
 		    {
 		        $pageNewLeft = $previousSibling->right + 1;
-		        $pageNewRight = $pageNewLeft + $gap - 1;
+//		        $pageNewRight = $pageNewLeft + $gap - 1;
 		    }
 		} else {
 		    $pageNewLeft = $this->left + 1;
-		    $pageNewRight = $pageNewLeft + $gap - 1;
+//		    $pageNewRight = $pageNewLeft + $gap - 1;
 		}
 
 		// amount we have to move $page
@@ -298,15 +299,15 @@ class Tg_Nav_Db_Navitem extends Tg_Db_Table_Row
 		}
 
 		// create a space for new node(s)
-		$pages->update (array ("right"=>new Zend_Db_Expr("$right+$gap")), "$right>=$pageNewLeft");
-		$pages->update (array ("left"=>new Zend_Db_Expr("$left+$gap")), "$left>=$pageNewLeft");
+		$pages->update (array ("right"=>new Zend_Db_Expr("$right+$gap")), "$right>=$pageNewLeft AND nav_id=".$page->nav_id);
+		$pages->update (array ("left"=>new Zend_Db_Expr("$left+$gap")), "$left>=$pageNewLeft AND nav_id=".$page->nav_id);
 
 		// move $page (and sub pages) into gap
-		$pages->update (array ("left"=>new Zend_Db_Expr("$left+$moveAmount"),"right"=>new Zend_Db_Expr("$right+$moveAmount")), "$left>=$pageOldLeft AND $right<=$pageOldRight");
+		$pages->update (array ("left"=>new Zend_Db_Expr("$left+$moveAmount"),"right"=>new Zend_Db_Expr("$right+$moveAmount")), "$left>=$pageOldLeft AND $right<=$pageOldRight AND nav_id=".$page->nav_id);
 
 		// close gap left by moving $page
-		$pages->update (array ("right"=>new Zend_Db_Expr("$right-$gap")), "$right>$pageOldRight");
-		$pages->update (array ("left"=>new Zend_Db_Expr("$left-$gap")), "$left>$pageOldLeft");
+		$pages->update (array ("right"=>new Zend_Db_Expr("$right-$gap")), "$right>$pageOldRight AND nav_id=".$page->nav_id);
+		$pages->update (array ("left"=>new Zend_Db_Expr("$left-$gap")), "$left>$pageOldLeft AND nav_id=".$page->nav_id);
 	}
 
 	function toObject ()

@@ -21,7 +21,8 @@
                 defaultType: 'textfield'
                 , buttons: [{
                     text: 'Save',
-                    handler: {fn:this.onSubmit,scope:this}
+                    handler: this.onSubmit,
+                    scope: this
                 }]
                 , items: [
                     {
@@ -75,11 +76,19 @@
         },
 
         initActions:function() {
+            this.title = this.form.items.get(2);
             this.type = this.form.items.get(3);
-            this.url = this.form.items.get(5);
             this.page = this.form.items.get(4);
+            this.url = this.form.items.get(5);
 
             this.type.on('select', this.onChange, this);
+            this.page.on('select', this.onPageChange, this);
+            this.page.on('change', this.onPageChange, this);
+        },
+
+        onPageChange : function (id, node)
+        {
+            this.title.setValue(node.text);
         },
 
         onChange : function (field, newValue, old)
@@ -89,21 +98,20 @@
 
         onSubmit : function (a1,a2,a3)
         {
-            c(a1);
-            c(a2);
-            c(a3);
-            c(this.getForm().getValues());
-            Tg.NavFactory.editNavSave(this.getForm());
+            Tg.NavFactory.editNavSave(this.getForm(), this.node);
         },
 
-        setValues : function (values)
+        setValues : function (node)
         {
-            this.form.setValues(values);
-            this.hideShowType(values.type);
+            if (node) {
+                this.node = node;
+                this.form.setValues(node.attributes.json);
+                this.hideShowType(node.attributes.json.type);
+            }
         },
 
         hideShowType : function (type) {
-            if (type===1) {
+            if (type==='1' || type === 1) {
                 // page
                 this.url.hide(); // URL
                 this.page.show();

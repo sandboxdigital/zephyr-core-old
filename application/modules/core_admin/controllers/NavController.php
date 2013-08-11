@@ -73,20 +73,8 @@ class Core_Admin_NavController extends Tg_Content_Controller
 
         try {
             $Pm = Tg_Nav::getInstance();
-            $Parent = $Pm->getPageById($this->_getParam("parentId"));
-            $Page = $Pm->getPageById($this->_getParam("pageId"));
-
-            if ($Page->getParent()->id != $Parent->id) {
-                foreach ($Parent->getPages() as $subPage )
-                {
-                    if ($subPage->name == $Page->name)
-                    {
-                        throw new Zend_Exception ("Page move failed - path already used");
-                    }
-                }
-            }
-
-            $Parent->movePage ($this->_getParam("pageId"), $this->_getParam("previousSiblingId",0));
+            $Parent = $Pm->getNavitemById($this->_getParam("parentId"));
+            $Parent->moveNavitem ($this->_getParam("navId"), $this->_getParam("previousSiblingId",0));
 
         } catch (Zend_Exception $exp)
         {
@@ -100,7 +88,7 @@ class Core_Admin_NavController extends Tg_Content_Controller
 
     public function deleteAction ()
     {
-        $Page = Tg_Nav::getInstance ()->getPageById($this->_getParam ('id'));
+        $Page = Tg_Nav::getInstance ()->getNavitemById($this->_getParam ('id'));
         if (!$Page)
             throw new Exception ("Page not found");
 
