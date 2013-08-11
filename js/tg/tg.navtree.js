@@ -119,11 +119,13 @@
             var config = {
                 id: json.items.id + "",
                 text: json.title?json.title:json.name,
-                json:json,
                 allowChildren: true,
                 expanded: this.expandedNodes.indexOf(json.id + "") > -1 ? true : false,
                 children: []
             };
+
+            Ext.applyIf(config, json);
+
             // json is a Nav object, hide the ROOT navitem single item
             for (var i = 0; i < json.items.items.length; i++) {
                 config.children.push(this.createNavitemNode(json.items.items[i],config));
@@ -136,12 +138,11 @@
             var config = {
                 id: json.id + "",
                 text: json.title?json.title:json.name,
-                json:json,
-    //            nav:nav,
                 allowChildren: true,
                 expanded: this.expandedNodes.indexOf(json.id + "") > -1 ? true : false,
                 children: []
             };
+            Ext.applyIf(config, json);
             for (var i = 0; i < json.items.length; i++) {
                 config.children.push(this.createNavitemNode(json.items[i]));
             }

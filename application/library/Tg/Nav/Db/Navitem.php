@@ -196,9 +196,12 @@ class Tg_Nav_Db_Navitem extends Tg_Db_Table_Row
 	{
 		$data['left'] = $this->right;
 		$data['right'] = $this->right+1;
+        $data['nav_id']=$this->nav_id;
 		unset($data['id']);
 
 		$pages = new Tg_Nav_Db_Navitems ();
+
+//        var_dump($data);die;
 
 		$page = $pages->createRow($data);
 
@@ -229,8 +232,6 @@ class Tg_Nav_Db_Navitem extends Tg_Db_Table_Row
 
 		if ($this->left==1)
 			throw new Exception ('Can\'t delete ROOT page');
-		if ($this->locked)
-			throw new Exception('Can\'t delete locked page');
 
 		$left = $pages->getAdapter()->quoteIdentifier('left');
 		$right = $pages->getAdapter()->quoteIdentifier('right');
@@ -244,8 +245,8 @@ class Tg_Nav_Db_Navitem extends Tg_Db_Table_Row
 		$pages->delete ($where);
 
 		// update tree
-		$pages->update (array ("left"=>new Zend_Db_Expr("$left-$dif")), "$left>{$this->left} AND nav_item=".$this->nav_id);
-		$pages->update (array ("right"=>new Zend_Db_Expr("$right-$dif")), "$right>{$this->right} AND nav_item=".$this->nav_id);
+		$pages->update (array ("left"=>new Zend_Db_Expr("$left-$dif")), "$left>{$this->left} AND nav_id=".$this->nav_id);
+		$pages->update (array ("right"=>new Zend_Db_Expr("$right-$dif")), "$right>{$this->right} AND nav_id=".$this->nav_id);
 	}
 
 	function moveNavitem ($pageId, $previousSiblingId = 0)

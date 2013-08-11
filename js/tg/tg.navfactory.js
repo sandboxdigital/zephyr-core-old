@@ -49,20 +49,18 @@
         }
 
         , addNav: function (parent) {
+            c(parent);
             var data = {
-                id:0,
+                id:0+"",
                 type:1,
                 parentId:parent.attributes.id,
                 title:Tg.PageFactory.pages.title,
-                page:Tg.PageFactory.pages.id
-            };
-            var node = parent.appendChild ({
-                text:data.title,
-                attributes:data,
-                json:data,
+                page:Tg.PageFactory.pages.id,
+                text:Tg.PageFactory.pages.title,
                 children:[],
                 expanded:false
-            });
+            };
+            var node = parent.appendChild (data);
             node.select();
         }
 
@@ -77,7 +75,7 @@
                     var values = form.getValues();
                     var node = Tg.NavFactory.navTree.getNodeById(values.id);
                     node.setText(values.title);
-                    node.attributes.json = values;
+                    node.attributes = values;
                 },
                 failure: function (form, action) {
                     switch (action.failureType) {
