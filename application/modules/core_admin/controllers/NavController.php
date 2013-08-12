@@ -105,21 +105,31 @@ class Core_Admin_NavController extends Tg_Content_Controller
 
         $page = Tg_Site::getInstance()->getRootPage();
         $menus = Tg_Nav::getNavs();
-        $menu = $menus[0]->getRootNavitem();
+        $menu = $menus[1]->getRootNavitem();
 
         $this->addPageToMenu($page,$menu);
+
+        echo '{"success":true,"msg":"Add all successful"}';
+        die;
     }
 
     protected function addPageToMenu (Tg_Site_Db_Page $page , Tg_Nav_Db_Navitem $menu)
     {
-        $newItem = $menu->appendNavitem(array(
-            'title'=>$page->title,
-            'page'=>$page->id,
-            'type'=>1
-        ));
+        if ($page->visible) {
+            $pages = $page->getPages();
+            echo $page->title.'-'.count($pages).'<br />';
 
+            $subNavitem = $menu->appendNavitem(array(
+                'title'=>$page->title,
+                'page'=>$page->id,
+                'type'=>1
+            ));
 
-        echo '{"success":true,"msg":"Add all successful"}';
-        die;
+            foreach ($pages as $subpage)
+            {
+
+                $this->addPageToMenu($subpage,$subNavitem);
+            }
+        }
     }
 }

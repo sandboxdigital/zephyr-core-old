@@ -71,14 +71,17 @@ class Tg_View_Helper_Nav
                     $liClass .= ' last';
                 }
 
+                $title = $subNavitem->title;
+                $target='';
+
                 if ($subNavitem->type == 1) {
                     $page = Tg_Site::getInstance()->getPageById($subNavitem->page);
-                    $url = $page?$page->getPath():'';
+                    $url = $page?$page->getUrl():'';
+
                 } else {
                     $url = $subNavitem->url;
+                    $target = ' target="_blank"';
                 }
-
-                $title = $subNavitem->title;
 
                 if(isset($options['translate']) && $options['translate'] == true)
                 {
@@ -87,7 +90,7 @@ class Tg_View_Helper_Nav
                         $title = $t->_($title);
                 }
 
-                $return .= '<li class="'.$liClass.'" id="'.$subNavitem->title.'"><a href="'.$url.'" class="'.$aClass.'">'.$title.'</a>';
+                $return .= '<li class="'.$liClass.'" id="'.$subNavitem->title.'"><a href="'.$url.'" class="'.$aClass.'"'.$target.'>'.$title.'</a>';
 //                if ($subNavitem != $RootNavitem && ($subNavitem->isAncestor($CurrentPage) || $options['showAll']))
 //                {
 //                    $options['showParent'] = false;
